@@ -44,9 +44,9 @@
       "category": "Garage / Vehicle",
       "id": "m6",
       "item": "Motorcycle",
-      "notes": "Posted for sale; friend interested to buy Mon/Tue (10/12-10/13)",
-      "status": "Listed / Pending Sale",
-      "targetPrice": "Friend Price"
+      "notes": "Listed publicly; responding to active buyer messages. Need sold before move.",
+      "status": "Listed",
+      "targetPrice": "Market Price"
     },
     {
       "category": "Fitness / Garage",
@@ -531,11 +531,20 @@
     {
       "category": "Core Logistics",
       "id": "t8",
-      "notes": "Friend interested for Mon 10/12 or Tue 10/13",
+      "notes": "Listed publicly; responding to active buyer messages & scheduling viewings",
       "owner": "William",
       "priority": "High Priority",
       "status": "Pending",
-      "text": "Finalize motorcycle sale with friend"
+      "text": "Sell motorcycle (responding to listing inquiries & test rides)"
+    },
+    {
+      "category": "Core Logistics",
+      "id": "t46",
+      "notes": "Recommended: Thu 10/29 & Fri 10/30 (POD load), Mon 11/2 (arrival & unpack)",
+      "owner": "William",
+      "priority": "High Priority",
+      "status": "Pending",
+      "text": "Determine & submit PTO / work days off for move"
     },
     {
       "category": "Supplies & Purchases",
@@ -864,11 +873,29 @@
     {
       "category": "Post-Move Admin",
       "id": "t45",
-      "notes": "Call utility providers in San Diego / Encinitas",
+      "notes": "Electric account active / scheduled for start date",
+      "owner": "William",
+      "priority": "High Priority",
+      "status": "Done",
+      "text": "Set up electric utility at new home (San Diego / Encinitas)"
+    },
+    {
+      "category": "Post-Move Admin",
+      "id": "t47",
+      "notes": "Order router / schedule technician for arrival week",
       "owner": "William",
       "priority": "High Priority",
       "status": "Pending",
-      "text": "Set up utilities at new home (Electric, Water, Internet)"
+      "text": "Set up high-speed Internet at new home"
+    },
+    {
+      "category": "Post-Move Admin",
+      "id": "t48",
+      "notes": "Confirm water & trash billing with landlord / city",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Set up water & trash utilities at new home"
     }
   ]
 }
