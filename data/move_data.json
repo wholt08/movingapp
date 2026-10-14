@@ -540,10 +540,10 @@
     {
       "category": "Core Logistics",
       "id": "t46",
-      "notes": "Recommended: Thu 10/29 & Fri 10/30 (POD load), Mon 11/2 (arrival & unpack)",
+      "notes": "Requested: Thu 10/29, Fri 10/30, and Mon 11/2 (5-day move & drive window)",
       "owner": "William",
       "priority": "High Priority",
-      "status": "Pending",
+      "status": "Done",
       "text": "Determine & submit PTO / work days off for move"
     },
     {
