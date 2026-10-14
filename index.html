@@ -55,6 +55,15 @@
             text-decoration: line-through;
             color: #64748b;
         }
+        .pod-cell-active {
+            ring-width: 2px;
+            --tw-ring-color: #f97316;
+            background-color: #fff7ed !important;
+        }
+        .dark .pod-cell-active {
+            background-color: #431407 !important;
+            --tw-ring-color: #fb923c;
+        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100">
@@ -74,7 +83,7 @@
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>Active Plan
                             </span>
                         </div>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Drop-off: Oct 28 • Pick-up: Oct 30 • Drive: Oct 31</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">POD: 16'L × 8'W × 8'H • Vehicle: 2015 Subaru Outback • Drive: Oct 31</p>
                     </div>
                 </div>
 
@@ -94,9 +103,7 @@
                     <div class="flex items-center gap-1.5 ml-1">
                         <!-- Dark Mode Toggle Button -->
                         <button onclick="toggleDarkMode()" id="dark-toggle-btn" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all shadow-xs" title="Toggle Dark/Light Mode">
-                            <!-- Moon Icon (Light Mode) -->
                             <svg id="moon-icon" class="w-4 h-4 hidden dark:inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                            <!-- Sun Icon (Dark Mode) -->
                             <svg id="sun-icon" class="w-4 h-4 inline dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
                         </button>
 
@@ -138,7 +145,12 @@
                 </button>
                 <button onclick="switchTab('packing')" id="tab-packing" class="tab-btn px-3.5 py-2 rounded-t-lg transition-colors flex items-center gap-2 whitespace-nowrap">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                    Packing (POD & Subaru)
+                    Packing Lists
+                </button>
+                <button onclick="switchTab('visualizer')" id="tab-visualizer" class="tab-btn px-3.5 py-2 rounded-t-lg transition-colors flex items-center gap-2 whitespace-nowrap">
+                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+                    <span>Packing Visualizer</span>
+                    <span class="text-[10px] bg-orange-100 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 px-1.5 py-0.2 rounded-full font-bold">POD & Subaru</span>
                 </button>
             </div>
         </div>
@@ -399,7 +411,7 @@
         </div>
 
 
-        <!-- ================= TAB 5: PACKING (POD & SUBARU) ================= -->
+        <!-- ================= TAB 5: PACKING LISTS ================= -->
         <div id="view-packing" class="hidden space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- 16' POD Container -->
@@ -424,7 +436,13 @@
 
                     <div class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 bg-orange-50/60 dark:bg-orange-950/30 p-2.5 rounded-lg border border-orange-100 dark:border-orange-900/40">
                         <span>💡 <strong>Tip:</strong> Load heavy items on bottom floor. Strap mattresses to side walls.</span>
-                        <button onclick="openAddItemModal('pod')" class="text-orange-700 dark:text-orange-400 font-bold hover:underline">+ Add</button>
+                        <div class="flex items-center gap-3">
+                            <button onclick="switchTab('visualizer'); switchVisualizerMode('pod');" class="text-orange-600 dark:text-orange-400 font-bold hover:underline flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                View 2D Plan
+                            </button>
+                            <button onclick="openAddItemModal('pod')" class="text-orange-700 dark:text-orange-300 font-bold hover:underline">+ Add</button>
+                        </div>
                     </div>
 
                     <div class="flex-1 overflow-y-auto custom-scroll mt-3 divide-y divide-slate-100 dark:divide-slate-800" id="pod-items-list">
@@ -454,7 +472,13 @@
 
                     <div class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 bg-blue-50/60 dark:bg-blue-950/30 p-2.5 rounded-lg border border-blue-100 dark:border-blue-900/40">
                         <span>💡 <strong>Lifeline:</strong> Keep Scout comfortable, tech padded, toiletries & air bed accessible!</span>
-                        <button onclick="openAddItemModal('car')" class="text-blue-700 dark:text-blue-400 font-bold hover:underline">+ Add</button>
+                        <div class="flex items-center gap-3">
+                            <button onclick="switchTab('visualizer'); switchVisualizerMode('subaru');" class="text-blue-600 dark:text-blue-400 font-bold hover:underline flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                View Car Layout
+                            </button>
+                            <button onclick="openAddItemModal('car')" class="text-blue-700 dark:text-blue-300 font-bold hover:underline">+ Add</button>
+                        </div>
                     </div>
 
                     <div class="flex-1 overflow-y-auto custom-scroll mt-3 divide-y divide-slate-100 dark:divide-slate-800" id="car-items-list">
@@ -462,6 +486,368 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+
+        <!-- ================= TAB 6: PACKING VISUALIZER ================= -->
+        <div id="view-visualizer" class="hidden space-y-6">
+            
+            <!-- Switcher: POD vs Subaru Outback -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span>🎯 Packing Blueprint & Spatial Visualizer</span>
+                    </h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Visualize weight distribution, vertical tiers, and spatial zones so loading day is seamless.</p>
+                </div>
+                
+                <div class="inline-flex rounded-xl p-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    <button onclick="switchVisualizerMode('pod')" id="btn-viz-pod" class="px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 bg-white dark:bg-slate-900 text-orange-600 dark:text-orange-400 shadow-xs">
+                        <span>📦 16ft POD Container</span>
+                        <span class="text-[10px] bg-orange-100 dark:bg-orange-950/80 px-1.5 py-0.5 rounded">16'×8'×8'</span>
+                    </button>
+                    <button onclick="switchVisualizerMode('subaru')" id="btn-viz-subaru" class="px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">
+                        <span>🚙 2015 Subaru Outback</span>
+                        <span class="text-[10px] bg-blue-100 dark:bg-blue-950/80 px-1.5 py-0.5 rounded">73.3 cu ft</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONTAINER A: 16ft POD Visualizer (16'L x 8'W x 8'H) -->
+            <div id="viz-pod-container" class="space-y-6">
+                
+                <!-- Specs & Safety Balance Bar -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Internal Dimensions</span>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-white mt-1">16' L × 8' W × 8' H</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Approx. 857 cubic feet capacity</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] uppercase font-bold text-slate-400">Axle Weight Distribution</span>
+                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400" id="pod-balance-label">62% Front / 38% Rear</span>
+                        </div>
+                        <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2.5 mt-2.5 overflow-hidden flex">
+                            <div class="bg-blue-600 h-full w-[62%]" title="Front / Bulkhead Half"></div>
+                            <div class="bg-orange-500 h-full w-[38%]" title="Rear / Door Half"></div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 flex justify-between">
+                            <span>Front Bulkhead (Tiers 1-2)</span>
+                            <span>Doorway (Tiers 3-4)</span>
+                        </p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-slate-400">Active Zone Filter</span>
+                            <h4 class="text-sm font-bold text-orange-600 dark:text-orange-400 mt-1" id="pod-active-filter-label">All Compartments</h4>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400">Click any box on the schematic to filter</p>
+                        </div>
+                        <button onclick="filterPodItemsByZone('all')" class="text-xs px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg font-semibold">
+                            Reset View
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2D Interactive Elevation Cross-Section Schematic -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-base">Longitudinal Cross-Section (16' Length × 8' Height Elevation)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Side cutaway view from back wall (front of container) to the roll-up door.</p>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-blue-500"></span> Heavy Base</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500"></span> Mid Stacks</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500"></span> Top Trusses</span>
+                        </div>
+                    </div>
+
+                    <!-- Side-Wall Mattress Callout -->
+                    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-950/40 dark:to-indigo-950/40 border border-purple-200 dark:border-purple-800/60 rounded-xl p-3 flex items-center justify-between text-xs text-purple-900 dark:text-purple-200">
+                        <div class="flex items-center gap-2 font-medium">
+                            <span class="text-base">🛏️</span>
+                            <span><strong>Left Wall Vertical Tie-Down:</strong> King Mattress, Box Spring & Disassembled Wood Bed Frame strapped upright with E-Track ratchet straps along the full length of the wall.</span>
+                        </div>
+                        <span class="px-2 py-0.5 rounded bg-purple-200 dark:bg-purple-900 text-purple-800 dark:text-purple-200 font-bold text-[10px]">E-Track Secured</span>
+                    </div>
+
+                    <!-- The 16ft POD Grid Blueprint -->
+                    <div class="border-2 border-slate-700 dark:border-slate-600 rounded-2xl p-4 bg-slate-900 text-white relative shadow-inner overflow-x-auto">
+                        <!-- Container Header Badges -->
+                        <div class="flex justify-between items-center text-[11px] font-mono uppercase text-slate-400 border-b border-slate-700/80 pb-2 mb-3">
+                            <div class="flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span>FRONT / CAB WALL (DEEPEST INSIDE)</span>
+                            </div>
+                            <span>CONTAINER INTERIOR (16 FT)</span>
+                            <div class="flex items-center gap-1">
+                                <span>ROLL-UP DOOR (ENTRANCE)</span>
+                                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                            </div>
+                        </div>
+
+                        <!-- 3 Vertical Levels x 4 Tiers Grid -->
+                        <div class="grid grid-cols-4 gap-3 min-w-[700px] text-xs">
+                            
+                            <!-- Header for Tiers -->
+                            <div class="text-center font-bold text-slate-300 pb-1 border-b border-slate-700">
+                                <span>Tier 1 (0 - 4 ft)</span>
+                                <span class="block text-[10px] font-normal text-slate-400">Anchor Bulkhead</span>
+                            </div>
+                            <div class="text-center font-bold text-slate-300 pb-1 border-b border-slate-700">
+                                <span>Tier 2 (4 - 8 ft)</span>
+                                <span class="block text-[10px] font-normal text-slate-400">Mid-Front Dense</span>
+                            </div>
+                            <div class="text-center font-bold text-slate-300 pb-1 border-b border-slate-700">
+                                <span>Tier 3 (8 - 12 ft)</span>
+                                <span class="block text-[10px] font-normal text-slate-400">Mid-Rear Modular</span>
+                            </div>
+                            <div class="text-center font-bold text-slate-300 pb-1 border-b border-slate-700">
+                                <span>Tier 4 (12 - 16 ft)</span>
+                                <span class="block text-[10px] font-normal text-slate-400">Doorway / Access</span>
+                            </div>
+
+                            <!-- ROW 1: TOP / CEILING LEVEL (6 - 8 ft) -->
+                            <div onclick="filterPodItemsByZone('T1-Top')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T1-Top">
+                                <span class="text-[10px] font-bold text-emerald-400 uppercase block">Top Trusses (6-8')</span>
+                                <p class="font-bold text-slate-100 mt-1">Kayak & Boards</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Slid across ceiling rafters</p>
+                                <span class="inline-block mt-2 text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.5 rounded" id="count-T1-Top">2 items</span>
+                            </div>
+                            <div onclick="filterPodItemsByZone('T2-Top')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T2-Top">
+                                <span class="text-[10px] font-bold text-emerald-400 uppercase block">Top Trusses (6-8')</span>
+                                <p class="font-bold text-slate-100 mt-1">Paddle Boards / Soft</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Inflatable SUPs & pillows</p>
+                                <span class="inline-block mt-2 text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.5 rounded" id="count-T2-Top">1 item</span>
+                            </div>
+                            <div onclick="filterPodItemsByZone('T3-Top')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T3-Top">
+                                <span class="text-[10px] font-bold text-emerald-400 uppercase block">Top Trusses (6-8')</span>
+                                <p class="font-bold text-slate-100 mt-1">Acoustic Guitar</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Padded, safe atop light boxes</p>
+                                <span class="inline-block mt-2 text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.5 rounded" id="count-T3-Top">1 item</span>
+                            </div>
+                            <div onclick="filterPodItemsByZone('T4-Top')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T4-Top">
+                                <span class="text-[10px] font-bold text-emerald-400 uppercase block">Top Trusses (6-8')</span>
+                                <p class="font-bold text-slate-100 mt-1">Cushions & Linens</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Light filler near door</p>
+                                <span class="inline-block mt-2 text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-1.5 py-0.5 rounded" id="count-T4-Top">1 item</span>
+                            </div>
+
+                            <!-- ROW 2: MID LEVEL (3 - 6 ft) -->
+                            <div onclick="filterPodItemsByZone('T1-Mid')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T1-Mid">
+                                <span class="text-[10px] font-bold text-amber-400 uppercase block">Mid Level (3-6')</span>
+                                <p class="font-bold text-slate-100 mt-1">65" Boxed TV & Decor</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Upright between furniture</p>
+                                <span class="inline-block mt-2 text-[10px] bg-amber-950 text-amber-300 border border-amber-800 px-1.5 py-0.5 rounded" id="count-T1-Mid">2 items</span>
+                            </div>
+                            <div onclick="filterPodItemsByZone('T2-Mid')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T2-Mid">
+                                <span class="text-[10px] font-bold text-amber-400 uppercase block">Mid Level (3-6')</span>
+                                <p class="font-bold text-slate-100 mt-1">40" TV, Clothes & Shoes</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Stackable uniform boxes</p>
+                                <span class="inline-block mt-2 text-[10px] bg-amber-950 text-amber-300 border border-amber-800 px-1.5 py-0.5 rounded" id="count-T2-Mid">4 items</span>
+                            </div>
+                            <div onclick="filterPodItemsByZone('T3-Mid')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T3-Mid">
+                                <span class="text-[10px] font-bold text-amber-400 uppercase block">Mid Level (3-6')</span>
+                                <p class="font-bold text-slate-100 mt-1">Kitchen & Small Appls</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Fragile dishware & air fryer</p>
+                                <span class="inline-block mt-2 text-[10px] bg-amber-950 text-amber-300 border border-amber-800 px-1.5 py-0.5 rounded" id="count-T3-Mid">5 items</span>
+                            </div>
+                            <div onclick="filterPodItemsByZone('T4-Mid')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T4-Mid">
+                                <span class="text-[10px] font-bold text-amber-400 uppercase block">Mid Level (3-6')</span>
+                                <p class="font-bold text-slate-100 mt-1">Office Chairs & Tables</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Interlocked inverted</p>
+                                <span class="inline-block mt-2 text-[10px] bg-amber-950 text-amber-300 border border-amber-800 px-1.5 py-0.5 rounded" id="count-T4-Mid">3 items</span>
+                            </div>
+
+                            <!-- ROW 3: FLOOR BASE LEVEL (0 - 3 ft) -->
+                            <div onclick="filterPodItemsByZone('T1-Base')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T1-Base">
+                                <span class="text-[10px] font-bold text-blue-400 uppercase block">Floor Base (0-3')</span>
+                                <p class="font-bold text-slate-100 mt-1">Large Dresser & TV Stand</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Heavy wood anchor foundation</p>
+                                <span class="inline-block mt-2 text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-1.5 py-0.5 rounded" id="count-T1-Base">3 items</span>
+                            </div>
+                            <div onclick="filterPodItemsByZone('T2-Base')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T2-Base">
+                                <span class="text-[10px] font-bold text-blue-400 uppercase block">Floor Base (0-3')</span>
+                                <p class="font-bold text-slate-100 mt-1">2 Standing Desks & Books</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Heavy book boxes on floor</p>
+                                <span class="inline-block mt-2 text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-1.5 py-0.5 rounded" id="count-T2-Base">3 items</span>
+                            </div>
+                            <div onclick="filterPodItemsByZone('T3-Base')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T3-Base">
+                                <span class="text-[10px] font-bold text-blue-400 uppercase block">Floor Base (0-3')</span>
+                                <p class="font-bold text-slate-100 mt-1">Grill, Fire Pit & Walking Pads</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Heavy gear & garage boxes</p>
+                                <span class="inline-block mt-2 text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-1.5 py-0.5 rounded" id="count-T3-Base">4 items</span>
+                            </div>
+                            <div onclick="filterPodItemsByZone('T4-Base')" class="pod-zone-card p-3 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 cursor-pointer transition-all hover:scale-[1.01]" id="zone-T4-Base">
+                                <span class="text-[10px] font-bold text-blue-400 uppercase block">Floor Base (0-3')</span>
+                                <p class="font-bold text-slate-100 mt-1">4 Bicycles (Batteries in car)</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Alternating handlebars + net</p>
+                                <span class="inline-block mt-2 text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-1.5 py-0.5 rounded" id="count-T4-Base">2 items</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POD Item Zone Assignment Explorer -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-base">POD Inventory Zone Assignments</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">See which items are assigned to which tier, or move items to rebalance the container.</p>
+                        </div>
+                        <span id="pod-filtered-count-badge" class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2.5 py-1 rounded-lg font-semibold">
+                            Showing all items
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 uppercase font-bold text-[11px] border-b border-slate-200 dark:border-slate-800">
+                                <tr>
+                                    <th class="p-3">Item</th>
+                                    <th class="p-3">Category</th>
+                                    <th class="p-3">Assigned Zone</th>
+                                    <th class="p-3">Vertical Level</th>
+                                    <th class="p-3 text-right">Packed</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pod-viz-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- CONTAINER B: 2015 Subaru Outback Visualizer (73.3 cu. ft.) -->
+            <div id="viz-subaru-container" class="hidden space-y-6">
+                
+                <!-- Specs Card -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Total Cargo Volume</span>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-white mt-1">73.3 cu. ft. Max</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Rear seats split 60/40 flat</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Cargo Dimensions</span>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-white mt-1">75" Length × 43" Width</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">32" vertical hatch opening clearance</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Scout Safety Zone</span>
+                        <h4 class="text-base font-bold text-blue-600 dark:text-blue-400 mt-1">VIP Passenger 🐕</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Dedicated seat, bed, water, harness</p>
+                    </div>
+                </div>
+
+                <!-- Interactive Outback Blueprint -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+                    <div>
+                        <h3 class="font-bold text-slate-900 dark:text-white text-base">Overhead Vehicle Blueprint (2015 Subaru Outback)</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">How to distribute Scout, fragile electronics, and your 10-day road trip survival gear.</p>
+                    </div>
+
+                    <!-- Car Blueprint Diagram -->
+                    <div class="border-2 border-slate-700 dark:border-slate-600 rounded-3xl p-6 bg-slate-900 text-white relative shadow-inner">
+                        <div class="flex justify-between items-center text-[11px] font-mono uppercase text-slate-400 border-b border-slate-800 pb-2 mb-4">
+                            <span>FRONT ENGINE / WINDSHIELD</span>
+                            <span>SUBARU OUTBACK OVERHEAD SCHEMATIC</span>
+                            <span>REAR LIFTGATE</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                            
+                            <!-- Section 1: Front Cockpit -->
+                            <div class="border border-slate-700 rounded-2xl p-4 bg-slate-800/60 flex flex-col justify-between">
+                                <div>
+                                    <span class="text-[10px] font-bold text-blue-400 uppercase tracking-wider block">Cockpit Zone</span>
+                                    <h4 class="font-bold text-white text-sm mt-1">Driver & Passenger</h4>
+                                    <p class="text-slate-400 text-xs mt-1">William & Camille front bucket seats.</p>
+                                </div>
+                                <div class="mt-4 pt-3 border-t border-slate-700 text-[11px] text-slate-300 space-y-1">
+                                    <p>📱 Phones, GPS, Sunglasses</p>
+                                    <p>🥤 Road trip drinks & snacks</p>
+                                    <p>📄 Move documents & apartment lease</p>
+                                </div>
+                            </div>
+
+                            <!-- Section 2: Scout's VIP Haven (Rear 40% Split) -->
+                            <div class="border-2 border-blue-500 rounded-2xl p-4 bg-blue-950/40 flex flex-col justify-between relative shadow-lg">
+                                <span class="absolute top-3 right-3 text-lg">🐕</span>
+                                <div>
+                                    <span class="text-[10px] font-bold text-blue-300 uppercase tracking-wider block">Rear Left 40% Seat</span>
+                                    <h4 class="font-bold text-white text-sm mt-1">Scout's Safe Haven</h4>
+                                    <p class="text-blue-200/80 text-xs mt-1">Seat kept upright or semi-recline with dog bed.</p>
+                                </div>
+                                <div class="mt-4 pt-3 border-t border-blue-800/80 text-[11px] text-blue-100 space-y-1">
+                                    <p class="font-bold text-white">✓ Orthopedic Dog Bed</p>
+                                    <p>✓ Seatbelt safety harness tether</p>
+                                    <p>✓ Pet ramp stowed flat beneath</p>
+                                    <p>✓ Spill-proof water bowl & food bag</p>
+                                    <p>✓ Clear window view for Scout</p>
+                                </div>
+                            </div>
+
+                            <!-- Section 3: Main Rear Cargo Area (60% Folded Flat + Trunk) -->
+                            <div class="border border-indigo-500 rounded-2xl p-4 bg-indigo-950/30 flex flex-col justify-between">
+                                <div>
+                                    <span class="text-[10px] font-bold text-indigo-300 uppercase tracking-wider block">Folded Cargo Bed (75" Length)</span>
+                                    <h4 class="font-bold text-white text-sm mt-1">Luggage, Tech & Survival Kit</h4>
+                                    <p class="text-indigo-200/80 text-xs mt-1">Two-tier vertical packing strategy.</p>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-indigo-800/60 text-[11px] space-y-2">
+                                    <div class="bg-indigo-900/60 p-2 rounded-lg border border-indigo-700/60">
+                                        <span class="font-bold text-indigo-200 block text-[10px] uppercase">Tier 1: Lower Cargo Floor</span>
+                                        <p class="text-slate-300 text-[11px]">2 10-day suitcases, inflatable queen bed, bedding, basic kitchen box & coffee machine.</p>
+                                    </div>
+                                    <div class="bg-purple-900/60 p-2 rounded-lg border border-purple-700/60">
+                                        <span class="font-bold text-purple-200 block text-[10px] uppercase">Tier 2: Upper Delicate Deck</span>
+                                        <p class="text-slate-300 text-[11px]">4 Computer Monitors (padded & screen-down on blankets, ZERO weight on top), 3 Laptops & House Plants.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subaru Packing Table Explorer -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-slate-900 dark:text-white text-base">Subaru Packing Items by Zone</h3>
+                        <span class="text-xs bg-blue-100 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 px-2.5 py-1 rounded-lg font-semibold">
+                            Road Trip Survival Kit
+                        </span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 uppercase font-bold text-[11px] border-b border-slate-200 dark:border-slate-800">
+                                <tr>
+                                    <th class="p-3">Item</th>
+                                    <th class="p-3">Vehicle Zone</th>
+                                    <th class="p-3">Priority / Safety Note</th>
+                                    <th class="p-3 text-right">Packed Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="subaru-viz-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
     </main>
@@ -727,46 +1113,46 @@
             ],
             packing: {
                 pod: [
-                    { id: "p1", text: "King Bed Mattress & Wood Frame", category: "Furniture", packed: false },
-                    { id: "p2", text: "Large Dresser", category: "Furniture", packed: false },
-                    { id: "p3", text: "65\" TV (In TV Box)", category: "Electronics", packed: false },
-                    { id: "p4", text: "40\" TV (In TV Box)", category: "Electronics", packed: false },
-                    { id: "p5", text: "Wood TV Stand (6ft)", category: "Furniture", packed: false },
-                    { id: "p6", text: "Clothes & Shoes Boxes", category: "Bedroom", packed: false },
-                    { id: "p7", text: "Artwork & Mirrors (Bubble wrapped)", category: "Living Room", packed: false },
-                    { id: "p8", text: "2 Standing Desks (Tops & Legs separated)", category: "Office", packed: false },
-                    { id: "p9", text: "2 Office Chairs", category: "Office", packed: false },
-                    { id: "p10", text: "Desktop Computer (Well padded)", category: "Electronics", packed: false },
-                    { id: "p11", text: "2 Office Walking Pads", category: "Office", packed: false },
-                    { id: "p12", text: "Collapsible Coffee Tables (1 Lg, 2-3 Sm)", category: "Furniture", packed: false },
-                    { id: "p13", text: "Acoustic Guitar", category: "Personal", packed: false },
-                    { id: "p14", text: "Books (Small, heavy boxes)", category: "Living Room", packed: false },
-                    { id: "p15", text: "Home Receiver, Subwoofer & Speakers", category: "Electronics", packed: false },
-                    { id: "p16", text: "Record Player", category: "Electronics", packed: false },
-                    { id: "p17", text: "Board Games Box", category: "Living Room", packed: false },
-                    { id: "p18", text: "Blackstone Portable Grill", category: "Outdoor", packed: false },
-                    { id: "p19", text: "Small Gas Fire Pit (NO PROPANE - Disposed)", category: "Outdoor", packed: false },
-                    { id: "p20", text: "Kitchen Boxes (Glasses, Pans, Spices, Utensils)", category: "Kitchen", packed: false },
-                    { id: "p21", text: "Small Appliances (Air Fryer, Blender)", category: "Kitchen", packed: false },
-                    { id: "p22", text: "Garage Boxes (~12 boxes: Outdoor, Camping, Bike Tools)", category: "Garage", packed: false },
-                    { id: "p23", text: "Folding Chairs & Extra Carpets", category: "Household", packed: false },
-                    { id: "p24", text: "4 Bicycles (E-bike batteries removed for car)", category: "Outdoor", packed: false },
-                    { id: "p25", text: "2 Inflatable Paddle Boards & 1 Kayak", category: "Outdoor", packed: false }
+                    { id: "p1", text: "King Bed Mattress & Wood Frame", category: "Furniture", zone: "T1-Side", level: "Side Wall", packed: false, weightClass: "heavy" },
+                    { id: "p2", text: "Large Dresser", category: "Furniture", zone: "T1-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
+                    { id: "p3", text: "65\" TV (In TV Box)", category: "Electronics", zone: "T1-Mid", level: "Mid Level", packed: false, weightClass: "medium" },
+                    { id: "p4", text: "40\" TV (In TV Box)", category: "Electronics", zone: "T2-Mid", level: "Mid Level", packed: false, weightClass: "medium" },
+                    { id: "p5", text: "Wood TV Stand (6ft)", category: "Furniture", zone: "T1-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
+                    { id: "p6", text: "Clothes & Shoes Boxes", category: "Bedroom", zone: "T2-Mid", level: "Mid Level", packed: false, weightClass: "medium" },
+                    { id: "p7", text: "Artwork & Mirrors (Bubble wrapped)", category: "Living Room", zone: "T1-Mid", level: "Mid Level", packed: false, weightClass: "light" },
+                    { id: "p8", text: "2 Standing Desks (Tops & Legs separated)", category: "Office", zone: "T2-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
+                    { id: "p9", text: "2 Office Chairs", category: "Office", zone: "T4-Mid", level: "Mid Level", packed: false, weightClass: "medium" },
+                    { id: "p10", text: "Desktop Computer (Well padded)", category: "Electronics", zone: "T2-Mid", level: "Mid Level", packed: false, weightClass: "medium" },
+                    { id: "p11", text: "2 Office Walking Pads", category: "Office", zone: "T3-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
+                    { id: "p12", text: "Collapsible Coffee Tables (1 Lg, 2-3 Sm)", category: "Furniture", zone: "T4-Mid", level: "Mid Level", packed: false, weightClass: "medium" },
+                    { id: "p13", text: "Acoustic Guitar", category: "Personal", zone: "T3-Top", level: "Top Trusses", packed: false, weightClass: "light" },
+                    { id: "p14", text: "Books (Small, heavy boxes)", category: "Living Room", zone: "T2-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
+                    { id: "p15", text: "Home Receiver, Subwoofer & Speakers", category: "Electronics", zone: "T2-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
+                    { id: "p16", text: "Record Player", category: "Electronics", zone: "T3-Mid", level: "Mid Level", packed: false, weightClass: "medium" },
+                    { id: "p17", text: "Board Games Box", category: "Living Room", zone: "T3-Mid", level: "Mid Level", packed: false, weightClass: "light" },
+                    { id: "p18", text: "Blackstone Portable Grill", category: "Outdoor", zone: "T3-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
+                    { id: "p19", text: "Small Gas Fire Pit (NO PROPANE - Disposed)", category: "Outdoor", zone: "T3-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
+                    { id: "p20", text: "Kitchen Boxes (Glasses, Pans, Spices, Utensils)", category: "Kitchen", zone: "T3-Mid", level: "Mid Level", packed: false, weightClass: "medium" },
+                    { id: "p21", text: "Small Appliances (Air Fryer, Blender)", category: "Kitchen", zone: "T3-Mid", level: "Mid Level", packed: false, weightClass: "medium" },
+                    { id: "p22", text: "Garage Boxes (~12 boxes: Outdoor, Camping, Bike Tools)", category: "Garage", zone: "T2-Mid", level: "Mid Level", packed: false, weightClass: "heavy" },
+                    { id: "p23", text: "Folding Chairs & Extra Carpets", category: "Household", zone: "T4-Top", level: "Top Trusses", packed: false, weightClass: "light" },
+                    { id: "p24", text: "4 Bicycles (E-bike batteries removed for car)", category: "Outdoor", zone: "T4-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
+                    { id: "p25", text: "2 Inflatable Paddle Boards & 1 Kayak", category: "Outdoor", zone: "T1-Top", level: "Top Trusses", packed: false, weightClass: "light" }
                 ],
                 car: [
-                    { id: "c1", text: "2 Work Laptops & Chargers", category: "Tech", packed: false },
-                    { id: "c2", text: "1 Personal Laptop & Charger", category: "Tech", packed: false },
-                    { id: "c3", text: "4 Computer Monitors (Padded & blanketed in back)", category: "Tech", packed: false },
-                    { id: "c4", text: "E-bike batteries (Removed from bikes for safety)", category: "Tech", packed: false },
-                    { id: "c5", text: "Folding Table", category: "Immediate Use", packed: false },
-                    { id: "c6", text: "2 Luggage Bags (10 days of clothes for road trip)", category: "Clothing", packed: false },
-                    { id: "c7", text: "Inflatable Queen Mattress", category: "Bedding", packed: false },
-                    { id: "c8", text: "Bedding (Sheets, Comforter, Pillows)", category: "Bedding", packed: false },
-                    { id: "c9", text: "Basic Kitchen Box (Pan, Olive Oil, 2 Plates, Silverware)", category: "Kitchen", packed: false },
-                    { id: "c10", text: "Coffee Machine & Beans/Mug", category: "Kitchen", packed: false },
-                    { id: "c11", text: "Toiletries & Daily Bathroom Essentials", category: "Personal", packed: false },
-                    { id: "c12", text: "House Plants", category: "Plants", packed: false },
-                    { id: "c13", text: "Scout's Essentials (Food, Bowls, Bed, Leash, Harness, Meds)", category: "Pet Scout", packed: false }
+                    { id: "c1", text: "2 Work Laptops & Chargers", category: "Tech", zone: "Upper Delicate Deck", note: "Keep in padded sleeves in reach", packed: false },
+                    { id: "c2", text: "1 Personal Laptop & Charger", category: "Tech", zone: "Upper Delicate Deck", note: "Keep in backpack", packed: false },
+                    { id: "c3", text: "4 Computer Monitors", category: "Tech", zone: "Upper Delicate Deck", note: "Padded face-down on moving blanket, ZERO weight on top!", packed: false },
+                    { id: "c4", text: "E-bike batteries", category: "Tech", zone: "Lower Cargo Floor", note: "Removed from bikes for temperature safety", packed: false },
+                    { id: "c5", text: "Folding Table", category: "Immediate Use", zone: "Lower Cargo Floor", note: "Slides flat on bottom bed", packed: false },
+                    { id: "c6", text: "2 Luggage Bags (10 days clothes)", category: "Clothing", zone: "Lower Cargo Floor", note: "Road trip essentials", packed: false },
+                    { id: "c7", text: "Inflatable Queen Mattress", category: "Bedding", zone: "Lower Cargo Floor", note: "First night in CA before POD arrives", packed: false },
+                    { id: "c8", text: "Bedding (Sheets, Comforter, Pillows)", category: "Bedding", zone: "Lower Cargo Floor", note: "Used as cushion between items", packed: false },
+                    { id: "c9", text: "Basic Kitchen Box (Pan, Olive Oil, 2 Plates)", category: "Kitchen", zone: "Lower Cargo Floor", note: "Near hatch for quick access", packed: false },
+                    { id: "c10", text: "Coffee Machine & Beans/Mug", category: "Kitchen", zone: "Lower Cargo Floor", note: "First thing to unpack!", packed: false },
+                    { id: "c11", text: "Toiletries & Daily Bathroom Essentials", category: "Personal", zone: "Underfloor / Quick-Access", note: "Easy reach during highway rest stops", packed: false },
+                    { id: "c12", text: "House Plants", category: "Plants", zone: "Upper Delicate Deck", note: "Secured upright in boxes so they don't tip", packed: false },
+                    { id: "c13", text: "Scout's Essentials (Food, Bowls, Bed, Leash, Meds)", category: "Pet Scout", zone: "Scout's Safe Haven (Rear Left)", note: "Dog bed & harness tethered to seatbelt", packed: false }
                 ]
             }
         };
@@ -774,6 +1160,7 @@
         let moveData = {};
         let activeTab = 'timeline';
         let currentItemCategory = 'pod';
+        let currentPodZoneFilter = 'all';
 
         // Dark Mode Logic
         function initTheme() {
@@ -799,6 +1186,23 @@
             if (saved) {
                 try {
                     moveData = JSON.parse(saved);
+                    // Ensure visualizer zone data exists for older saves
+                    if (moveData.packing && moveData.packing.pod) {
+                        moveData.packing.pod.forEach((item, idx) => {
+                            if (!item.zone && defaultMoveData.packing.pod[idx]) {
+                                item.zone = defaultMoveData.packing.pod[idx].zone;
+                                item.level = defaultMoveData.packing.pod[idx].level;
+                            }
+                        });
+                    }
+                    if (moveData.packing && moveData.packing.car) {
+                        moveData.packing.car.forEach((item, idx) => {
+                            if (!item.zone && defaultMoveData.packing.car[idx]) {
+                                item.zone = defaultMoveData.packing.car[idx].zone;
+                                item.note = defaultMoveData.packing.car[idx].note;
+                            }
+                        });
+                    }
                 } catch (e) {
                     console.error("Failed to parse saved data, falling back to default.", e);
                     moveData = JSON.parse(JSON.stringify(defaultMoveData));
@@ -815,6 +1219,8 @@
             renderRepairsList();
             renderMarketplace();
             renderPackingLists();
+            renderPodVisualizer();
+            renderSubaruVisualizer();
         }
 
         function saveData() {
@@ -834,7 +1240,7 @@
         // Tab Switching
         function switchTab(tabId) {
             activeTab = tabId;
-            ['timeline', 'tasks', 'repairs', 'marketplace', 'packing'].forEach(t => {
+            ['timeline', 'tasks', 'repairs', 'marketplace', 'packing', 'visualizer'].forEach(t => {
                 const view = document.getElementById(`view-${t}`);
                 const btn = document.getElementById(`tab-${t}`);
                 if (t === tabId) {
@@ -845,6 +1251,10 @@
                     btn.classList.remove('active');
                 }
             });
+            if (tabId === 'visualizer') {
+                renderPodVisualizer();
+                renderSubaruVisualizer();
+            }
         }
 
         // Countdown Calculator
@@ -960,7 +1370,6 @@
             const ownerFilter = document.getElementById('task-filter-owner').value;
             const statusFilter = document.getElementById('task-filter-status').value;
 
-            // Filter tasks
             const filtered = moveData.tasks.filter(task => {
                 const matchSearch = task.text.toLowerCase().includes(searchQuery) || (task.notes && task.notes.toLowerCase().includes(searchQuery));
                 const matchOwner = ownerFilter === 'all' || task.owner === ownerFilter;
@@ -968,7 +1377,6 @@
                 return matchSearch && matchOwner && matchStatus;
             });
 
-            // Group by category
             const categories = [...new Set(moveData.tasks.map(t => t.category))];
 
             container.innerHTML = categories.map(cat => {
@@ -1106,6 +1514,8 @@
                 item.packed = !item.packed;
                 saveData();
                 renderPackingLists();
+                renderPodVisualizer();
+                renderSubaruVisualizer();
             }
         }
 
@@ -1113,6 +1523,8 @@
             moveData.packing[listType] = moveData.packing[listType].filter(i => i.id !== itemId);
             saveData();
             renderPackingLists();
+            renderPodVisualizer();
+            renderSubaruVisualizer();
         }
 
         function renderPackingLists() {
@@ -1132,7 +1544,7 @@
                         <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePackingItem('pod', '${item.id}')" class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 cursor-pointer dark:bg-slate-800 dark:border-slate-700">
                         <div>
                             <span class="text-xs font-semibold ${item.packed ? 'task-done' : 'text-slate-800 dark:text-slate-200'}">${item.text}</span>
-                            ${item.category ? `<span class="ml-2 text-[10px] text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.2 rounded font-medium">${item.category}</span>` : ''}
+                            ${item.level ? `<span class="ml-2 text-[10px] text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/60 px-1.5 py-0.2 rounded font-medium border border-orange-200 dark:border-orange-900/60">${item.level}</span>` : ''}
                         </div>
                     </label>
                     <button onclick="deletePackingItem('pod', '${item.id}')" class="text-slate-300 dark:text-slate-600 hover:text-red-500 text-xs px-1">&times;</button>
@@ -1155,7 +1567,7 @@
                         <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePackingItem('car', '${item.id}')" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer dark:bg-slate-800 dark:border-slate-700">
                         <div>
                             <span class="text-xs font-semibold ${item.packed ? 'task-done' : 'text-slate-800 dark:text-slate-200'}">${item.text}</span>
-                            ${item.category ? `<span class="ml-2 text-[10px] text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.2 rounded font-medium">${item.category}</span>` : ''}
+                            ${item.zone ? `<span class="ml-2 text-[10px] text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.2 rounded font-medium border border-blue-200 dark:border-blue-900/60">${item.zone}</span>` : ''}
                         </div>
                     </label>
                     <button onclick="deletePackingItem('car', '${item.id}')" class="text-slate-300 dark:text-slate-600 hover:text-red-500 text-xs px-1">&times;</button>
@@ -1163,20 +1575,159 @@
             `).join('');
         }
 
+        // ================= PACKING VISUALIZER LOGIC =================
+        function switchVisualizerMode(mode) {
+            const podSection = document.getElementById('viz-pod-container');
+            const subaruSection = document.getElementById('viz-subaru-container');
+            const btnPod = document.getElementById('btn-viz-pod');
+            const btnSubaru = document.getElementById('btn-viz-subaru');
+
+            if (mode === 'pod') {
+                podSection.classList.remove('hidden');
+                subaruSection.classList.add('hidden');
+                btnPod.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 bg-white dark:bg-slate-900 text-orange-600 dark:text-orange-400 shadow-xs";
+                btnSubaru.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400";
+                renderPodVisualizer();
+            } else {
+                podSection.classList.add('hidden');
+                subaruSection.classList.remove('hidden');
+                btnSubaru.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-xs";
+                btnPod.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-orange-600 dark:hover:text-orange-400";
+                renderSubaruVisualizer();
+            }
+        }
+
+        function filterPodItemsByZone(zone) {
+            currentPodZoneFilter = zone;
+            document.querySelectorAll('.pod-zone-card').forEach(el => el.classList.remove('pod-cell-active'));
+            if (zone !== 'all') {
+                const activeCard = document.getElementById(`zone-${zone}`);
+                if (activeCard) activeCard.classList.add('pod-cell-active');
+                document.getElementById('pod-active-filter-label').textContent = zone.replace('T', 'Tier ').replace('-', ' - ');
+            } else {
+                document.getElementById('pod-active-filter-label').textContent = 'All Compartments';
+            }
+            renderPodVisualizerTable();
+        }
+
+        function updatePodItemZone(itemId, newZone) {
+            const item = moveData.packing.pod.find(i => i.id === itemId);
+            if (item) {
+                item.zone = newZone;
+                if (newZone.includes('Base')) item.level = 'Base Floor';
+                if (newZone.includes('Mid')) item.level = 'Mid Level';
+                if (newZone.includes('Top')) item.level = 'Top Trusses';
+                if (newZone.includes('Side')) item.level = 'Side Wall';
+                saveData();
+                renderPodVisualizer();
+            }
+        }
+
+        function renderPodVisualizer() {
+            // Count items per zone
+            const zones = ['T1-Top', 'T2-Top', 'T3-Top', 'T4-Top', 'T1-Mid', 'T2-Mid', 'T3-Mid', 'T4-Mid', 'T1-Base', 'T2-Base', 'T3-Base', 'T4-Base'];
+            zones.forEach(z => {
+                const count = moveData.packing.pod.filter(i => i.zone === z).length;
+                const badge = document.getElementById(`count-${z}`);
+                if (badge) badge.textContent = `${count} ${count === 1 ? 'item' : 'items'}`;
+            });
+
+            // Calculate Front vs Rear balance
+            const frontItems = moveData.packing.pod.filter(i => i.zone && (i.zone.startsWith('T1') || i.zone.startsWith('T2'))).length;
+            const total = moveData.packing.pod.length || 1;
+            const frontPct = Math.round((frontItems / total) * 100);
+            const rearPct = 100 - frontPct;
+            document.getElementById('pod-balance-label').textContent = `${frontPct}% Front / ${rearPct}% Rear`;
+
+            renderPodVisualizerTable();
+        }
+
+        function renderPodVisualizerTable() {
+            const tbody = document.getElementById('pod-viz-table-body');
+            let items = moveData.packing.pod;
+            if (currentPodZoneFilter !== 'all') {
+                items = items.filter(i => i.zone === currentPodZoneFilter);
+                document.getElementById('pod-filtered-count-badge').textContent = `Showing ${items.length} items in ${currentPodZoneFilter}`;
+            } else {
+                document.getElementById('pod-filtered-count-badge').textContent = `Showing all ${items.length} items`;
+            }
+
+            const zoneOptions = [
+                { id: "T1-Base", label: "Tier 1 - Base Floor" },
+                { id: "T1-Mid", label: "Tier 1 - Mid Level" },
+                { id: "T1-Top", label: "Tier 1 - Top Trusses" },
+                { id: "T1-Side", label: "Side Wall (Strapped)" },
+                { id: "T2-Base", label: "Tier 2 - Base Floor" },
+                { id: "T2-Mid", label: "Tier 2 - Mid Level" },
+                { id: "T2-Top", label: "Tier 2 - Top Trusses" },
+                { id: "T3-Base", label: "Tier 3 - Base Floor" },
+                { id: "T3-Mid", label: "Tier 3 - Mid Level" },
+                { id: "T3-Top", label: "Tier 3 - Top Trusses" },
+                { id: "T4-Base", label: "Tier 4 - Base Floor" },
+                { id: "T4-Mid", label: "Tier 4 - Mid Level" },
+                { id: "T4-Top", label: "Tier 4 - Top Trusses" },
+            ];
+
+            tbody.innerHTML = items.map(item => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                    <td class="p-3 font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span>${item.text}</span>
+                    </td>
+                    <td class="p-3 text-slate-500">${item.category || 'General'}</td>
+                    <td class="p-3">
+                        <select onchange="updatePodItemZone('${item.id}', this.value)" class="text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded p-1 font-medium text-slate-800 dark:text-slate-200">
+                            ${zoneOptions.map(opt => `<option value="${opt.id}" ${item.zone === opt.id ? 'selected' : ''}>${opt.label}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${item.level === 'Base Floor' ? 'bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300' : (item.level === 'Top Trusses' ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300' : 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300')}">
+                            ${item.level || 'Mid Level'}
+                        </span>
+                    </td>
+                    <td class="p-3 text-right">
+                        <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePackingItem('pod', '${item.id}')" class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 cursor-pointer">
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderSubaruVisualizer() {
+            const tbody = document.getElementById('subaru-viz-table-body');
+            const items = moveData.packing.car;
+
+            tbody.innerHTML = items.map(item => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                    <td class="p-3 font-semibold text-slate-900 dark:text-white">
+                        <div class="flex items-center gap-2">
+                            <span>${item.text}</span>
+                        </div>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${item.zone.includes('Scout') ? 'bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800' : (item.zone.includes('Upper') ? 'bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300')}">
+                            ${item.zone}
+                        </span>
+                    </td>
+                    <td class="p-3 text-slate-500 dark:text-slate-400 text-xs">${item.note || 'Pack securely for road trip'}</td>
+                    <td class="p-3 text-right">
+                        <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePackingItem('car', '${item.id}')" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer">
+                    </td>
+                </tr>
+            `).join('');
+        }
+
         // ================= MODALS & AI INTEGRATION =================
         function openAiModal() {
-            // Generate live prompt containing current state
             const pendingTasks = moveData.tasks.filter(t => t.status === 'Pending').map(t => `- [${t.category}] ${t.text} (${t.owner || 'Unassigned'}) [Priority: ${t.priority || 'Normal'}]`).join('\n');
             const pendingMarket = moveData.marketplace.filter(m => !['Given Away', 'Sold'].includes(m.status)).map(m => `- ${m.item} (${m.status}, Target: ${m.targetPrice})`).join('\n');
-            const remainingPOD = moveData.packing.pod.filter(p => !p.packed).map(p => `- ${p.text}`).join('\n');
-            const remainingCar = moveData.packing.car.filter(c => !c.packed).map(c => `- ${c.text}`).join('\n');
+            const remainingPOD = moveData.packing.pod.filter(p => !p.packed).map(p => `- ${p.text} [Zone: ${p.zone || 'General'}]`).join('\n');
+            const remainingCar = moveData.packing.car.filter(c => !c.packed).map(c => `- ${c.text} [Zone: ${c.zone || 'General'}]`).join('\n');
 
             const promptText = `I am managing my move from Seattle to San Diego/Encinitas.
 Key Dates:
 - Today's Date: Oct 14
-- POD Drop-off: Oct 28
+- POD Drop-off: Oct 28 (16ft Container: 8'H x 8'W x 16'L)
 - POD Pick-up: Oct 30
-- Drive Day (Subaru Outback): Oct 31
+- Drive Day: Oct 31 in 2015 Subaru Outback (with dog Scout)
 
 Here is my current live checklist and state:
 
@@ -1186,10 +1737,10 @@ ${pendingTasks}
 === MARKETPLACE & ITEMS TO REHOME ===
 ${pendingMarket}
 
-=== ITEMS LEFT TO PACK (POD) ===
+=== ITEMS LEFT TO PACK (16' POD CONTAINER) ===
 ${remainingPOD}
 
-=== ITEMS LEFT TO PACK (SUBARU OUTBACK) ===
+=== ITEMS LEFT TO PACK (2015 SUBARU OUTBACK) ===
 ${remainingCar}
 
 === MY REQUEST ===
@@ -1298,11 +1849,15 @@ Please review this state and help me with:
                 id: (currentItemCategory === 'pod' ? 'p_' : 'c_') + Date.now(),
                 text,
                 category: 'General',
-                packed: false
+                packed: false,
+                zone: currentItemCategory === 'pod' ? 'T2-Mid' : 'Lower Cargo Floor',
+                level: currentItemCategory === 'pod' ? 'Mid Level' : undefined
             };
             moveData.packing[currentItemCategory].push(newItem);
             saveData();
             renderPackingLists();
+            if (currentItemCategory === 'pod') renderPodVisualizer();
+            if (currentItemCategory === 'car') renderSubaruVisualizer();
             closeAddItemModal();
             document.getElementById('new-item-text').value = '';
         }
