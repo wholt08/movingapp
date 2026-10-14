@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seattle to Encinitas Move</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .checkbox-custom:checked + div {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        .checkbox-custom:checked + div svg {
+            display: block;
+        }
+        .strikethrough {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+        /* Custom scrollbar for inner containers */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-12">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Move Dashboard</h1>
+                <p class="text-sm text-slate-500 font-medium">Seattle, WA ➔ Encinitas, CA</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block">
+                    <p class="text-xs text-slate-400 uppercase tracking-wide font-semibold">Vehicle</p>
+                    <p class="text-sm font-semibold text-slate-700">2015 Subaru Outback</p>
+                </div>
+                <div class="text-right hidden sm:block">
+                    <p class="text-xs text-slate-400 uppercase tracking-wide font-semibold">Container</p>
+                    <p class="text-sm font-semibold text-slate-700">16' POD</p>
+                </div>
+                <button onclick="resetData()" class="ml-4 p-2 text-slate-400 hover:text-red-500 transition-colors" title="Reset All Progress">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-8">
+        
+        <!-- Timeline Section -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
+            <h2 class="text-lg font-semibold text-slate-800 mb-6 flex items-center gap-2">
+                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                Move Timeline
+            </h2>
+            <div class="relative flex flex-col md:flex-row justify-between w-full">
+                <!-- Line -->
+                <div class="absolute left-[23px] top-4 bottom-4 w-0.5 bg-blue-100 md:hidden"></div>
+                <div class="absolute top-6 left-10 right-10 h-0.5 bg-blue-100 hidden md:block"></div>
+
+                <!-- Event 1 -->
+                <div class="relative z-10 flex md:flex-col items-start md:items-center gap-4 md:gap-3 mb-6 md:mb-0 md:flex-1">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold border-4 border-white shadow-sm shrink-0">1</div>
+                    <div class="md:text-center mt-1 md:mt-0">
+                        <h3 class="font-semibold text-slate-800">Prep & Pack</h3>
+                        <p class="text-sm text-slate-500">Oct 14 - 27</p>
+                        <p class="text-xs text-slate-400 mt-1 max-w-[200px] md:mx-auto">Sell furniture, buy boxes, pack non-essentials.</p>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="relative z-10 flex md:flex-col items-start md:items-center gap-4 md:gap-3 mb-6 md:mb-0 md:flex-1">
+                    <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold border-4 border-white shadow-sm shrink-0">2</div>
+                    <div class="md:text-center mt-1 md:mt-0">
+                        <h3 class="font-semibold text-slate-800">POD Drop-off</h3>
+                        <p class="text-sm text-slate-500">Oct 28</p>
+                        <p class="text-xs text-slate-400 mt-1 max-w-[200px] md:mx-auto">Load heavy items base layer, secure everything tightly.</p>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="relative z-10 flex md:flex-col items-start md:items-center gap-4 md:gap-3 md:flex-1">
+                    <div class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold border-4 border-white shadow-sm shrink-0">3</div>
+                    <div class="md:text-center mt-1 md:mt-0">
+                        <h3 class="font-semibold text-slate-800">Drive Down</h3>
+                        <p class="text-sm text-slate-500">Oct 31</p>
+                        <p class="text-xs text-slate-400 mt-1 max-w-[200px] md:mx-auto">Load Subaru with essentials, Scout, and head South.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Tasks Column -->
+            <section class="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col h-[600px]">
+                <div class="p-6 border-b border-slate-100 bg-slate-50 rounded-t-2xl">
+                    <h2 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                        Action Plan
+                    </h2>
+                    <div class="mt-2 text-sm text-slate-500 flex justify-between items-center">
+                        <span id="tasks-progress-text">0/0 completed</span>
+                        <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                            <div id="tasks-progress-bar" class="h-full bg-indigo-500 transition-all duration-300 w-0"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 flex-1 overflow-y-auto custom-scroll" id="tasks-list">
+                    <!-- Tasks injected by JS -->
+                </div>
+            </section>
+
+            <!-- Packing Lists (2 Columns wide) -->
+            <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- POD List -->
+                <section class="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col h-[600px]">
+                    <div class="p-6 border-b border-slate-100 bg-slate-50 rounded-t-2xl">
+                        <h2 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                            16ft POD
+                        </h2>
+                        <div class="mt-2 text-sm text-slate-500 flex justify-between items-center">
+                            <span id="pod-progress-text">0/0 packed</span>
+                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                                <div id="pod-progress-bar" class="h-full bg-orange-500 transition-all duration-300 w-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 flex-1 overflow-y-auto custom-scroll" id="pod-list">
+                        <!-- POD Items injected by JS -->
+                    </div>
+                </section>
+
+                <!-- Subaru List -->
+                <section class="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col h-[600px]">
+                    <div class="p-6 border-b border-slate-100 bg-slate-50 rounded-t-2xl">
+                        <h2 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                            Subaru Outback
+                        </h2>
+                        <div class="mt-2 text-sm text-slate-500 flex justify-between items-center">
+                            <span id="car-progress-text">0/0 packed</span>
+                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
+                                <div id="car-progress-bar" class="h-full bg-blue-600 transition-all duration-300 w-0"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 flex-1 overflow-y-auto custom-scroll" id="car-list">
+                        <!-- Car Items injected by JS -->
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // --- Initial Data Structures ---
+        const initialData = {
+            tasks: [
+                { id: 't1', text: 'Sell Couch', completed: false },
+                { id: 't2', text: 'Sell Kitchen Table & Chairs', completed: false },
+                { id: 't3', text: 'Buy Heavy-Duty TV Boxes (40" & 65")', completed: false },
+                { id: 't4', text: 'Buy Moving Blankets & Straps', completed: false },
+                { id: 't5', text: 'Disassemble Standing Desks (Remove tops)', completed: false },
+                { id: 't6', text: 'Disassemble Wood Bed Frame', completed: false },
+                { id: 't7', text: 'Box Garage/Camping Gear & Tools', completed: false },
+                { id: 't8', text: 'Remove Batteries from E-Bikes', completed: false },
+                { id: 't9', text: 'Dispose of Propane Tank / Firewood', completed: false },
+                { id: 't10', text: 'Pad & Pack Desktop PC safely', completed: false },
+                { id: 't11', text: 'Plan POD Base Layer (heavy items)', completed: false },
+            ],
+            pod: [
+                { id: 'p1', text: 'King Bed Mattress & Wood Frame', completed: false },
+                { id: 'p2', text: 'Large Dresser', completed: false },
+                { id: 'p3', text: '65" TV (Boxed)', completed: false },
+                { id: 'p4', text: '40" TV (Boxed)', completed: false },
+                { id: 'p5', text: 'Wood TV Stand (6ft)', completed: false },
+                { id: 'p6', text: 'Clothes & Shoes Boxes', completed: false },
+                { id: 'p7', text: 'Artwork / Mirrors', completed: false },
+                { id: 'p8', text: '2 Standing Desks (Tops & Legs separate)', completed: false },
+                { id: 'p9', text: '2 Office Chairs', completed: false },
+                { id: 'p10', text: 'Desktop Computer (Well padded)', completed: false },
+                { id: 'p11', text: '2 Office Walking Pads', completed: false },
+                { id: 'p12', text: 'Collapsible Coffee Tables (1 Lg, 2-3 Sm)', completed: false },
+                { id: 'p13', text: 'Acoustic Guitar', completed: false },
+                { id: 'p14', text: 'Books (Small, heavy boxes)', completed: false },
+                { id: 'p15', text: 'Home Receiver, Subwoofer & Speakers', completed: false },
+                { id: 'p16', text: 'Record Player', completed: false },
+                { id: 'p17', text: 'Board Games', completed: false },
+                { id: 'p18', text: 'Blackstone Portable Grill', completed: false },
+                { id: 'p19', text: 'Small Gas Fire Pit (NO PROPANE)', completed: false },
+                { id: 'p20', text: 'Kitchen Boxes (Glasses, Pans, Spices, Utensils)', completed: false },
+                { id: 'p21', text: 'Small Appliances (Air Fryer, Blender)', completed: false },
+                { id: 'p22', text: 'Garage Boxes (~12: Outdoor, Camping, Bike Tools)', completed: false },
+                { id: 'p23', text: 'Folding Chairs & Extra Carpets', completed: false },
+                { id: 'p24', text: '4 Bicycles (E-bike batteries removed)', completed: false },
+                { id: 'p25', text: '2 Inflatable Paddle Boards & 1 Kayak', completed: false }
+            ],
+            car: [
+                { id: 'c1', text: '2 Work Laptops & Chargers', completed: false },
+                { id: 'c2', text: '1 Personal Laptop & Charger', completed: false },
+                { id: 'c3', text: '4 Computer Monitors (Padded in back)', completed: false },
+                { id: 'c4', text: 'Folding Table', completed: false },
+                { id: 'c5', text: '2 Luggage Bags (10 days of clothes)', completed: false },
+                { id: 'c6', text: 'Inflatable Queen Mattress', completed: false },
+                { id: 'c7', text: 'Bedding (Sheets, Comforter, Pillows)', completed: false },
+                { id: 'c8', text: 'Basic Kitchen Box (Pan, Olive Oil, 2 Plates, Silverware)', completed: false },
+                { id: 'c9', text: 'Coffee Machine & Beans/Mug', completed: false },
+                { id: 'c10', text: 'Toiletries & Daily Bathroom Essentials', completed: false },
+                { id: 'c11', text: 'House Plants', completed: false },
+                { id: 'c12', text: 'Scout\'s Essentials (Food, Bowls, Bed, Leash)', completed: false }
+            ]
+        };
+
+        let appData = {};
+
+        // --- Core Application Logic ---
+
+        function init() {
+            // Load from local storage or use initial data
+            const savedData = localStorage.getItem('seattleMoveData');
+            if (savedData) {
+                appData = JSON.parse(savedData);
+            } else {
+                appData = JSON.parse(JSON.stringify(initialData)); // Deep copy
+            }
+            renderAll();
+        }
+
+        function saveData() {
+            localStorage.setItem('seattleMoveData', JSON.stringify(appData));
+            updateProgress();
+        }
+
+        function resetData() {
+            if(confirm("Are you sure you want to reset all checklists?")) {
+                appData = JSON.parse(JSON.stringify(initialData));
+                saveData();
+                renderAll();
+            }
+        }
+
+        function toggleItem(category, id) {
+            const item = appData[category].find(i => i.id === id);
+            if (item) {
+                item.completed = !item.completed;
+                saveData();
+                // Re-render just the list that changed to update styles
+                if(category === 'tasks') renderList(appData.tasks, 'tasks-list', 'tasks');
+                if(category === 'pod') renderList(appData.pod, 'pod-list', 'pod');
+                if(category === 'car') renderList(appData.car, 'car-list', 'car');
+            }
+        }
+
+        // --- Rendering Logic ---
+
+        function renderAll() {
+            renderList(appData.tasks, 'tasks-list', 'tasks');
+            renderList(appData.pod, 'pod-list', 'pod');
+            renderList(appData.car, 'car-list', 'car');
+            updateProgress();
+        }
+
+        function renderList(items, containerId, category) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ''; // Clear current
+
+            items.forEach(item => {
+                const label = document.createElement('label');
+                label.className = 'flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 cursor-pointer group transition-colors border border-transparent hover:border-slate-100 mb-1';
+                
+                const isChecked = item.completed ? 'checked' : '';
+                const textClass = item.completed ? 'strikethrough' : 'text-slate-700 font-medium';
+
+                label.innerHTML = `
+                    <div class="relative flex items-center justify-center mt-0.5">
+                        <input type="checkbox" class="checkbox-custom absolute opacity-0 w-0 h-0" ${isChecked} onchange="toggleItem('${category}', '${item.id}')">
+                        <div class="w-5 h-5 border-2 border-slate-300 rounded flex items-center justify-center transition-colors bg-white">
+                            <svg class="w-3.5 h-3.5 text-white hidden pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                    </div>
+                    <span class="text-sm select-none transition-colors ${textClass}">${item.text}</span>
+                `;
+                container.appendChild(label);
+            });
+        }
+
+        function updateProgress() {
+            updateSectionProgress(appData.tasks, 'tasks');
+            updateSectionProgress(appData.pod, 'pod');
+            updateSectionProgress(appData.car, 'car');
+        }
+
+        function updateSectionProgress(items, prefix) {
+            const total = items.length;
+            const completed = items.filter(i => i.completed).length;
+            const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
+            
+            document.getElementById(`${prefix}-progress-text`).textContent = `${completed}/${total} completed`;
+            document.getElementById(`${prefix}-progress-bar`).style.width = `${percentage}%`;
+        }
+
+        // Initialize App on load
+        window.addEventListener('DOMContentLoaded', init);
+
+    </script>
+</body>
+</html>

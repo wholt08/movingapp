@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seattle ➔ San Diego Move Command Center</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f8fafc; border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .tab-btn.active {
+            color: #2563eb;
+            border-bottom: 2px solid #2563eb;
+            background-color: #eff6ff;
+        }
+        .task-done {
+            text-decoration: line-through;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
+
+    <!-- Header & Live Status -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-xl font-bold text-slate-900 tracking-tight">Seattle ➔ Encinitas Move</h1>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>Active Plan
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500">Drop-off: Oct 28 • Pick-up: Oct 30 • Drive: Oct 31</p>
+                    </div>
+                </div>
+
+                <!-- T-Minus Badges & Action Buttons -->
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                    <div class="flex items-center gap-2 text-xs">
+                        <div class="bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1.5 rounded-lg text-center font-medium shadow-xs">
+                            <span class="block text-[10px] uppercase font-bold text-amber-600">POD Drop-off</span>
+                            <span id="countdown-pod" class="font-bold text-sm">-- days</span>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 text-blue-800 px-3 py-1.5 rounded-lg text-center font-medium shadow-xs">
+                            <span class="block text-[10px] uppercase font-bold text-blue-600">Drive South</span>
+                            <span id="countdown-drive" class="font-bold text-sm">-- days</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-1.5 ml-1">
+                        <button onclick="openAiModal()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 transition-all shadow-xs" title="Connect / Prompt any AI">
+                            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <span class="hidden md:inline">AI Sync</span>
+                        </button>
+                        <button onclick="openAddTaskModal()" class="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation Bar -->
+            <div class="flex items-center gap-1 mt-3 overflow-x-auto border-t border-slate-100 pt-1 -mb-1 text-sm font-medium text-slate-600">
+                <button onclick="switchTab('timeline')" id="tab-timeline" class="tab-btn active px-3.5 py-2 rounded-t-lg transition-colors flex items-center gap-2 whitespace-nowrap">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    Timeline & Focus
+                </button>
+                <button onclick="switchTab('tasks')" id="tab-tasks" class="tab-btn px-3.5 py-2 rounded-t-lg transition-colors flex items-center gap-2 whitespace-nowrap">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                    Master Task Hub
+                    <span id="badge-tasks-count" class="text-[11px] bg-slate-200 text-slate-700 px-1.5 py-0.2 rounded-full font-semibold">0</span>
+                </button>
+                <button onclick="switchTab('repairs')" id="tab-repairs" class="tab-btn px-3.5 py-2 rounded-t-lg transition-colors flex items-center gap-2 whitespace-nowrap">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Repairs & Deposit
+                    <span id="badge-repairs-count" class="text-[11px] bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded-full font-semibold">0</span>
+                </button>
+                <button onclick="switchTab('marketplace')" id="tab-marketplace" class="tab-btn px-3.5 py-2 rounded-t-lg transition-colors flex items-center gap-2 whitespace-nowrap">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Sell & Purge
+                    <span id="badge-market-count" class="text-[11px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded-full font-semibold">0</span>
+                </button>
+                <button onclick="switchTab('packing')" id="tab-packing" class="tab-btn px-3.5 py-2 rounded-t-lg transition-colors flex items-center gap-2 whitespace-nowrap">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    Packing (POD & Subaru)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Body Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+
+        <!-- ================= TAB 1: TIMELINE & FOCUS ================= -->
+        <div id="view-timeline" class="space-y-6">
+            <!-- Progress Overview Card -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase">Total Tasks</p>
+                        <h3 class="text-2xl font-bold text-slate-800" id="stat-total-tasks">0</h3>
+                        <p class="text-xs text-slate-500 mt-0.5" id="stat-tasks-progress">0% complete</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                        📋
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase">Home Repairs</p>
+                        <h3 class="text-2xl font-bold text-slate-800" id="stat-repairs-pending">0</h3>
+                        <p class="text-xs text-amber-600 font-medium mt-0.5" id="stat-repairs-sub">pending deposit check</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+                        🛠️
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase">Marketplace / Purge</p>
+                        <h3 class="text-2xl font-bold text-slate-800" id="stat-market-pending">0</h3>
+                        <p class="text-xs text-slate-500 mt-0.5" id="stat-market-sub">items to list or rehome</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                        🏷️
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase">Packed Items</p>
+                        <h3 class="text-2xl font-bold text-slate-800" id="stat-packed-count">0</h3>
+                        <p class="text-xs text-indigo-600 font-medium mt-0.5" id="stat-packed-sub">in POD & Subaru</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                        📦
+                    </div>
+                </div>
+            </div>
+
+            <!-- What to Work On Now (Focus Recommender) -->
+            <div class="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                <div class="absolute right-0 top-0 translate-x-8 -translate-y-8 w-64 h-64 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-200 text-xs font-semibold border border-blue-400/20 mb-2">
+                            <span>⚡ Suggested Focus For Today</span>
+                        </div>
+                        <h2 class="text-xl md:text-2xl font-bold">Top Priority Actions (Oct 14 - 16)</h2>
+                        <p class="text-blue-100 text-sm mt-1 max-w-2xl">Focus only on these high-leverage items today to remove stress without getting bogged down by the full list.</p>
+                    </div>
+                    <button onclick="switchTab('tasks')" class="px-4 py-2 bg-white text-blue-900 hover:bg-blue-50 rounded-lg font-semibold text-xs transition-colors shrink-0 shadow-sm">
+                        View All Tasks ➔
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-5" id="urgent-focus-cards">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Phase Roadmap Timeline -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Moving Journey Roadmap</h2>
+                    <p class="text-xs text-slate-500">Structured into manageable milestones so you always know what's next.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+                    <!-- Phase 1 -->
+                    <div class="border border-blue-200 bg-blue-50/50 rounded-xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider block mb-1">Phase 1 • Oct 14 - 18</span>
+                            <h4 class="font-bold text-slate-900 text-sm">Permits, Purge & Sales</h4>
+                            <p class="text-xs text-slate-600 mt-1">Seattle POD permit, Goodwill drop-off, finalize motorcycle, list furniture.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-blue-100 text-[11px] font-semibold text-blue-700 flex items-center justify-between">
+                            <span>Status</span>
+                            <span class="px-1.5 py-0.5 rounded bg-blue-100">In Progress</span>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="border border-slate-200 bg-white rounded-xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Phase 2 • Oct 19 - 25</span>
+                            <h4 class="font-bold text-slate-900 text-sm">Repairs & Non-Essentials</h4>
+                            <p class="text-xs text-slate-600 mt-1">Spackle holes, touch-up trim, box office & decor, dismount bike/dog gates.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-slate-500 flex items-center justify-between">
+                            <span>Status</span>
+                            <span>Upcoming</span>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="border border-slate-200 bg-white rounded-xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Phase 3 • Oct 26 - 27</span>
+                            <h4 class="font-bold text-slate-900 text-sm">POD Staging</h4>
+                            <p class="text-xs text-slate-600 mt-1">Disassemble beds & standing desks, clean POD parking spot, stage base layer.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-slate-500 flex items-center justify-between">
+                            <span>Status</span>
+                            <span>Upcoming</span>
+                        </div>
+                    </div>
+
+                    <!-- Phase 4 -->
+                    <div class="border border-slate-200 bg-white rounded-xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-amber-600 uppercase tracking-wider block mb-1">Phase 4 • Oct 28 - 30</span>
+                            <h4 class="font-bold text-slate-900 text-sm">POD Loading Window</h4>
+                            <p class="text-xs text-slate-600 mt-1">POD arrives Oct 28. Load heavy base, tie down tiers, lock up for Oct 30 pickup.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-amber-600 flex items-center justify-between">
+                            <span>Critical Window</span>
+                            <span>48 hrs</span>
+                        </div>
+                    </div>
+
+                    <!-- Phase 5 -->
+                    <div class="border border-slate-200 bg-white rounded-xl p-4 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider block mb-1">Phase 5 • Oct 31</span>
+                            <h4 class="font-bold text-slate-900 text-sm">Move Out & Drive</h4>
+                            <p class="text-xs text-slate-600 mt-1">Reinstall doorbell & toilet seat, walk-through with Brian, load Subaru & drive!</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] font-semibold text-emerald-700 flex items-center justify-between">
+                            <span>Destination</span>
+                            <span>San Diego ☀️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= TAB 2: MASTER TASK HUB ================= -->
+        <div id="view-tasks" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-100">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900">Master To-Do & Logistics Tracker</h2>
+                        <p class="text-xs text-slate-500">Filter by owner, status, or search for any item.</p>
+                    </div>
+                    
+                    <!-- Filters & Search -->
+                    <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                        <input type="text" id="task-search-input" oninput="renderMasterTasks()" placeholder="Search tasks..." class="px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white w-full sm:w-48">
+                        <select id="task-filter-owner" onchange="renderMasterTasks()" class="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-700 font-medium">
+                            <option value="all">All Owners</option>
+                            <option value="William">William</option>
+                            <option value="Camille">Camille</option>
+                            <option value="William & Camille">William & Camille</option>
+                        </select>
+                        <select id="task-filter-status" onchange="renderMasterTasks()" class="px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-700 font-medium">
+                            <option value="all">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Task Groups by Category -->
+                <div id="tasks-accordion-container" class="space-y-4 mt-6">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= TAB 3: REPAIRS & DEPOSIT ================= -->
+        <div id="view-repairs" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 text-xs font-semibold border border-amber-200 mb-1">
+                            <span>🛡️ Deposit Security Plan</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-slate-900">Apartment Move-Out Repairs & Handover</h2>
+                        <p class="text-xs text-slate-500">Check off holes, wall patches, and hardware replacements for landlord inspection (Brian).</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Completion</span>
+                        <span id="repairs-progress-badge" class="text-sm font-bold text-slate-800">0/0 Done</span>
+                    </div>
+                </div>
+
+                <!-- Supplies Checklist for Repairs -->
+                <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-4 flex flex-wrap gap-4 text-xs text-amber-900">
+                    <div class="font-bold flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        Repairs Kit Status:
+                    </div>
+                    <span class="flex items-center gap-1"><span class="text-emerald-600 font-bold">✓</span> Spackle & Sanding Sponge (Purchased)</span>
+                    <span class="flex items-center gap-1"><span class="text-emerald-600 font-bold">✓</span> Wood Touch-up Marker (Purchased)</span>
+                    <span class="flex items-center gap-1"><span class="text-amber-600 font-bold">⏳</span> Original Video Doorbell & Toilet Seat saved for swap</span>
+                </div>
+
+                <!-- Repairs Interactive Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="repairs-list-container">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= TAB 4: MARKETPLACE & PURGE ================= -->
+        <div id="view-marketplace" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200 mb-1">
+                            <span>💰 Less Stuff = Easier Move</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-slate-900">Items to Sell, Rehome & Donate</h2>
+                        <p class="text-xs text-slate-500">Track listings on Facebook Marketplace, items given away, and Goodwill drop-offs.</p>
+                    </div>
+                    <button onclick="openAddMarketModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1 transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        Add Item
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-600 border border-slate-200 rounded-xl overflow-hidden">
+                        <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-b border-slate-200">
+                            <tr>
+                                <th class="p-3">Item</th>
+                                <th class="p-3">Category/Room</th>
+                                <th class="p-3">Status</th>
+                                <th class="p-3">Target Price</th>
+                                <th class="p-3">Platform / Buyer Notes</th>
+                                <th class="p-3 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="marketplace-table-body" class="divide-y divide-slate-100">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= TAB 5: PACKING (POD & SUBARU) ================= -->
+        <div id="view-packing" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- 16' POD Container -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col h-[750px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                                📦
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base">16ft POD Container</h3>
+                                <p class="text-xs text-slate-500">Drop-off: Oct 28 • Pick-up: Oct 30</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span id="pod-packed-stat" class="text-xs font-bold text-orange-600">0/0 Packed</span>
+                            <div class="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden mt-1">
+                                <div id="pod-progress-bar" class="bg-orange-500 h-full w-0 transition-all"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 flex items-center justify-between text-xs text-slate-500 bg-orange-50/60 p-2.5 rounded-lg border border-orange-100">
+                        <span>💡 <strong>Tip:</strong> Load heavy items on bottom floor. Strap mattresses to side walls.</span>
+                        <button onclick="openAddItemModal('pod')" class="text-orange-700 font-bold hover:underline">+ Add</button>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto custom-scroll mt-3 divide-y divide-slate-100" id="pod-items-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 2015 Subaru Outback -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col h-[750px]">
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                                🚙
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base">2015 Subaru Outback</h3>
+                                <p class="text-xs text-slate-500">Road trip Oct 31 • Scouts & 10-day survival kit</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span id="car-packed-stat" class="text-xs font-bold text-blue-600">0/0 Packed</span>
+                            <div class="w-20 h-1.5 bg-slate-100 rounded-full overflow-hidden mt-1">
+                                <div id="car-progress-bar" class="bg-blue-600 h-full w-0 transition-all"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 flex items-center justify-between text-xs text-slate-500 bg-blue-50/60 p-2.5 rounded-lg border border-blue-100">
+                        <span>💡 <strong>Lifeline:</strong> Keep Scout comfortable, tech padded, toiletries & air bed accessible!</span>
+                        <button onclick="openAddItemModal('car')" class="text-blue-700 font-bold hover:underline">+ Add</button>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto custom-scroll mt-3 divide-y divide-slate-100" id="car-items-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+        <p>Seattle, WA ➔ Encinitas / San Diego, CA • Powered by your custom Plan & AI Assistant</p>
+    </footer>
+
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- AI Connect / Export Modal -->
+    <div id="modal-ai" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-xl border border-slate-100 space-y-4 max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🤖</span>
+                    <h3 class="font-bold text-slate-900">AI Assistant Bridge</h3>
+                </div>
+                <button onclick="closeAiModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">&times;</button>
+            </div>
+
+            <p class="text-xs text-slate-500">
+                You can feed your exact moving status to any AI (Gemini, Claude, ChatGPT, Antigravity) to get daily suggestions, draft Marketplace listings, or update your schedule.
+            </p>
+
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-slate-700 flex justify-between">
+                    <span>1. Ready-to-Send AI Prompt (Includes current plan state)</span>
+                    <button onclick="copyAiPrompt()" id="copy-prompt-btn" class="text-blue-600 hover:text-blue-800 font-semibold">Copy Prompt 📋</button>
+                </label>
+                <textarea id="ai-prompt-preview" readonly class="w-full h-36 bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-[11px] font-mono text-slate-700 custom-scroll"></textarea>
+            </div>
+
+            <div class="space-y-2 pt-2 border-t border-slate-100">
+                <label class="text-xs font-bold text-slate-700 flex justify-between">
+                    <span>2. Import Updated JSON from AI or Backup</span>
+                    <span class="text-[10px] text-slate-400">Paste JSON and click apply</span>
+                </label>
+                <textarea id="ai-json-import" placeholder="Paste updated JSON here..." class="w-full h-24 bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-[11px] font-mono text-slate-700 custom-scroll"></textarea>
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <div class="flex gap-2">
+                    <button onclick="exportJsonFile()" class="px-3 py-1.5 text-xs bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-semibold">Download Backup (.json)</button>
+                    <button onclick="resetDataConfirmation()" class="px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded-lg font-semibold">Reset to Default</button>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="closeAiModal()" class="px-4 py-1.5 text-xs rounded-lg border border-slate-200 text-slate-600 font-semibold">Close</button>
+                    <button onclick="applyAiJsonImport()" class="px-4 py-1.5 text-xs rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold">Apply JSON</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Task Modal -->
+    <div id="modal-add-task" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-100 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900">Add New Task</h3>
+                <button onclick="closeAddTaskModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">&times;</button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Task Description</label>
+                    <input type="text" id="new-task-text" placeholder="e.g. Schedule carpet cleaner" class="w-full border border-slate-200 rounded-lg p-2">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Category</label>
+                        <select id="new-task-category" class="w-full border border-slate-200 rounded-lg p-2">
+                            <option value="Core Logistics">Core Logistics</option>
+                            <option value="Home Repairs">Home Repairs</option>
+                            <option value="Room Sort & Purge">Room Sort & Purge</option>
+                            <option value="Supplies & Purchases">Supplies & Purchases</option>
+                            <option value="Early Packing">Early Packing</option>
+                            <option value="Post-Move Admin">Post-Move Admin</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Owner</label>
+                        <select id="new-task-owner" class="w-full border border-slate-200 rounded-lg p-2">
+                            <option value="William">William</option>
+                            <option value="Camille">Camille</option>
+                            <option value="William & Camille">William & Camille</option>
+                            <option value="">Unassigned</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Priority</label>
+                        <select id="new-task-priority" class="w-full border border-slate-200 rounded-lg p-2">
+                            <option value="High Priority">High Priority</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                            <option value="">Normal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Timing / Notes</label>
+                        <input type="text" id="new-task-notes" placeholder="e.g. Target 10/20" class="w-full border border-slate-200 rounded-lg p-2">
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                <button onclick="closeAddTaskModal()" class="px-4 py-1.5 text-xs rounded-lg border border-slate-200 text-slate-600 font-semibold">Cancel</button>
+                <button onclick="saveNewTask()" class="px-4 py-1.5 text-xs rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold">Save Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal (Packing) -->
+    <div id="modal-add-item" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl border border-slate-100 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900" id="add-item-modal-title">Add Item</h3>
+                <button onclick="closeAddItemModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">&times;</button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Item Name</label>
+                    <input type="text" id="new-item-text" placeholder="e.g. Winter Coats Box" class="w-full border border-slate-200 rounded-lg p-2">
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                <button onclick="closeAddItemModal()" class="px-4 py-1.5 text-xs rounded-lg border border-slate-200 text-slate-600 font-semibold">Cancel</button>
+                <button onclick="saveNewItem()" class="px-4 py-1.5 text-xs rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold">Save Item</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Marketplace Modal -->
+    <div id="modal-add-market" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-100 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900">Add Marketplace / Purge Item</h3>
+                <button onclick="closeAddMarketModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">&times;</button>
+            </div>
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Item</label>
+                    <input type="text" id="new-market-name" placeholder="e.g. Office Desk" class="w-full border border-slate-200 rounded-lg p-2">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Category / Room</label>
+                        <input type="text" id="new-market-room" placeholder="e.g. Office" class="w-full border border-slate-200 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Status</label>
+                        <select id="new-market-status" class="w-full border border-slate-200 rounded-lg p-2">
+                            <option value="Ready to List">Ready to List</option>
+                            <option value="Listed">Listed</option>
+                            <option value="Pending / Holding">Pending / Holding</option>
+                            <option value="To Rehome">To Rehome</option>
+                            <option value="Pending Drop-off">Pending Drop-off</option>
+                            <option value="Given Away">Given Away</option>
+                            <option value="Sold">Sold</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Target Price</label>
+                        <input type="text" id="new-market-price" placeholder="e.g. $50 or Free" class="w-full border border-slate-200 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Platform / Buyer Notes</label>
+                        <input type="text" id="new-market-notes" placeholder="e.g. Marketplace, curb alert" class="w-full border border-slate-200 rounded-lg p-2">
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                <button onclick="closeAddMarketModal()" class="px-4 py-1.5 text-xs rounded-lg border border-slate-200 text-slate-600 font-semibold">Cancel</button>
+                <button onclick="saveNewMarketItem()" class="px-4 py-1.5 text-xs rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold">Save Item</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= APPLICATION JAVASCRIPT ================= -->
+    <script>
+        // Seed database pre-loaded with the user's Google Drive spreadsheet data
+        const defaultMoveData = {
+            metadata: {
+                title: "Seattle to San Diego / Encinitas Move",
+                origin: "Seattle, WA",
+                destination: "Encinitas / San Diego, CA",
+                podDropoff: "2026-10-28",
+                podPickup: "2026-10-30",
+                driveDate: "2026-10-31"
+            },
+            tasks: [
+                { id: "t1", category: "Core Logistics", text: "Get confirmation from Brian on move-out date", owner: "William", status: "Done", priority: "High Priority", notes: "Confirmed for 10/31" },
+                { id: "t2", category: "Core Logistics", text: "Get confirmation from Brian on deposit return process", owner: "William", status: "Pending", priority: "Medium", notes: "Ask about walk-through and forwarding address" },
+                { id: "t3", category: "Core Logistics", text: "Research & reserve transport (POD vs. U-Haul vs. Movers)", owner: "William", status: "Done", priority: "High Priority", notes: "Reserved POD: drop-off 10/28, pick-up 10/30. Drive to San Diego 10/31." },
+                { id: "t4", category: "Core Logistics", text: "Obtain written manager/work approval for move", owner: "William", status: "Done", priority: "High Priority", notes: "Approved" },
+                { id: "t5", category: "Core Logistics", text: "Apply for parking permit with City of Seattle for POD", owner: "William", status: "Pending", priority: "High Priority", notes: "Target was 10/12; needed for 10/28 drop-off (Needs street permit!)" },
+                { id: "t6", category: "Core Logistics", text: "Update drop-off location on PODS portal", owner: "William", status: "Pending", priority: "High Priority", notes: "Target 10/12" },
+                { id: "t7", category: "Core Logistics", text: "Sign PODS user agreement", owner: "William", status: "Pending", priority: "High Priority", notes: "Target 10/12" },
+                { id: "t8", category: "Core Logistics", text: "Finalize motorcycle sale with friend", owner: "William", status: "Pending", priority: "High Priority", notes: "Friend interested for Mon 10/12 or Tue 10/13" },
+                
+                { id: "t9", category: "Supplies & Purchases", text: "Buy TV box for 65\" TV", owner: "William", status: "Pending", priority: "Medium", notes: "Home Depot: $40" },
+                { id: "t10", category: "Supplies & Purchases", text: "Buy TV box for ~40\" bedroom TV", owner: "William", status: "Pending", priority: "Medium", notes: "Home Depot: $27" },
+                { id: "t11", category: "Supplies & Purchases", text: "Get moving boxes (via Marketplace)", owner: "William & Camille", status: "Done", priority: "Medium", notes: "Acquired" },
+                { id: "t12", category: "Supplies & Purchases", text: "Buy spackle & sanding sponge for wall holes", owner: "William", status: "Done", priority: "Medium", notes: "Purchased" },
+                { id: "t13", category: "Supplies & Purchases", text: "Buy wood touch-up marker / scratch repair kit", owner: "William", status: "Done", priority: "Medium", notes: "Purchased" },
+                { id: "t14", category: "Supplies & Purchases", text: "Buy packing tape", owner: "William", status: "Pending", priority: "High Priority", notes: "Need heavy duty tape for boxes" },
+                
+                { id: "t15", category: "Room Sort & Purge", text: "Clean out garage", owner: "William", status: "Done", priority: "Medium", notes: "Completed" },
+                { id: "t16", category: "Room Sort & Purge", text: "Clean up backyard & remove outdoor pet gear", owner: "William", status: "Done", priority: "Medium", notes: "Completed" },
+                { id: "t17", category: "Room Sort & Purge", text: "Closets: Cull unworn clothes and pack non-seasonal items", owner: "Camille", status: "Done", priority: "Medium", notes: "Office closet consolidated" },
+                { id: "t18", category: "Room Sort & Purge", text: "Office: Organize and pack non-daily essentials", owner: "William", status: "Pending", priority: "Medium", notes: "Sort electronics, cables & paperwork" },
+                { id: "t19", category: "Room Sort & Purge", text: "Bedroom: Second round of decluttering / sorting", owner: "Camille", status: "Pending", priority: "Medium", notes: "Sort remaining clothes & shoes" },
+                { id: "t20", category: "Room Sort & Purge", text: "Put garage items on curb and post in neighborhood group", owner: "William", status: "Pending", priority: "Medium", notes: "Free alert on Buy Nothing / Craigslist" },
+                { id: "t21", category: "Room Sort & Purge", text: "Sort books, clothes, games, & decorations for donation", owner: "William & Camille", status: "Done", priority: "High Priority", notes: "Sorted and boxed for Goodwill" },
+                { id: "t22", category: "Room Sort & Purge", text: "Drop off donations at Goodwill (books, clothes, games, decor)", owner: "William & Camille", status: "Pending", priority: "High Priority", notes: "Drop off this week to free floor space" },
+                { id: "t23", category: "Room Sort & Purge", text: "Take photos of rowing machine and post on Marketplace", owner: "Camille", status: "Pending", priority: "Medium", notes: "Machine repaired, ready to photograph & list" },
+                { id: "t24", category: "Room Sort & Purge", text: "Post dining table & chairs on Marketplace", owner: "Camille", status: "Pending", priority: "Medium", notes: "Pending listing" },
+                { id: "t25", category: "Room Sort & Purge", text: "Post living room couch for sale", owner: "Camille", status: "Pending", priority: "Low", notes: "Waiting a bit closer to move" },
+                { id: "t26", category: "Room Sort & Purge", text: "Rehome/get rid of office chair, helmets (motorcycle & bike), pet ramp", owner: "William", status: "Pending", priority: "Medium", notes: "Pending disposal/sale" },
+
+                { id: "t27", category: "Early Packing", text: "Box up suits and work clothes", owner: "William", status: "Pending", priority: "Medium", notes: "Pack in wardrobe box or flat boxes" },
+                { id: "t28", category: "Early Packing", text: "Box up guest bedroom decor & books", owner: "Camille", status: "Pending", priority: "Medium", notes: "Small boxes for heavy books" },
+
+                { id: "t29", category: "Home Repairs", text: "Fill nail holes & patch walls", owner: "William", status: "Pending", priority: "High Priority", notes: "Use spackle & sanding sponge" },
+                { id: "t30", category: "Home Repairs", text: "Repair scratches on wood trim / floors", owner: "William", status: "Done", priority: "Medium", notes: "Window sills repaired" },
+                { id: "t31", category: "Home Repairs", text: "Patch bike rack holes in foyer", owner: "William", status: "Done", priority: "Medium", notes: "Completed" },
+                { id: "t32", category: "Home Repairs", text: "Patch TV speaker holes", owner: "William", status: "Pending", priority: "Medium", notes: "Fill & sand flush" },
+                { id: "t33", category: "Home Repairs", text: "Patch curtain rod holes in bedroom", owner: "William", status: "Pending", priority: "Medium", notes: "Fill & sand flush" },
+                { id: "t34", category: "Home Repairs", text: "Uninstall bike mount", owner: "William", status: "Done", priority: "Medium", notes: "Dismounted" },
+                { id: "t35", category: "Home Repairs", text: "Uninstall dog gate in foyer", owner: "William", status: "Pending", priority: "Medium", notes: "Leave until week of move for Scout safety" },
+                { id: "t36", category: "Home Repairs", text: "Repaint window sill in kitchen", owner: "William", status: "Pending", priority: "Medium", notes: "Touch-up paint" },
+                { id: "t37", category: "Home Repairs", text: "Remove residue/goo from kitchen window from AC unit", owner: "William", status: "Pending", priority: "Medium", notes: "Use Goo Gone or isopropyl alcohol" },
+                { id: "t38", category: "Home Repairs", text: "Remove video doorbell and reinstall original doorbell", owner: "William", status: "Pending", priority: "High Priority", notes: "Do on Oct 30 before handover" },
+                { id: "t39", category: "Home Repairs", text: "Remove bidet and reinstall original toilet seat", owner: "William", status: "Pending", priority: "High Priority", notes: "Do on Oct 30 before handover" },
+                { id: "t40", category: "Home Repairs", text: "Fix rowing machine", owner: "William", status: "Done", priority: "Medium", notes: "Repaired" },
+
+                { id: "t41", category: "Post-Move Admin", text: "Check / modify Apartments.com payment settings (contact Brian)", owner: "William", status: "Done", priority: "High Priority", notes: "Auto-pay stopped for move-out" },
+                { id: "t42", category: "Post-Move Admin", text: "Update vehicle & motorcycle insurance", owner: "William", status: "Pending", priority: "Medium", notes: "Update garaging address to California" },
+                { id: "t43", category: "Post-Move Admin", text: "Update address in workplace HR system", owner: "William & Camille", status: "Pending", priority: "Medium", notes: "Tax & payroll update" },
+                { id: "t44", category: "Post-Move Admin", text: "Set up USPS mail forwarding", owner: "William & Camille", status: "Pending", priority: "High Priority", notes: "Schedule starting Oct 31" },
+                { id: "t45", category: "Post-Move Admin", text: "Set up utilities at new home (Electric, Water, Internet)", owner: "William", status: "Pending", priority: "High Priority", notes: "Call utility providers in San Diego / Encinitas" }
+            ],
+            marketplace: [
+                { id: "m1", item: "Living room couch", category: "Living Room", targetPrice: "TBD", status: "Pending / Holding", notes: "Waiting a little bit before posting closer to move" },
+                { id: "m2", item: "Extra bicycle", category: "Garage", targetPrice: "TBD", status: "Ready to List", notes: "Clean up & post on Marketplace" },
+                { id: "m3", item: "Scout's ramps & fencing", category: "Pet Gear", targetPrice: "Free / Rehome", status: "To Rehome", notes: "Still need to get rid of pet ramp; post in local dog group" },
+                { id: "m4", item: "Office chair & ottoman", category: "Office", targetPrice: "Free / Curb", status: "To Rehome", notes: "Put on curb or post on Buy Nothing" },
+                { id: "m5", item: "Guest bed / Bed frame", category: "Bedroom", targetPrice: "$150", status: "Listed", notes: "Posted on Marketplace by Camille" },
+                { id: "m6", item: "Motorcycle", category: "Garage / Vehicle", targetPrice: "Friend Price", status: "Listed / Pending Sale", notes: "Posted for sale; friend interested to buy Mon/Tue (10/12-10/13)" },
+                { id: "m7", item: "Rowing machine", category: "Fitness / Garage", targetPrice: "$200", status: "Ready to List", notes: "Fixed by William; Camille taking photos & posting on Marketplace" },
+                { id: "m8", item: "Dining table & chairs", category: "Dining Room", targetPrice: "$120", status: "Ready to List", notes: "Camille to post on Marketplace" },
+                { id: "m9", item: "Motorcycle helmet", category: "Garage", targetPrice: "$30 / Free", status: "To Rehome", notes: "Need to get rid of" },
+                { id: "m10", item: "Bike helmet", category: "Garage", targetPrice: "$10 / Free", status: "To Rehome", notes: "Need to get rid of" },
+                { id: "m11", item: "Two fishing poles", category: "Garage", targetPrice: "Free", status: "Given Away", notes: "Gave away" },
+                { id: "m12", item: "Trash can", category: "Household", targetPrice: "Free", status: "Given Away", notes: "Gave away" },
+                { id: "m13", item: "Camp chair", category: "Outdoor", targetPrice: "Free", status: "Given Away", notes: "Gave away" },
+                { id: "m14", item: "Christmas tree stand", category: "Seasonal", targetPrice: "Free", status: "Given Away", notes: "Gave away" },
+                { id: "m15", item: "Donation lot (books, clothes, games, decor)", category: "Various", targetPrice: "Donation", status: "Pending Drop-off", notes: "Sorted and boxed for Goodwill; drop off this week" }
+            ],
+            packing: {
+                pod: [
+                    { id: "p1", text: "King Bed Mattress & Wood Frame", category: "Furniture", packed: false },
+                    { id: "p2", text: "Large Dresser", category: "Furniture", packed: false },
+                    { id: "p3", text: "65\" TV (In TV Box)", category: "Electronics", packed: false },
+                    { id: "p4", text: "40\" TV (In TV Box)", category: "Electronics", packed: false },
+                    { id: "p5", text: "Wood TV Stand (6ft)", category: "Furniture", packed: false },
+                    { id: "p6", text: "Clothes & Shoes Boxes", category: "Bedroom", packed: false },
+                    { id: "p7", text: "Artwork & Mirrors (Bubble wrapped)", category: "Living Room", packed: false },
+                    { id: "p8", text: "2 Standing Desks (Tops & Legs separated)", category: "Office", packed: false },
+                    { id: "p9", text: "2 Office Chairs", category: "Office", packed: false },
+                    { id: "p10", text: "Desktop Computer (Well padded)", category: "Electronics", packed: false },
+                    { id: "p11", text: "2 Office Walking Pads", category: "Office", packed: false },
+                    { id: "p12", text: "Collapsible Coffee Tables (1 Lg, 2-3 Sm)", category: "Furniture", packed: false },
+                    { id: "p13", text: "Acoustic Guitar", category: "Personal", packed: false },
+                    { id: "p14", text: "Books (Small, heavy boxes)", category: "Living Room", packed: false },
+                    { id: "p15", text: "Home Receiver, Subwoofer & Speakers", category: "Electronics", packed: false },
+                    { id: "p16", text: "Record Player", category: "Electronics", packed: false },
+                    { id: "p17", text: "Board Games Box", category: "Living Room", packed: false },
+                    { id: "p18", text: "Blackstone Portable Grill", category: "Outdoor", packed: false },
+                    { id: "p19", text: "Small Gas Fire Pit (NO PROPANE - Disposed)", category: "Outdoor", packed: false },
+                    { id: "p20", text: "Kitchen Boxes (Glasses, Pans, Spices, Utensils)", category: "Kitchen", packed: false },
+                    { id: "p21", text: "Small Appliances (Air Fryer, Blender)", category: "Kitchen", packed: false },
+                    { id: "p22", text: "Garage Boxes (~12 boxes: Outdoor, Camping, Bike Tools)", category: "Garage", packed: false },
+                    { id: "p23", text: "Folding Chairs & Extra Carpets", category: "Household", packed: false },
+                    { id: "p24", text: "4 Bicycles (E-bike batteries removed for car)", category: "Outdoor", packed: false },
+                    { id: "p25", text: "2 Inflatable Paddle Boards & 1 Kayak", category: "Outdoor", packed: false }
+                ],
+                car: [
+                    { id: "c1", text: "2 Work Laptops & Chargers", category: "Tech", packed: false },
+                    { id: "c2", text: "1 Personal Laptop & Charger", category: "Tech", packed: false },
+                    { id: "c3", text: "4 Computer Monitors (Padded & blanketed in back)", category: "Tech", packed: false },
+                    { id: "c4", text: "E-bike batteries (Removed from bikes for safety)", category: "Tech", packed: false },
+                    { id: "c5", text: "Folding Table", category: "Immediate Use", packed: false },
+                    { id: "c6", text: "2 Luggage Bags (10 days of clothes for road trip)", category: "Clothing", packed: false },
+                    { id: "c7", text: "Inflatable Queen Mattress", category: "Bedding", packed: false },
+                    { id: "c8", text: "Bedding (Sheets, Comforter, Pillows)", category: "Bedding", packed: false },
+                    { id: "c9", text: "Basic Kitchen Box (Pan, Olive Oil, 2 Plates, Silverware)", category: "Kitchen", packed: false },
+                    { id: "c10", text: "Coffee Machine & Beans/Mug", category: "Kitchen", packed: false },
+                    { id: "c11", text: "Toiletries & Daily Bathroom Essentials", category: "Personal", packed: false },
+                    { id: "c12", text: "House Plants", category: "Plants", packed: false },
+                    { id: "c13", text: "Scout's Essentials (Food, Bowls, Bed, Leash, Harness, Meds)", category: "Pet Scout", packed: false }
+                ]
+            }
+        };
+
+        let moveData = {};
+        let activeTab = 'timeline';
+        let currentItemCategory = 'pod';
+
+        // Initialize App
+        function initApp() {
+            const saved = localStorage.getItem('moveDataCommandCenter');
+            if (saved) {
+                try {
+                    moveData = JSON.parse(saved);
+                } catch (e) {
+                    console.error("Failed to parse saved data, falling back to default.", e);
+                    moveData = JSON.parse(JSON.stringify(defaultMoveData));
+                }
+            } else {
+                moveData = JSON.parse(JSON.stringify(defaultMoveData));
+                saveData();
+            }
+
+            updateCountdowns();
+            renderStats();
+            renderUrgentFocus();
+            renderMasterTasks();
+            renderRepairsList();
+            renderMarketplace();
+            renderPackingLists();
+        }
+
+        function saveData() {
+            localStorage.setItem('moveDataCommandCenter', JSON.stringify(moveData));
+            renderStats();
+        }
+
+        function resetDataConfirmation() {
+            if (confirm("Reset everything to original moving plan? Any custom changes made will be restored to default.")) {
+                moveData = JSON.parse(JSON.stringify(defaultMoveData));
+                saveData();
+                closeAiModal();
+                initApp();
+            }
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            activeTab = tabId;
+            ['timeline', 'tasks', 'repairs', 'marketplace', 'packing'].forEach(t => {
+                const view = document.getElementById(`view-${t}`);
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === tabId) {
+                    view.classList.remove('hidden');
+                    btn.classList.add('active');
+                } else {
+                    view.classList.add('hidden');
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // Countdown Calculator
+        function updateCountdowns() {
+            const now = new Date();
+            const podDate = new Date("2026-10-28T09:00:00");
+            const driveDate = new Date("2026-10-31T08:00:00");
+
+            const daysToPod = Math.ceil((podDate - now) / (1000 * 60 * 60 * 24));
+            const daysToDrive = Math.ceil((driveDate - now) / (1000 * 60 * 60 * 24));
+
+            document.getElementById('countdown-pod').textContent = daysToPod > 0 ? `T-${daysToPod} days` : (daysToPod === 0 ? 'Today!' : 'Arrived');
+            document.getElementById('countdown-drive').textContent = daysToDrive > 0 ? `T-${daysToDrive} days` : (daysToDrive === 0 ? 'Drive Day!' : 'Moved!');
+        }
+
+        // Stats Summary
+        function renderStats() {
+            const totalTasks = moveData.tasks.length;
+            const doneTasks = moveData.tasks.filter(t => t.status === 'Done').length;
+            const taskPct = totalTasks ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
+            document.getElementById('stat-total-tasks').textContent = `${doneTasks}/${totalTasks}`;
+            document.getElementById('stat-tasks-progress').textContent = `${taskPct}% complete`;
+            document.getElementById('badge-tasks-count').textContent = `${totalTasks - doneTasks}`;
+
+            // Repairs
+            const repairTasks = moveData.tasks.filter(t => t.category === 'Home Repairs');
+            const pendingRepairs = repairTasks.filter(t => t.status !== 'Done').length;
+            document.getElementById('stat-repairs-pending').textContent = `${pendingRepairs}`;
+            document.getElementById('badge-repairs-count').textContent = `${pendingRepairs}`;
+            document.getElementById('repairs-progress-badge').textContent = `${repairTasks.length - pendingRepairs}/${repairTasks.length} Done`;
+
+            // Marketplace
+            const pendingMarket = moveData.marketplace.filter(m => !['Given Away', 'Sold'].includes(m.status)).length;
+            document.getElementById('stat-market-pending').textContent = `${pendingMarket}`;
+            document.getElementById('badge-market-count').textContent = `${pendingMarket}`;
+
+            // Packing
+            const totalPack = moveData.packing.pod.length + moveData.packing.car.length;
+            const donePack = moveData.packing.pod.filter(p => p.packed).length + moveData.packing.car.filter(c => c.packed).length;
+            document.getElementById('stat-packed-count').textContent = `${donePack}/${totalPack}`;
+        }
+
+        // Urgent Focus Cards for Dashboard
+        function renderUrgentFocus() {
+            const container = document.getElementById('urgent-focus-cards');
+            const urgentTasks = [
+                {
+                    title: "Apply for POD Street Permit",
+                    desc: "City of Seattle street use permit for 10/28 drop-off. Critical to prevent fines/cancellation.",
+                    owner: "William",
+                    category: "Core Logistics",
+                    action: "City Portal",
+                    id: "t5"
+                },
+                {
+                    title: "Goodwill Donation Drop-off",
+                    desc: "Boxes of books, clothes & decor already sorted. Drop off to physically clear staging area.",
+                    owner: "William & Camille",
+                    category: "Room Sort",
+                    action: "Goodwill Run",
+                    id: "t22"
+                },
+                {
+                    title: "List Rowing Machine & Table",
+                    desc: "Rowing machine repaired! Post on FB Marketplace to give buyers time before move day.",
+                    owner: "Camille",
+                    category: "Marketplace",
+                    action: "Post Listing",
+                    id: "t23"
+                }
+            ];
+
+            container.innerHTML = urgentTasks.map(item => {
+                const liveTask = moveData.tasks.find(t => t.id === item.id);
+                const isDone = liveTask && liveTask.status === 'Done';
+                return `
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-3.5 border border-white/15 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] uppercase font-bold text-blue-200">${item.category} • ${item.owner}</span>
+                                ${isDone ? '<span class="text-[10px] bg-emerald-400 text-slate-900 font-bold px-1.5 rounded">DONE</span>' : '<span class="text-[10px] bg-amber-400 text-slate-900 font-bold px-1.5 rounded">URGENT</span>'}
+                            </div>
+                            <h4 class="font-bold text-white text-sm mt-1.5 ${isDone ? 'line-through opacity-70' : ''}">${item.title}</h4>
+                            <p class="text-xs text-blue-100/80 mt-1 leading-snug">${item.desc}</p>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                            <span class="text-[11px] text-blue-200">Owner: ${item.owner}</span>
+                            <button onclick="toggleTaskStatus('${item.id}')" class="px-2 py-1 rounded bg-white/20 hover:bg-white/30 text-white text-[11px] font-semibold transition-colors">
+                                ${isDone ? 'Mark Pending' : 'Check Off ✓'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ================= MASTER TASK HUB LOGIC =================
+        function toggleTaskStatus(taskId) {
+            const task = moveData.tasks.find(t => t.id === taskId);
+            if (task) {
+                task.status = (task.status === 'Done') ? 'Pending' : 'Done';
+                saveData();
+                renderMasterTasks();
+                renderRepairsList();
+                renderUrgentFocus();
+            }
+        }
+
+        function renderMasterTasks() {
+            const container = document.getElementById('tasks-accordion-container');
+            const searchQuery = document.getElementById('task-search-input').value.toLowerCase();
+            const ownerFilter = document.getElementById('task-filter-owner').value;
+            const statusFilter = document.getElementById('task-filter-status').value;
+
+            // Filter tasks
+            const filtered = moveData.tasks.filter(task => {
+                const matchSearch = task.text.toLowerCase().includes(searchQuery) || (task.notes && task.notes.toLowerCase().includes(searchQuery));
+                const matchOwner = ownerFilter === 'all' || task.owner === ownerFilter;
+                const matchStatus = statusFilter === 'all' || task.status === statusFilter;
+                return matchSearch && matchOwner && matchStatus;
+            });
+
+            // Group by category
+            const categories = [...new Set(moveData.tasks.map(t => t.category))];
+
+            container.innerHTML = categories.map(cat => {
+                const catTasks = filtered.filter(t => t.category === cat);
+                if (catTasks.length === 0) return '';
+
+                const catDone = catTasks.filter(t => t.status === 'Done').length;
+                const catTotal = catTasks.length;
+
+                return `
+                    <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50/40">
+                        <div class="p-3.5 bg-slate-100/70 flex items-center justify-between border-b border-slate-200 font-semibold text-xs text-slate-800">
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm">📌</span>
+                                <span class="font-bold text-slate-900">${cat}</span>
+                                <span class="text-[11px] bg-white border border-slate-200 px-2 py-0.5 rounded-full text-slate-600 font-medium">${catDone}/${catTotal}</span>
+                            </div>
+                        </div>
+                        <div class="divide-y divide-slate-100 bg-white">
+                            ${catTasks.map(task => {
+                                const isDone = task.status === 'Done';
+                                const priorityClass = task.priority === 'High Priority' ? 'bg-red-50 text-red-700 border-red-200' : (task.priority === 'Medium' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-slate-50 text-slate-600 border-slate-200');
+                                return `
+                                    <div class="p-3.5 flex items-start justify-between gap-3 hover:bg-slate-50 transition-colors">
+                                        <div class="flex items-start gap-3 flex-1">
+                                            <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus('${task.id}')" class="mt-0.5 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer">
+                                            <div class="flex-1">
+                                                <p class="text-xs font-semibold ${isDone ? 'task-done' : 'text-slate-800'}">${task.text}</p>
+                                                ${task.notes ? `<p class="text-[11px] text-slate-400 mt-0.5">${task.notes}</p>` : ''}
+                                                <div class="flex flex-wrap items-center gap-2 mt-1.5">
+                                                    ${task.owner ? `<span class="text-[10px] font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded">👤 ${task.owner}</span>` : ''}
+                                                    ${task.priority ? `<span class="text-[10px] font-semibold px-2 py-0.5 rounded border ${priorityClass}">${task.priority}</span>` : ''}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button onclick="deleteTask('${task.id}')" class="text-slate-300 hover:text-red-500 text-xs px-1">&times;</button>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteTask(taskId) {
+            moveData.tasks = moveData.tasks.filter(t => t.id !== taskId);
+            saveData();
+            renderMasterTasks();
+            renderRepairsList();
+        }
+
+        // ================= REPAIRS & DEPOSIT LOGIC =================
+        function renderRepairsList() {
+            const container = document.getElementById('repairs-list-container');
+            const repairs = moveData.tasks.filter(t => t.category === 'Home Repairs');
+
+            container.innerHTML = repairs.map(repair => {
+                const isDone = repair.status === 'Done';
+                return `
+                    <div class="p-4 rounded-xl border ${isDone ? 'border-emerald-200 bg-emerald-50/30' : 'border-slate-200 bg-white'} shadow-xs flex items-start gap-3 transition-all">
+                        <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus('${repair.id}')" class="mt-1 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xs font-bold ${isDone ? 'task-done text-slate-400' : 'text-slate-900'}">${repair.text}</h4>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isDone ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                                    ${isDone ? 'Completed' : 'Pending'}
+                                </span>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-1">${repair.notes || 'Ensure finish is clean and photographed for deposit security.'}</p>
+                            <div class="mt-2 text-[10px] text-slate-400 font-medium">Assigned: ${repair.owner || 'William'}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ================= MARKETPLACE & PURGE LOGIC =================
+        function renderMarketplace() {
+            const tbody = document.getElementById('marketplace-table-body');
+            tbody.innerHTML = moveData.marketplace.map(item => {
+                let badgeClass = 'bg-slate-100 text-slate-700';
+                if (item.status === 'Listed') badgeClass = 'bg-blue-100 text-blue-800 border border-blue-200';
+                if (item.status === 'Listed / Pending Sale') badgeClass = 'bg-indigo-100 text-indigo-800 border border-indigo-200';
+                if (item.status === 'Ready to List') badgeClass = 'bg-amber-100 text-amber-800 border border-amber-200';
+                if (item.status === 'Pending / Holding') badgeClass = 'bg-yellow-100 text-yellow-800 border border-yellow-200';
+                if (item.status === 'To Rehome') badgeClass = 'bg-purple-100 text-purple-800 border border-purple-200';
+                if (item.status === 'Given Away' || item.status === 'Sold') badgeClass = 'bg-emerald-100 text-emerald-800 border border-emerald-200';
+
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-3 font-semibold text-slate-900">${item.item}</td>
+                        <td class="p-3">${item.category}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeClass}">${item.status}</span>
+                        </td>
+                        <td class="p-3 font-semibold text-slate-800">${item.targetPrice}</td>
+                        <td class="p-3 text-slate-500">${item.notes}</td>
+                        <td class="p-3 text-right">
+                            <select onchange="updateMarketStatus('${item.id}', this.value)" class="text-[11px] border border-slate-200 rounded px-1.5 py-0.5 bg-white">
+                                <option value="" disabled selected>Change Status</option>
+                                <option value="Ready to List">Ready to List</option>
+                                <option value="Listed">Listed</option>
+                                <option value="Pending / Holding">Pending / Holding</option>
+                                <option value="To Rehome">To Rehome</option>
+                                <option value="Given Away">Given Away</option>
+                                <option value="Sold">Sold</option>
+                            </select>
+                            <button onclick="deleteMarketItem('${item.id}')" class="ml-1 text-slate-300 hover:text-red-500 font-bold px-1">&times;</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateMarketStatus(id, newStatus) {
+            const item = moveData.marketplace.find(m => m.id === id);
+            if (item) {
+                item.status = newStatus;
+                saveData();
+                renderMarketplace();
+            }
+        }
+
+        function deleteMarketItem(id) {
+            moveData.marketplace = moveData.marketplace.filter(m => m.id !== id);
+            saveData();
+            renderMarketplace();
+        }
+
+        // ================= PACKING LISTS LOGIC =================
+        function togglePackingItem(listType, itemId) {
+            const item = moveData.packing[listType].find(i => i.id === itemId);
+            if (item) {
+                item.packed = !item.packed;
+                saveData();
+                renderPackingLists();
+            }
+        }
+
+        function deletePackingItem(listType, itemId) {
+            moveData.packing[listType] = moveData.packing[listType].filter(i => i.id !== itemId);
+            saveData();
+            renderPackingLists();
+        }
+
+        function renderPackingLists() {
+            // Render POD
+            const podList = document.getElementById('pod-items-list');
+            const podItems = moveData.packing.pod;
+            const podPacked = podItems.filter(p => p.packed).length;
+            const podTotal = podItems.length;
+            const podPct = podTotal ? Math.round((podPacked / podTotal) * 100) : 0;
+
+            document.getElementById('pod-packed-stat').textContent = `${podPacked}/${podTotal} Packed (${podPct}%)`;
+            document.getElementById('pod-progress-bar').style.width = `${podPct}%`;
+
+            podList.innerHTML = podItems.map(item => `
+                <div class="py-2.5 px-2 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                    <label class="flex items-center gap-2.5 cursor-pointer flex-1">
+                        <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePackingItem('pod', '${item.id}')" class="w-4 h-4 rounded text-orange-600 focus:ring-orange-500 cursor-pointer">
+                        <div>
+                            <span class="text-xs font-semibold ${item.packed ? 'task-done' : 'text-slate-800'}">${item.text}</span>
+                            ${item.category ? `<span class="ml-2 text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.2 rounded font-medium">${item.category}</span>` : ''}
+                        </div>
+                    </label>
+                    <button onclick="deletePackingItem('pod', '${item.id}')" class="text-slate-300 hover:text-red-500 text-xs px-1">&times;</button>
+                </div>
+            `).join('');
+
+            // Render Subaru Car
+            const carList = document.getElementById('car-items-list');
+            const carItems = moveData.packing.car;
+            const carPacked = carItems.filter(c => c.packed).length;
+            const carTotal = carItems.length;
+            const carPct = carTotal ? Math.round((carPacked / carTotal) * 100) : 0;
+
+            document.getElementById('car-packed-stat').textContent = `${carPacked}/${carTotal} Packed (${carPct}%)`;
+            document.getElementById('car-progress-bar').style.width = `${carPct}%`;
+
+            carList.innerHTML = carItems.map(item => `
+                <div class="py-2.5 px-2 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                    <label class="flex items-center gap-2.5 cursor-pointer flex-1">
+                        <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePackingItem('car', '${item.id}')" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer">
+                        <div>
+                            <span class="text-xs font-semibold ${item.packed ? 'task-done' : 'text-slate-800'}">${item.text}</span>
+                            ${item.category ? `<span class="ml-2 text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.2 rounded font-medium">${item.category}</span>` : ''}
+                        </div>
+                    </label>
+                    <button onclick="deletePackingItem('car', '${item.id}')" class="text-slate-300 hover:text-red-500 text-xs px-1">&times;</button>
+                </div>
+            `).join('');
+        }
+
+        // ================= MODALS & AI INTEGRATION =================
+        function openAiModal() {
+            // Generate live prompt containing current state
+            const pendingTasks = moveData.tasks.filter(t => t.status === 'Pending').map(t => `- [${t.category}] ${t.text} (${t.owner || 'Unassigned'}) [Priority: ${t.priority || 'Normal'}]`).join('\n');
+            const pendingMarket = moveData.marketplace.filter(m => !['Given Away', 'Sold'].includes(m.status)).map(m => `- ${m.item} (${m.status}, Target: ${m.targetPrice})`).join('\n');
+            const remainingPOD = moveData.packing.pod.filter(p => !p.packed).map(p => `- ${p.text}`).join('\n');
+            const remainingCar = moveData.packing.car.filter(c => !c.packed).map(c => `- ${c.text}`).join('\n');
+
+            const promptText = `I am managing my move from Seattle to San Diego/Encinitas.
+Key Dates:
+- Today's Date: Oct 14
+- POD Drop-off: Oct 28
+- POD Pick-up: Oct 30
+- Drive Day (Subaru Outback): Oct 31
+
+Here is my current live checklist and state:
+
+=== PENDING TASKS ===
+${pendingTasks}
+
+=== MARKETPLACE & ITEMS TO REHOME ===
+${pendingMarket}
+
+=== ITEMS LEFT TO PACK (POD) ===
+${remainingPOD}
+
+=== ITEMS LEFT TO PACK (SUBARU OUTBACK) ===
+${remainingCar}
+
+=== MY REQUEST ===
+Please review this state and help me with:
+1. What are the top 3-4 specific tasks William & Camille should knock out in the next 48 hours to minimize stress?
+2. Are there any safety or logistics risks (e.g. city permits, hazardous materials in POD) I need to address right away?
+3. Help me optimize my daily plan for this week.`;
+
+            document.getElementById('ai-prompt-preview').value = promptText;
+            document.getElementById('modal-ai').classList.remove('hidden');
+        }
+
+        function closeAiModal() {
+            document.getElementById('modal-ai').classList.add('hidden');
+        }
+
+        function copyAiPrompt() {
+            const textarea = document.getElementById('ai-prompt-preview');
+            textarea.select();
+            navigator.clipboard.writeText(textarea.value).then(() => {
+                const btn = document.getElementById('copy-prompt-btn');
+                btn.textContent = "Copied to Clipboard! ✓";
+                setTimeout(() => { btn.textContent = "Copy Prompt 📋"; }, 2000);
+            });
+        }
+
+        function applyAiJsonImport() {
+            const raw = document.getElementById('ai-json-import').value.trim();
+            if (!raw) {
+                alert("Please paste valid JSON data into the text area.");
+                return;
+            }
+            try {
+                const parsed = JSON.parse(raw);
+                if (parsed.tasks || parsed.marketplace || parsed.packing) {
+                    moveData = { ...moveData, ...parsed };
+                    saveData();
+                    initApp();
+                    closeAiModal();
+                    alert("Moving plan successfully updated from JSON!");
+                } else {
+                    alert("JSON format not recognized. Ensure it contains tasks, marketplace, or packing arrays.");
+                }
+            } catch (err) {
+                alert("Invalid JSON format: " + err.message);
+            }
+        }
+
+        function exportJsonFile() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(moveData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `move_plan_backup_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        // Add Task Modal
+        function openAddTaskModal() {
+            document.getElementById('modal-add-task').classList.remove('hidden');
+        }
+        function closeAddTaskModal() {
+            document.getElementById('modal-add-task').classList.add('hidden');
+        }
+        function saveNewTask() {
+            const text = document.getElementById('new-task-text').value.trim();
+            if (!text) return;
+            const category = document.getElementById('new-task-category').value;
+            const owner = document.getElementById('new-task-owner').value;
+            const priority = document.getElementById('new-task-priority').value;
+            const notes = document.getElementById('new-task-notes').value.trim();
+
+            const newTask = {
+                id: 't_' + Date.now(),
+                category,
+                text,
+                owner,
+                status: 'Pending',
+                priority,
+                notes
+            };
+
+            moveData.tasks.unshift(newTask);
+            saveData();
+            renderMasterTasks();
+            renderRepairsList();
+            closeAddTaskModal();
+            document.getElementById('new-task-text').value = '';
+            document.getElementById('new-task-notes').value = '';
+        }
+
+        // Add Item Modal
+        function openAddItemModal(category) {
+            currentItemCategory = category;
+            document.getElementById('add-item-modal-title').textContent = category === 'pod' ? 'Add Item to 16ft POD' : 'Add Item to Subaru Outback';
+            document.getElementById('modal-add-item').classList.remove('hidden');
+        }
+        function closeAddItemModal() {
+            document.getElementById('modal-add-item').classList.add('hidden');
+        }
+        function saveNewItem() {
+            const text = document.getElementById('new-item-text').value.trim();
+            if (!text) return;
+            const newItem = {
+                id: (currentItemCategory === 'pod' ? 'p_' : 'c_') + Date.now(),
+                text,
+                category: 'General',
+                packed: false
+            };
+            moveData.packing[currentItemCategory].push(newItem);
+            saveData();
+            renderPackingLists();
+            closeAddItemModal();
+            document.getElementById('new-item-text').value = '';
+        }
+
+        // Add Market Modal
+        function openAddMarketModal() {
+            document.getElementById('modal-add-market').classList.remove('hidden');
+        }
+        function closeAddMarketModal() {
+            document.getElementById('modal-add-market').classList.add('hidden');
+        }
+        function saveNewMarketItem() {
+            const item = document.getElementById('new-market-name').value.trim();
+            if (!item) return;
+            const category = document.getElementById('new-market-room').value.trim() || 'General';
+            const status = document.getElementById('new-market-status').value;
+            const targetPrice = document.getElementById('new-market-price').value.trim() || 'TBD';
+            const notes = document.getElementById('new-market-notes').value.trim();
+
+            const newMarket = {
+                id: 'm_' + Date.now(),
+                item,
+                category,
+                status,
+                targetPrice,
+                notes
+            };
+
+            moveData.marketplace.push(newMarket);
+            saveData();
+            renderMarketplace();
+            closeAddMarketModal();
+            document.getElementById('new-market-name').value = '';
+            document.getElementById('new-market-room').value = '';
+            document.getElementById('new-market-price').value = '';
+            document.getElementById('new-market-notes').value = '';
+        }
+
+        // App Initialization
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
