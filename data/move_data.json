@@ -627,7 +627,7 @@
     {
       "category": "Supplies & Purchases",
       "id": "t49",
-      "notes": "For kitchen window sill and wall scuffs",
+      "notes": "For kitchen window sill, bedroom curtain rod marks, and wall scuffs",
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
@@ -827,12 +827,22 @@
     {
       "category": "Home Repairs",
       "id": "t33",
-      "notes": "Fill & sand flush",
+      "notes": "Curtain rods removed; holes filled with putty",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Done",
+      "text": "Dismount bedroom curtain rods & fill holes",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Home Repairs",
+      "id": "t51",
+      "notes": "Holes already filled with putty; paint once touch-up paint is acquired",
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Patch curtain rod holes in bedroom",
-      "timeframe": "Next Week"
+      "text": "Touch up paint on bedroom curtain rod wall marks",
+      "timeframe": "This Week"
     },
     {
       "category": "Home Repairs",
