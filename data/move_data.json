@@ -472,7 +472,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Get confirmation from Brian on move-out date"
+      "text": "Get confirmation from Brian on move-out date",
+      "timeframe": "This Week"
     },
     {
       "category": "Core Logistics",
@@ -481,7 +482,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Get confirmation from Brian on deposit return process"
+      "text": "Get confirmation from Brian on deposit return process",
+      "timeframe": "This Week"
     },
     {
       "category": "Core Logistics",
@@ -490,7 +492,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Research & reserve transport (POD vs. U-Haul vs. Movers)"
+      "text": "Research & reserve transport (POD vs. U-Haul vs. Movers)",
+      "timeframe": "This Week"
     },
     {
       "category": "Core Logistics",
@@ -499,7 +502,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Obtain written manager/work approval for move"
+      "text": "Obtain written manager/work approval for move",
+      "timeframe": "This Week"
     },
     {
       "category": "Core Logistics",
@@ -508,7 +512,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Apply for parking permit with City of Seattle for POD"
+      "text": "Apply for parking permit with City of Seattle for POD",
+      "timeframe": "This Week"
     },
     {
       "category": "Core Logistics",
@@ -517,7 +522,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Update drop-off location on PODS portal"
+      "text": "Update drop-off location on PODS portal",
+      "timeframe": "This Week"
     },
     {
       "category": "Core Logistics",
@@ -526,7 +532,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Sign PODS user agreement"
+      "text": "Sign PODS user agreement",
+      "timeframe": "This Week"
     },
     {
       "category": "Core Logistics",
@@ -535,7 +542,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Pending",
-      "text": "Sell motorcycle (responding to listing inquiries & test rides)"
+      "text": "Sell motorcycle (responding to listing inquiries & test rides)",
+      "timeframe": "This Week"
     },
     {
       "category": "Core Logistics",
@@ -544,7 +552,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Determine & submit PTO / work days off for move"
+      "text": "Determine & submit PTO / work days off for move",
+      "timeframe": "This Week"
     },
     {
       "category": "Supplies & Purchases",
@@ -553,7 +562,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Buy TV box for 65\" TV"
+      "text": "Buy TV box for 65\" TV",
+      "timeframe": "This Week"
     },
     {
       "category": "Supplies & Purchases",
@@ -562,7 +572,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Buy TV box for ~40\" bedroom TV"
+      "text": "Buy TV box for ~40\" bedroom TV",
+      "timeframe": "This Week"
     },
     {
       "category": "Supplies & Purchases",
@@ -571,7 +582,8 @@
       "owner": "William & Camille",
       "priority": "Medium",
       "status": "Done",
-      "text": "Get moving boxes (via Marketplace)"
+      "text": "Get moving boxes (via Marketplace)",
+      "timeframe": "This Week"
     },
     {
       "category": "Supplies & Purchases",
@@ -580,7 +592,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Buy spackle & sanding sponge for wall holes"
+      "text": "Buy spackle & sanding sponge for wall holes",
+      "timeframe": "This Week"
     },
     {
       "category": "Supplies & Purchases",
@@ -589,7 +602,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Buy wood touch-up marker / scratch repair kit"
+      "text": "Buy wood touch-up marker / scratch repair kit",
+      "timeframe": "This Week"
     },
     {
       "category": "Supplies & Purchases",
@@ -598,7 +612,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Pending",
-      "text": "Buy packing tape"
+      "text": "Buy packing tape",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -607,7 +622,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Clean out garage"
+      "text": "Clean out garage",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -616,7 +632,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Clean up backyard & remove outdoor pet gear"
+      "text": "Clean up backyard & remove outdoor pet gear",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -625,7 +642,8 @@
       "owner": "Camille",
       "priority": "Medium",
       "status": "Done",
-      "text": "Closets: Cull unworn clothes and pack non-seasonal items"
+      "text": "Closets: Cull unworn clothes and pack non-seasonal items",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -634,7 +652,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Office: Organize and pack non-daily essentials"
+      "text": "Office: Organize and pack non-daily essentials",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -643,7 +662,8 @@
       "owner": "Camille",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Bedroom: Second round of decluttering / sorting"
+      "text": "Bedroom: Second round of decluttering / sorting",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -651,8 +671,9 @@
       "notes": "Free alert on Buy Nothing / Craigslist",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
-      "text": "Put garage items on curb and post in neighborhood group"
+      "status": "Done",
+      "text": "Put garage items on curb and post in neighborhood group",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -661,7 +682,8 @@
       "owner": "William & Camille",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Sort books, clothes, games, & decorations for donation"
+      "text": "Sort books, clothes, games, & decorations for donation",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -670,7 +692,8 @@
       "owner": "William & Camille",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Drop off donations at Goodwill (books, clothes, games, decor)"
+      "text": "Drop off donations at Goodwill (books, clothes, games, decor)",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -678,8 +701,9 @@
       "notes": "Machine repaired, ready to photograph & list",
       "owner": "Camille",
       "priority": "Medium",
-      "status": "Pending",
-      "text": "Take photos of rowing machine and post on Marketplace"
+      "status": "Done",
+      "text": "Take photos of rowing machine and post on Marketplace",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -688,7 +712,8 @@
       "owner": "Camille",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Post dining table & chairs on Marketplace"
+      "text": "Post dining table & chairs on Marketplace",
+      "timeframe": "This Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -697,7 +722,8 @@
       "owner": "Camille",
       "priority": "Low",
       "status": "Pending",
-      "text": "Post living room couch for sale"
+      "text": "Post living room couch for sale",
+      "timeframe": "Move Week"
     },
     {
       "category": "Room Sort & Purge",
@@ -706,7 +732,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Rehome/get rid of office chair, helmets (motorcycle & bike), pet ramp"
+      "text": "Rehome/get rid of office chair, helmets (motorcycle & bike), pet ramp",
+      "timeframe": "This Week"
     },
     {
       "category": "Early Packing",
@@ -715,7 +742,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Box up suits and work clothes"
+      "text": "Box up suits and work clothes",
+      "timeframe": "This Week"
     },
     {
       "category": "Early Packing",
@@ -724,7 +752,8 @@
       "owner": "Camille",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Box up guest bedroom decor & books"
+      "text": "Box up guest bedroom decor & books",
+      "timeframe": "This Week"
     },
     {
       "category": "Home Repairs",
@@ -733,7 +762,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Pending",
-      "text": "Fill nail holes & patch walls"
+      "text": "Fill nail holes & patch walls",
+      "timeframe": "Next Week"
     },
     {
       "category": "Home Repairs",
@@ -742,7 +772,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Repair scratches on wood trim / floors"
+      "text": "Repair scratches on wood trim / floors",
+      "timeframe": "Next Week"
     },
     {
       "category": "Home Repairs",
@@ -751,7 +782,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Patch bike rack holes in foyer"
+      "text": "Patch bike rack holes in foyer",
+      "timeframe": "Next Week"
     },
     {
       "category": "Home Repairs",
@@ -760,7 +792,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Patch TV speaker holes"
+      "text": "Patch TV speaker holes",
+      "timeframe": "Next Week"
     },
     {
       "category": "Home Repairs",
@@ -769,7 +802,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Patch curtain rod holes in bedroom"
+      "text": "Patch curtain rod holes in bedroom",
+      "timeframe": "Next Week"
     },
     {
       "category": "Home Repairs",
@@ -778,7 +812,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Uninstall bike mount"
+      "text": "Uninstall bike mount",
+      "timeframe": "Next Week"
     },
     {
       "category": "Home Repairs",
@@ -787,7 +822,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Uninstall dog gate in foyer"
+      "text": "Uninstall dog gate in foyer",
+      "timeframe": "Move Week"
     },
     {
       "category": "Home Repairs",
@@ -796,7 +832,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Repaint window sill in kitchen"
+      "text": "Repaint window sill in kitchen",
+      "timeframe": "Next Week"
     },
     {
       "category": "Home Repairs",
@@ -805,7 +842,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Remove residue/goo from kitchen window from AC unit"
+      "text": "Remove residue/goo from kitchen window from AC unit",
+      "timeframe": "Next Week"
     },
     {
       "category": "Home Repairs",
@@ -814,7 +852,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Pending",
-      "text": "Remove video doorbell and reinstall original doorbell"
+      "text": "Remove video doorbell and reinstall original doorbell",
+      "timeframe": "Move Week"
     },
     {
       "category": "Home Repairs",
@@ -823,7 +862,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Pending",
-      "text": "Remove bidet and reinstall original toilet seat"
+      "text": "Remove bidet and reinstall original toilet seat",
+      "timeframe": "Move Week"
     },
     {
       "category": "Home Repairs",
@@ -832,7 +872,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Fix rowing machine"
+      "text": "Fix rowing machine",
+      "timeframe": "Next Week"
     },
     {
       "category": "Post-Move Admin",
@@ -841,7 +882,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Check / modify Apartments.com payment settings (contact Brian)"
+      "text": "Check / modify Apartments.com payment settings (contact Brian)",
+      "timeframe": "Move Week"
     },
     {
       "category": "Post-Move Admin",
@@ -850,7 +892,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
-      "text": "Update vehicle & motorcycle insurance"
+      "text": "Update vehicle & motorcycle insurance",
+      "timeframe": "Post Move"
     },
     {
       "category": "Post-Move Admin",
@@ -859,7 +902,8 @@
       "owner": "William & Camille",
       "priority": "Medium",
       "status": "Done",
-      "text": "Update address in workplace HR system"
+      "text": "Update address in workplace HR system",
+      "timeframe": "Post Move"
     },
     {
       "category": "Post-Move Admin",
@@ -868,7 +912,8 @@
       "owner": "William & Camille",
       "priority": "High Priority",
       "status": "Pending",
-      "text": "Set up USPS mail forwarding"
+      "text": "Set up USPS mail forwarding",
+      "timeframe": "Move Week"
     },
     {
       "category": "Post-Move Admin",
@@ -877,7 +922,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Done",
-      "text": "Set up electric utility at new home (San Diego / Encinitas)"
+      "text": "Set up electric utility at new home (San Diego / Encinitas)",
+      "timeframe": "This Week"
     },
     {
       "category": "Post-Move Admin",
@@ -886,7 +932,8 @@
       "owner": "William",
       "priority": "High Priority",
       "status": "Pending",
-      "text": "Set up high-speed Internet at new home"
+      "text": "Set up high-speed Internet at new home",
+      "timeframe": "This Week"
     },
     {
       "category": "Post-Move Admin",
@@ -895,7 +942,8 @@
       "owner": "William",
       "priority": "Medium",
       "status": "Done",
-      "text": "Set up water & trash utilities at new home"
+      "text": "Set up water & trash utilities at new home",
+      "timeframe": "Post Move"
     }
   ]
 }
