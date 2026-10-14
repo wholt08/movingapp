@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seattle ➔ San Diego Move Command Center</title>
+    <!-- Firebase Realtime Database SDK (Compat for simple browser usage) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script src="firebase_config.js"></script>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -79,9 +83,10 @@
                     <div>
                         <div class="flex items-center gap-2">
                             <h1 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Seattle ➔ Encinitas Move</h1>
-                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>Active Plan
-                            </span>
+                            <button onclick="openSyncSettingsModal()" id="cloud-status-badge" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors" title="Click to configure Cloud Sync">
+                                <span class="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5" id="cloud-status-dot"></span>
+                                <span id="cloud-status-text">Local Storage</span>
+                            </button>
                         </div>
                         <p class="text-xs text-slate-500 dark:text-slate-400">POD: 16'L × 8'W × 8'H • Vehicle: 2015 Subaru Outback • Drive: Oct 31</p>
                     </div>
@@ -904,6 +909,52 @@
         </div>
     </div>
 
+    <!-- Cloud Sync Settings Modal -->
+    <div id="modal-cloud-sync" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full p-6 shadow-xl border border-slate-100 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">☁️</span>
+                    <h3 class="font-bold text-slate-900 dark:text-white">Cloud Sync (Firebase)</h3>
+                </div>
+                <button onclick="closeSyncSettingsModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg font-bold">&times;</button>
+            </div>
+
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+                Connect your free Google Firebase Realtime Database to enable instant 2-way live sync across your phone, desktop, and laptop.
+            </p>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                        Firebase Database URL
+                    </label>
+                    <input type="url" id="firebase-db-url-input" placeholder="https://your-project-id-default-rtdb.firebaseio.com" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-lg p-2 font-mono text-[11px]">
+                    <span class="text-[10px] text-slate-400 mt-1 block">Found in Firebase Console ➔ Realtime Database ➔ Top header.</span>
+                </div>
+
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <label class="block font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                        Or Paste Full Firebase Config (Optional)
+                    </label>
+                    <textarea id="firebase-full-config-input" placeholder='{"databaseURL": "...", "apiKey": "..."}' class="w-full h-20 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-lg p-2 font-mono text-[10px] custom-scroll"></textarea>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 dark:bg-blue-950/40 p-3 rounded-xl border border-blue-100 dark:border-blue-900/40 text-[11px] text-blue-800 dark:text-blue-300">
+                💡 <strong>How it works:</strong> Once connected, checking off a task on your phone instantly updates on your desktop in real-time.
+            </div>
+
+            <div class="flex justify-between items-center pt-2 border-t border-slate-100 dark:border-slate-800">
+                <button onclick="disconnectFirebase()" class="px-3 py-1.5 text-xs text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg font-semibold">Disconnect</button>
+                <div class="flex gap-2">
+                    <button onclick="closeSyncSettingsModal()" class="px-4 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-semibold">Cancel</button>
+                    <button onclick="saveFirebaseConfig()" class="px-4 py-1.5 text-xs rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold">Connect & Sync</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Add Task Modal -->
     <div id="modal-add-task" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-100 dark:border-slate-800 space-y-4">
@@ -1221,11 +1272,150 @@
             renderPackingLists();
             renderPodVisualizer();
             renderSubaruVisualizer();
+
+            // Initialize Cloud Sync (Firebase)
+            initFirebase();
+        }
+
+        // ================= FIREBASE CLOUD SYNC LOGIC =================
+        let firebaseDb = null;
+        let isRemoteSync = false;
+
+        function getFirebaseConfig() {
+            // Check localStorage first, then window.FIREBASE_CONFIG
+            const saved = localStorage.getItem('moveAppFirebaseConfig');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.databaseURL) return parsed;
+                } catch (e) {}
+            }
+            if (window.FIREBASE_CONFIG && window.FIREBASE_CONFIG.databaseURL) {
+                return window.FIREBASE_CONFIG;
+            }
+            return null;
+        }
+
+        function initFirebase() {
+            const config = getFirebaseConfig();
+            if (config && config.databaseURL) {
+                try {
+                    if (!firebase.apps.length) {
+                        firebase.initializeApp(config);
+                    }
+                    firebaseDb = firebase.database();
+                    updateCloudBadge(true);
+
+                    // Listen for real-time changes across devices
+                    firebaseDb.ref('moveData').on('value', snapshot => {
+                        const val = snapshot.val();
+                        if (val && !isRemoteSync) {
+                            moveData = val;
+                            localStorage.setItem('moveDataCommandCenter', JSON.stringify(moveData));
+                            renderStats();
+                            renderUrgentFocus();
+                            renderMasterTasks();
+                            renderRepairsList();
+                            renderMarketplace();
+                            renderPackingLists();
+                            if (activeTab === 'visualizer') {
+                                renderPodVisualizer();
+                                renderSubaruVisualizer();
+                            }
+                        }
+                    });
+                } catch (err) {
+                    console.error("Firebase connection error:", err);
+                    updateCloudBadge(false);
+                }
+            } else {
+                updateCloudBadge(false);
+            }
+        }
+
+        function updateCloudBadge(connected) {
+            const dot = document.getElementById('cloud-status-dot');
+            const text = document.getElementById('cloud-status-text');
+            const badge = document.getElementById('cloud-status-badge');
+            if (connected) {
+                dot.className = "w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse";
+                text.textContent = "Cloud Synced (Live)";
+                badge.className = "inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 transition-colors cursor-pointer";
+            } else {
+                dot.className = "w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5";
+                text.textContent = "Local Only (Connect Cloud)";
+                badge.className = "inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer";
+            }
+        }
+
+        function openSyncSettingsModal() {
+            const config = getFirebaseConfig();
+            if (config) {
+                document.getElementById('firebase-db-url-input').value = config.databaseURL || '';
+                document.getElementById('firebase-full-config-input').value = JSON.stringify(config, null, 2);
+            }
+            document.getElementById('modal-cloud-sync').classList.remove('hidden');
+        }
+
+        function closeSyncSettingsModal() {
+            document.getElementById('modal-cloud-sync').classList.add('hidden');
+        }
+
+        function saveFirebaseConfig() {
+            let url = document.getElementById('firebase-db-url-input').value.trim();
+            const fullJson = document.getElementById('firebase-full-config-input').value.trim();
+            let configObj = {};
+
+            if (fullJson) {
+                try {
+                    configObj = JSON.parse(fullJson);
+                } catch (e) {
+                    alert("Invalid JSON format in full config textarea.");
+                    return;
+                }
+            } else if (url) {
+                if (!url.startsWith('http')) url = 'https://' + url;
+                configObj = { databaseURL: url.replace(/\/$/, '') };
+            } else {
+                alert("Please enter a Firebase Database URL or JSON config.");
+                return;
+            }
+
+            localStorage.setItem('moveAppFirebaseConfig', JSON.stringify(configObj));
+            closeSyncSettingsModal();
+            initFirebase();
+
+            // Push current state to Firebase immediately to seed database
+            if (firebaseDb) {
+                firebaseDb.ref('moveData').set(moveData).then(() => {
+                    alert("Successfully connected to Firebase! Live multi-device sync is now active.");
+                });
+            }
+        }
+
+        function disconnectFirebase() {
+            if (confirm("Disconnect Firebase cloud sync? App will continue using local storage on this device.")) {
+                localStorage.removeItem('moveAppFirebaseConfig');
+                firebaseDb = null;
+                updateCloudBadge(false);
+                closeSyncSettingsModal();
+            }
         }
 
         function saveData() {
             localStorage.setItem('moveDataCommandCenter', JSON.stringify(moveData));
             renderStats();
+
+            // Sync to Firebase if connected
+            if (firebaseDb) {
+                isRemoteSync = true;
+                firebaseDb.ref('moveData').set(moveData).then(() => {
+                    setTimeout(() => { isRemoteSync = false; }, 300);
+                }).catch(err => {
+                    console.error("Firebase sync error:", err);
+                    isRemoteSync = false;
+                });
+            }
         }
 
         function resetDataConfirmation() {

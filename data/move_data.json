@@ -1,0 +1,874 @@
+{
+  "metadata": {
+    "title": "Seattle to San Diego / Encinitas Move",
+    "origin": "Seattle, WA",
+    "destination": "Encinitas / San Diego, CA",
+    "podDropoff": "2026-10-28",
+    "podPickup": "2026-10-30",
+    "driveDate": "2026-10-31"
+  },
+  "tasks": [
+    {
+      "id": "t1",
+      "category": "Core Logistics",
+      "text": "Get confirmation from Brian on move-out date",
+      "owner": "William",
+      "status": "Done",
+      "priority": "High Priority",
+      "notes": "Confirmed for 10/31"
+    },
+    {
+      "id": "t2",
+      "category": "Core Logistics",
+      "text": "Get confirmation from Brian on deposit return process",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Ask about walk-through and forwarding address"
+    },
+    {
+      "id": "t3",
+      "category": "Core Logistics",
+      "text": "Research & reserve transport (POD vs. U-Haul vs. Movers)",
+      "owner": "William",
+      "status": "Done",
+      "priority": "High Priority",
+      "notes": "Reserved POD: drop-off 10/28, pick-up 10/30. Drive to San Diego 10/31."
+    },
+    {
+      "id": "t4",
+      "category": "Core Logistics",
+      "text": "Obtain written manager/work approval for move",
+      "owner": "William",
+      "status": "Done",
+      "priority": "High Priority",
+      "notes": "Approved"
+    },
+    {
+      "id": "t5",
+      "category": "Core Logistics",
+      "text": "Apply for parking permit with City of Seattle for POD",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Target was 10/12; needed for 10/28 drop-off (Needs street permit!)"
+    },
+    {
+      "id": "t6",
+      "category": "Core Logistics",
+      "text": "Update drop-off location on PODS portal",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Target 10/12"
+    },
+    {
+      "id": "t7",
+      "category": "Core Logistics",
+      "text": "Sign PODS user agreement",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Target 10/12"
+    },
+    {
+      "id": "t8",
+      "category": "Core Logistics",
+      "text": "Finalize motorcycle sale with friend",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Friend interested for Mon 10/12 or Tue 10/13"
+    },
+    {
+      "id": "t9",
+      "category": "Supplies & Purchases",
+      "text": "Buy TV box for 65\" TV",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Home Depot: $40"
+    },
+    {
+      "id": "t10",
+      "category": "Supplies & Purchases",
+      "text": "Buy TV box for ~40\" bedroom TV",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Home Depot: $27"
+    },
+    {
+      "id": "t11",
+      "category": "Supplies & Purchases",
+      "text": "Get moving boxes (via Marketplace)",
+      "owner": "William & Camille",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Acquired"
+    },
+    {
+      "id": "t12",
+      "category": "Supplies & Purchases",
+      "text": "Buy spackle & sanding sponge for wall holes",
+      "owner": "William",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Purchased"
+    },
+    {
+      "id": "t13",
+      "category": "Supplies & Purchases",
+      "text": "Buy wood touch-up marker / scratch repair kit",
+      "owner": "William",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Purchased"
+    },
+    {
+      "id": "t14",
+      "category": "Supplies & Purchases",
+      "text": "Buy packing tape",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Need heavy duty tape for boxes"
+    },
+    {
+      "id": "t15",
+      "category": "Room Sort & Purge",
+      "text": "Clean out garage",
+      "owner": "William",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Completed"
+    },
+    {
+      "id": "t16",
+      "category": "Room Sort & Purge",
+      "text": "Clean up backyard & remove outdoor pet gear",
+      "owner": "William",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Completed"
+    },
+    {
+      "id": "t17",
+      "category": "Room Sort & Purge",
+      "text": "Closets: Cull unworn clothes and pack non-seasonal items",
+      "owner": "Camille",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Office closet consolidated"
+    },
+    {
+      "id": "t18",
+      "category": "Room Sort & Purge",
+      "text": "Office: Organize and pack non-daily essentials",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Sort electronics, cables & paperwork"
+    },
+    {
+      "id": "t19",
+      "category": "Room Sort & Purge",
+      "text": "Bedroom: Second round of decluttering / sorting",
+      "owner": "Camille",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Sort remaining clothes & shoes"
+    },
+    {
+      "id": "t20",
+      "category": "Room Sort & Purge",
+      "text": "Put garage items on curb and post in neighborhood group",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Free alert on Buy Nothing / Craigslist"
+    },
+    {
+      "id": "t21",
+      "category": "Room Sort & Purge",
+      "text": "Sort books, clothes, games, & decorations for donation",
+      "owner": "William & Camille",
+      "status": "Done",
+      "priority": "High Priority",
+      "notes": "Sorted and boxed for Goodwill"
+    },
+    {
+      "id": "t22",
+      "category": "Room Sort & Purge",
+      "text": "Drop off donations at Goodwill (books, clothes, games, decor)",
+      "owner": "William & Camille",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Drop off this week to free floor space"
+    },
+    {
+      "id": "t23",
+      "category": "Room Sort & Purge",
+      "text": "Take photos of rowing machine and post on Marketplace",
+      "owner": "Camille",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Machine repaired, ready to photograph & list"
+    },
+    {
+      "id": "t24",
+      "category": "Room Sort & Purge",
+      "text": "Post dining table & chairs on Marketplace",
+      "owner": "Camille",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Pending listing"
+    },
+    {
+      "id": "t25",
+      "category": "Room Sort & Purge",
+      "text": "Post living room couch for sale",
+      "owner": "Camille",
+      "status": "Pending",
+      "priority": "Low",
+      "notes": "Waiting a bit closer to move"
+    },
+    {
+      "id": "t26",
+      "category": "Room Sort & Purge",
+      "text": "Rehome/get rid of office chair, helmets (motorcycle & bike), pet ramp",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Pending disposal/sale"
+    },
+    {
+      "id": "t27",
+      "category": "Early Packing",
+      "text": "Box up suits and work clothes",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Pack in wardrobe box or flat boxes"
+    },
+    {
+      "id": "t28",
+      "category": "Early Packing",
+      "text": "Box up guest bedroom decor & books",
+      "owner": "Camille",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Small boxes for heavy books"
+    },
+    {
+      "id": "t29",
+      "category": "Home Repairs",
+      "text": "Fill nail holes & patch walls",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Use spackle & sanding sponge"
+    },
+    {
+      "id": "t30",
+      "category": "Home Repairs",
+      "text": "Repair scratches on wood trim / floors",
+      "owner": "William",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Window sills repaired"
+    },
+    {
+      "id": "t31",
+      "category": "Home Repairs",
+      "text": "Patch bike rack holes in foyer",
+      "owner": "William",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Completed"
+    },
+    {
+      "id": "t32",
+      "category": "Home Repairs",
+      "text": "Patch TV speaker holes",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Fill & sand flush"
+    },
+    {
+      "id": "t33",
+      "category": "Home Repairs",
+      "text": "Patch curtain rod holes in bedroom",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Fill & sand flush"
+    },
+    {
+      "id": "t34",
+      "category": "Home Repairs",
+      "text": "Uninstall bike mount",
+      "owner": "William",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Dismounted"
+    },
+    {
+      "id": "t35",
+      "category": "Home Repairs",
+      "text": "Uninstall dog gate in foyer",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Leave until week of move for Scout safety"
+    },
+    {
+      "id": "t36",
+      "category": "Home Repairs",
+      "text": "Repaint window sill in kitchen",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Touch-up paint"
+    },
+    {
+      "id": "t37",
+      "category": "Home Repairs",
+      "text": "Remove residue/goo from kitchen window from AC unit",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Use Goo Gone or isopropyl alcohol"
+    },
+    {
+      "id": "t38",
+      "category": "Home Repairs",
+      "text": "Remove video doorbell and reinstall original doorbell",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Do on Oct 30 before handover"
+    },
+    {
+      "id": "t39",
+      "category": "Home Repairs",
+      "text": "Remove bidet and reinstall original toilet seat",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Do on Oct 30 before handover"
+    },
+    {
+      "id": "t40",
+      "category": "Home Repairs",
+      "text": "Fix rowing machine",
+      "owner": "William",
+      "status": "Done",
+      "priority": "Medium",
+      "notes": "Repaired"
+    },
+    {
+      "id": "t41",
+      "category": "Post-Move Admin",
+      "text": "Check / modify Apartments.com payment settings (contact Brian)",
+      "owner": "William",
+      "status": "Done",
+      "priority": "High Priority",
+      "notes": "Auto-pay stopped for move-out"
+    },
+    {
+      "id": "t42",
+      "category": "Post-Move Admin",
+      "text": "Update vehicle & motorcycle insurance",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Update garaging address to California"
+    },
+    {
+      "id": "t43",
+      "category": "Post-Move Admin",
+      "text": "Update address in workplace HR system",
+      "owner": "William & Camille",
+      "status": "Pending",
+      "priority": "Medium",
+      "notes": "Tax & payroll update"
+    },
+    {
+      "id": "t44",
+      "category": "Post-Move Admin",
+      "text": "Set up USPS mail forwarding",
+      "owner": "William & Camille",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Schedule starting Oct 31"
+    },
+    {
+      "id": "t45",
+      "category": "Post-Move Admin",
+      "text": "Set up utilities at new home (Electric, Water, Internet)",
+      "owner": "William",
+      "status": "Pending",
+      "priority": "High Priority",
+      "notes": "Call utility providers in San Diego / Encinitas"
+    }
+  ],
+  "marketplace": [
+    {
+      "id": "m1",
+      "item": "Living room couch",
+      "category": "Living Room",
+      "targetPrice": "TBD",
+      "status": "Pending / Holding",
+      "notes": "Waiting a little bit before posting closer to move"
+    },
+    {
+      "id": "m2",
+      "item": "Extra bicycle",
+      "category": "Garage",
+      "targetPrice": "TBD",
+      "status": "Ready to List",
+      "notes": "Clean up & post on Marketplace"
+    },
+    {
+      "id": "m3",
+      "item": "Scout's ramps & fencing",
+      "category": "Pet Gear",
+      "targetPrice": "Free / Rehome",
+      "status": "To Rehome",
+      "notes": "Still need to get rid of pet ramp; post in local dog group"
+    },
+    {
+      "id": "m4",
+      "item": "Office chair & ottoman",
+      "category": "Office",
+      "targetPrice": "Free / Curb",
+      "status": "To Rehome",
+      "notes": "Put on curb or post on Buy Nothing"
+    },
+    {
+      "id": "m5",
+      "item": "Guest bed / Bed frame",
+      "category": "Bedroom",
+      "targetPrice": "$150",
+      "status": "Listed",
+      "notes": "Posted on Marketplace by Camille"
+    },
+    {
+      "id": "m6",
+      "item": "Motorcycle",
+      "category": "Garage / Vehicle",
+      "targetPrice": "Friend Price",
+      "status": "Listed / Pending Sale",
+      "notes": "Posted for sale; friend interested to buy Mon/Tue (10/12-10/13)"
+    },
+    {
+      "id": "m7",
+      "item": "Rowing machine",
+      "category": "Fitness / Garage",
+      "targetPrice": "$200",
+      "status": "Ready to List",
+      "notes": "Fixed by William; Camille taking photos & posting on Marketplace"
+    },
+    {
+      "id": "m8",
+      "item": "Dining table & chairs",
+      "category": "Dining Room",
+      "targetPrice": "$120",
+      "status": "Ready to List",
+      "notes": "Camille to post on Marketplace"
+    },
+    {
+      "id": "m9",
+      "item": "Motorcycle helmet",
+      "category": "Garage",
+      "targetPrice": "$30 / Free",
+      "status": "To Rehome",
+      "notes": "Need to get rid of"
+    },
+    {
+      "id": "m10",
+      "item": "Bike helmet",
+      "category": "Garage",
+      "targetPrice": "$10 / Free",
+      "status": "To Rehome",
+      "notes": "Need to get rid of"
+    },
+    {
+      "id": "m11",
+      "item": "Two fishing poles",
+      "category": "Garage",
+      "targetPrice": "Free",
+      "status": "Given Away",
+      "notes": "Gave away"
+    },
+    {
+      "id": "m12",
+      "item": "Trash can",
+      "category": "Household",
+      "targetPrice": "Free",
+      "status": "Given Away",
+      "notes": "Gave away"
+    },
+    {
+      "id": "m13",
+      "item": "Camp chair",
+      "category": "Outdoor",
+      "targetPrice": "Free",
+      "status": "Given Away",
+      "notes": "Gave away"
+    },
+    {
+      "id": "m14",
+      "item": "Christmas tree stand",
+      "category": "Seasonal",
+      "targetPrice": "Free",
+      "status": "Given Away",
+      "notes": "Gave away"
+    },
+    {
+      "id": "m15",
+      "item": "Donation lot (books, clothes, games, decor)",
+      "category": "Various",
+      "targetPrice": "Donation",
+      "status": "Pending Drop-off",
+      "notes": "Sorted and boxed for Goodwill; drop off this week"
+    }
+  ],
+  "packing": {
+    "pod": [
+      {
+        "id": "p1",
+        "text": "King Bed Mattress & Wood Frame",
+        "category": "Furniture",
+        "zone": "T1-Side",
+        "level": "Side Wall",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p2",
+        "text": "Large Dresser",
+        "category": "Furniture",
+        "zone": "T1-Base",
+        "level": "Base Floor",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p3",
+        "text": "65\" TV (In TV Box)",
+        "category": "Electronics",
+        "zone": "T1-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "medium"
+      },
+      {
+        "id": "p4",
+        "text": "40\" TV (In TV Box)",
+        "category": "Electronics",
+        "zone": "T2-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "medium"
+      },
+      {
+        "id": "p5",
+        "text": "Wood TV Stand (6ft)",
+        "category": "Furniture",
+        "zone": "T1-Base",
+        "level": "Base Floor",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p6",
+        "text": "Clothes & Shoes Boxes",
+        "category": "Bedroom",
+        "zone": "T2-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "medium"
+      },
+      {
+        "id": "p7",
+        "text": "Artwork & Mirrors (Bubble wrapped)",
+        "category": "Living Room",
+        "zone": "T1-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "light"
+      },
+      {
+        "id": "p8",
+        "text": "2 Standing Desks (Tops & Legs separated)",
+        "category": "Office",
+        "zone": "T2-Base",
+        "level": "Base Floor",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p9",
+        "text": "2 Office Chairs",
+        "category": "Office",
+        "zone": "T4-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "medium"
+      },
+      {
+        "id": "p10",
+        "text": "Desktop Computer (Well padded)",
+        "category": "Electronics",
+        "zone": "T2-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "medium"
+      },
+      {
+        "id": "p11",
+        "text": "2 Office Walking Pads",
+        "category": "Office",
+        "zone": "T3-Base",
+        "level": "Base Floor",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p12",
+        "text": "Collapsible Coffee Tables (1 Lg, 2-3 Sm)",
+        "category": "Furniture",
+        "zone": "T4-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "medium"
+      },
+      {
+        "id": "p13",
+        "text": "Acoustic Guitar",
+        "category": "Personal",
+        "zone": "T3-Top",
+        "level": "Top Trusses",
+        "packed": false,
+        "weightClass": "light"
+      },
+      {
+        "id": "p14",
+        "text": "Books (Small, heavy boxes)",
+        "category": "Living Room",
+        "zone": "T2-Base",
+        "level": "Base Floor",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p15",
+        "text": "Home Receiver, Subwoofer & Speakers",
+        "category": "Electronics",
+        "zone": "T2-Base",
+        "level": "Base Floor",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p16",
+        "text": "Record Player",
+        "category": "Electronics",
+        "zone": "T3-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "medium"
+      },
+      {
+        "id": "p17",
+        "text": "Board Games Box",
+        "category": "Living Room",
+        "zone": "T3-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "light"
+      },
+      {
+        "id": "p18",
+        "text": "Blackstone Portable Grill",
+        "category": "Outdoor",
+        "zone": "T3-Base",
+        "level": "Base Floor",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p19",
+        "text": "Small Gas Fire Pit (NO PROPANE - Disposed)",
+        "category": "Outdoor",
+        "zone": "T3-Base",
+        "level": "Base Floor",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p20",
+        "text": "Kitchen Boxes (Glasses, Pans, Spices, Utensils)",
+        "category": "Kitchen",
+        "zone": "T3-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "medium"
+      },
+      {
+        "id": "p21",
+        "text": "Small Appliances (Air Fryer, Blender)",
+        "category": "Kitchen",
+        "zone": "T3-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "medium"
+      },
+      {
+        "id": "p22",
+        "text": "Garage Boxes (~12 boxes: Outdoor, Camping, Bike Tools)",
+        "category": "Garage",
+        "zone": "T2-Mid",
+        "level": "Mid Level",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p23",
+        "text": "Folding Chairs & Extra Carpets",
+        "category": "Household",
+        "zone": "T4-Top",
+        "level": "Top Trusses",
+        "packed": false,
+        "weightClass": "light"
+      },
+      {
+        "id": "p24",
+        "text": "4 Bicycles (E-bike batteries removed for car)",
+        "category": "Outdoor",
+        "zone": "T4-Base",
+        "level": "Base Floor",
+        "packed": false,
+        "weightClass": "heavy"
+      },
+      {
+        "id": "p25",
+        "text": "2 Inflatable Paddle Boards & 1 Kayak",
+        "category": "Outdoor",
+        "zone": "T1-Top",
+        "level": "Top Trusses",
+        "packed": false,
+        "weightClass": "light"
+      }
+    ],
+    "car": [
+      {
+        "id": "c1",
+        "text": "2 Work Laptops & Chargers",
+        "category": "Tech",
+        "zone": "Upper Delicate Deck",
+        "note": "Keep in padded sleeves in reach",
+        "packed": false
+      },
+      {
+        "id": "c2",
+        "text": "1 Personal Laptop & Charger",
+        "category": "Tech",
+        "zone": "Upper Delicate Deck",
+        "note": "Keep in backpack",
+        "packed": false
+      },
+      {
+        "id": "c3",
+        "text": "4 Computer Monitors",
+        "category": "Tech",
+        "zone": "Upper Delicate Deck",
+        "note": "Padded face-down on moving blanket, ZERO weight on top!",
+        "packed": false
+      },
+      {
+        "id": "c4",
+        "text": "E-bike batteries",
+        "category": "Tech",
+        "zone": "Lower Cargo Floor",
+        "note": "Removed from bikes for temperature safety",
+        "packed": false
+      },
+      {
+        "id": "c5",
+        "text": "Folding Table",
+        "category": "Immediate Use",
+        "zone": "Lower Cargo Floor",
+        "note": "Slides flat on bottom bed",
+        "packed": false
+      },
+      {
+        "id": "c6",
+        "text": "2 Luggage Bags (10 days clothes)",
+        "category": "Clothing",
+        "zone": "Lower Cargo Floor",
+        "note": "Road trip essentials",
+        "packed": false
+      },
+      {
+        "id": "c7",
+        "text": "Inflatable Queen Mattress",
+        "category": "Bedding",
+        "zone": "Lower Cargo Floor",
+        "note": "First night in CA before POD arrives",
+        "packed": false
+      },
+      {
+        "id": "c8",
+        "text": "Bedding (Sheets, Comforter, Pillows)",
+        "category": "Bedding",
+        "zone": "Lower Cargo Floor",
+        "note": "Used as cushion between items",
+        "packed": false
+      },
+      {
+        "id": "c9",
+        "text": "Basic Kitchen Box (Pan, Olive Oil, 2 Plates)",
+        "category": "Kitchen",
+        "zone": "Lower Cargo Floor",
+        "note": "Near hatch for quick access",
+        "packed": false
+      },
+      {
+        "id": "c10",
+        "text": "Coffee Machine & Beans/Mug",
+        "category": "Kitchen",
+        "zone": "Lower Cargo Floor",
+        "note": "First thing to unpack!",
+        "packed": false
+      },
+      {
+        "id": "c11",
+        "text": "Toiletries & Daily Bathroom Essentials",
+        "category": "Personal",
+        "zone": "Underfloor / Quick-Access",
+        "note": "Easy reach during highway rest stops",
+        "packed": false
+      },
+      {
+        "id": "c12",
+        "text": "House Plants",
+        "category": "Plants",
+        "zone": "Upper Delicate Deck",
+        "note": "Secured upright in boxes so they don't tip",
+        "packed": false
+      },
+      {
+        "id": "c13",
+        "text": "Scout's Essentials (Food, Bowls, Bed, Leash, Meds)",
+        "category": "Pet Scout",
+        "zone": "Scout's Safe Haven (Rear Left)",
+        "note": "Dog bed & harness tethered to seatbelt",
+        "packed": false
+      }
+    ]
+  }
+}
