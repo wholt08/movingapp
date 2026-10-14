@@ -61,7 +61,74 @@ def pull():
         print(f"[!] Error pulling from Firebase: {e}")
         return False
 
-def push():
+def fetch_remote():
+    db_url = get_database_url()
+    if not db_url:
+        return None
+    url = f"{db_url}/moveData.json"
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'MovingAppSync/1.0'})
+        with urllib.request.urlopen(req) as response:
+            if response.status == 200:
+                return json.loads(response.read().decode('utf-8'))
+    except Exception as e:
+        print(f"[*] Note: Could not fetch remote data for merge: {e}")
+    return None
+
+def smart_merge(local, remote):
+    """
+    Intelligently merges remote cloud state into local data.
+    Ensures that any task marked 'Done' on a phone/browser is preserved
+    and not accidentally overwritten by stale local status.
+    """
+    if not remote or not isinstance(remote, dict):
+        return local
+
+    merged = json.loads(json.dumps(local)) # deepcopy
+
+    # 1. Merge Tasks
+    if "tasks" in merged and isinstance(merged["tasks"], list) and "tasks" in remote and isinstance(remote["tasks"], list):
+        remote_tasks_by_id = {t["id"]: t for t in remote["tasks"] if isinstance(t, dict) and "id" in t}
+        for t in merged["tasks"]:
+            if not isinstance(t, dict): continue
+            rt = remote_tasks_by_id.get(t.get("id"))
+            if rt:
+                # If remote marked it Done, keep it Done
+                if rt.get("status") == "Done":
+                    t["status"] = "Done"
+
+    # 2. Merge Home Repairs
+    if "homeRepairs" in merged and isinstance(merged["homeRepairs"], list) and "homeRepairs" in remote and isinstance(remote["homeRepairs"], list):
+        remote_repairs = {r["id"]: r for r in remote["homeRepairs"] if isinstance(r, dict) and "id" in r}
+        for r in merged["homeRepairs"]:
+            if not isinstance(r, dict): continue
+            rr = remote_repairs.get(r.get("id"))
+            if rr and rr.get("status") == "Done":
+                r["status"] = "Done"
+
+    # 3. Merge Packing Lists
+    if "packingLists" in merged and isinstance(merged["packingLists"], dict) and "packingLists" in remote and isinstance(remote["packingLists"], dict):
+        for container in ["pod", "subaru"]:
+            if container in merged["packingLists"] and container in remote["packingLists"]:
+                r_items = {it["id"]: it for it in remote["packingLists"][container] if isinstance(it, dict) and "id" in it}
+                for it in merged["packingLists"][container]:
+                    if not isinstance(it, dict): continue
+                    rit = r_items.get(it.get("id"))
+                    if rit and rit.get("packed") is True:
+                        it["packed"] = True
+
+    # 4. Merge Marketplace
+    if "marketplace" in merged and isinstance(merged["marketplace"], list) and "marketplace" in remote and isinstance(remote["marketplace"], list):
+        remote_mp = {m["id"]: m for m in remote["marketplace"] if isinstance(m, dict) and "id" in m}
+        for m in merged["marketplace"]:
+            if not isinstance(m, dict): continue
+            rm = remote_mp.get(m.get("id"))
+            if rm and rm.get("status") in ["Sold", "Picked up", "Rehomed"]:
+                m["status"] = rm["status"]
+
+    return merged
+
+def push(force=False):
     db_url = get_database_url()
     if not db_url:
         print("[!] Firebase database URL not configured.")
@@ -75,8 +142,18 @@ def push():
     with open(DATA_FILE, "r") as f:
         data = json.load(f)
 
+    if not force:
+        print("[*] Checking remote cloud state to prevent overwriting active phone/browser progress...")
+        remote_data = fetch_remote()
+        if remote_data:
+            data = smart_merge(data, remote_data)
+            # Write merged back to disk
+            with open(DATA_FILE, "w") as f:
+                json.dump(data, f, indent=2)
+            print("[✓] Smart merge complete: user completed items safely preserved.")
+
     url = f"{db_url}/moveData.json"
-    print(f"[*] Pushing local plan ({DATA_FILE}) to {url} ...")
+    print(f"[*] Pushing plan ({DATA_FILE}) to {url} ...")
     try:
         payload = json.dumps(data).encode('utf-8')
         req = urllib.request.Request(url, data=payload, method='PUT', headers={
@@ -100,11 +177,12 @@ def status():
 
 if __name__ == "__main__":
     cmd = sys.argv[1].lower() if len(sys.argv) > 1 else "status"
+    force_flag = "--force" in sys.argv or "-f" in sys.argv
     if cmd == "pull":
         pull()
     elif cmd == "push":
-        push()
+        push(force=force_flag)
     elif cmd == "status":
         status()
     else:
-        print("Usage: python3 sync.py [pull | push | status]")
+        print("Usage: python3 sync.py [pull | push [--force] | status]")
