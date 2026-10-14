@@ -507,7 +507,7 @@
       "notes": "Target was 10/12; needed for 10/28 drop-off (Needs street permit!)",
       "owner": "William",
       "priority": "High Priority",
-      "status": "Pending",
+      "status": "Done",
       "text": "Apply for parking permit with City of Seattle for POD"
     },
     {
@@ -516,7 +516,7 @@
       "notes": "Target 10/12",
       "owner": "William",
       "priority": "High Priority",
-      "status": "Pending",
+      "status": "Done",
       "text": "Update drop-off location on PODS portal"
     },
     {
@@ -525,7 +525,7 @@
       "notes": "Target 10/12",
       "owner": "William",
       "priority": "High Priority",
-      "status": "Pending",
+      "status": "Done",
       "text": "Sign PODS user agreement"
     },
     {
@@ -669,7 +669,7 @@
       "notes": "Drop off this week to free floor space",
       "owner": "William & Camille",
       "priority": "High Priority",
-      "status": "Pending",
+      "status": "Done",
       "text": "Drop off donations at Goodwill (books, clothes, games, decor)"
     },
     {
@@ -705,7 +705,7 @@
       "notes": "Pending disposal/sale",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Rehome/get rid of office chair, helmets (motorcycle & bike), pet ramp"
     },
     {
@@ -858,7 +858,7 @@
       "notes": "Tax & payroll update",
       "owner": "William & Camille",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Update address in workplace HR system"
     },
     {
@@ -894,7 +894,7 @@
       "notes": "Confirm water & trash billing with landlord / city",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Set up water & trash utilities at new home"
     }
   ]
