@@ -8,6 +8,9 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
     <script src="firebase_config.js"></script>
+    <!-- Three.js & OrbitControls for 3D Packing Visualizer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -603,8 +606,147 @@
                     </div>
                 </div>
 
-                <!-- 2D Interactive Elevation Cross-Section Schematic -->
-                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+                <!-- POD Visualization View Switcher: 3D Simulator vs 2D Blueprint -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                            Display Engine:
+                        </span>
+                        <div class="inline-flex rounded-xl p-1 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                            <button id="btn-pod-view-3d" onclick="switchPodSubView('3d')" class="px-3.5 py-1.5 rounded-lg transition-all bg-white dark:bg-slate-900 text-orange-600 dark:text-orange-400 shadow-xs font-bold flex items-center gap-1.5">
+                                <span>🎮 3D Spatial Simulator</span>
+                                <span class="text-[9px] bg-orange-100 dark:bg-orange-950/80 text-orange-700 dark:text-orange-300 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">3D Model</span>
+                            </button>
+                            <button id="btn-pod-view-2d" onclick="switchPodSubView('2d')" class="px-3.5 py-1.5 rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium flex items-center gap-1.5">
+                                <span>📐 2D Elevation Blueprint</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3D Navigation Tips -->
+                    <div id="pod-3d-tips" class="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400">
+                        <span class="flex items-center gap-1">🖱️ <strong>Rotate:</strong> Drag</span>
+                        <span class="flex items-center gap-1">🔍 <strong>Zoom:</strong> Scroll</span>
+                        <span class="flex items-center gap-1">✋ <strong>Pan:</strong> Right-Click</span>
+                    </div>
+                </div>
+
+                <!-- SUBVIEW A: 3D Interactive Spatial Simulator -->
+                <div id="pod-3d-view-wrapper" class="bg-slate-900 rounded-2xl border border-slate-700 p-4 shadow-xl relative overflow-hidden space-y-3">
+                    
+                    <!-- 3D Viewport Header & Real-time Controls -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 text-white pb-3 border-b border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-orange-400 flex items-center gap-1.5">
+                                <span>📦</span> 16' × 8' × 8' POD 3D Container Model
+                            </span>
+                            <span class="text-[11px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full border border-slate-700">~857 cu. ft. capacity</span>
+                        </div>
+
+                        <!-- Camera Quick Angle Buttons -->
+                        <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                            <span class="text-[11px] text-slate-400 mr-1 hidden sm:inline">Camera:</span>
+                            <button onclick="set3DCameraAngle('iso')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 border border-slate-700 transition-colors font-medium text-[11px]">3D Iso</button>
+                            <button onclick="set3DCameraAngle('side')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 border border-slate-700 transition-colors font-medium text-[11px]">Side Cutaway</button>
+                            <button onclick="set3DCameraAngle('top')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 border border-slate-700 transition-colors font-medium text-[11px]">Top Down</button>
+                            <button onclick="set3DCameraAngle('door')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 border border-slate-700 transition-colors font-medium text-[11px]">Doorway View</button>
+                            <button onclick="reset3DCamera()" class="p-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-400 hover:text-white border border-slate-700" title="Reset View">🔄</button>
+                        </div>
+                    </div>
+
+                    <!-- 3D Canvas Viewport Container -->
+                    <div class="relative w-full h-[520px] rounded-xl overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border border-slate-800 cursor-grab active:cursor-grabbing" id="pod-3d-canvas-container">
+                        <!-- Canvas injected by Three.js -->
+
+                        <!-- Overlay: X-Ray & Exploded View Controls -->
+                        <div class="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
+                            <button id="btn-3d-exploded" onclick="toggle3DExplodedView()" class="px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800/90 backdrop-blur-md border border-slate-700 text-white text-xs font-semibold shadow-md flex items-center gap-1.5 transition-all">
+                                <span>💥</span>
+                                <span id="label-3d-exploded">Exploded View: Off</span>
+                            </button>
+                            <button id="btn-3d-walls" onclick="toggle3DWalls()" class="px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800/90 backdrop-blur-md border border-slate-700 text-white text-xs font-semibold shadow-md flex items-center gap-1.5 transition-all">
+                                <span>👁️</span>
+                                <span id="label-3d-walls">Walls: Glass Translucent</span>
+                            </button>
+                        </div>
+
+                        <!-- Overlay: Container Orientation Markers -->
+                        <div class="absolute top-3 right-3 z-10 flex items-center gap-2 pointer-events-none text-[10px] font-mono">
+                            <span class="px-2 py-1 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800/80 backdrop-blur-md">⬅ Bulkhead / Cab Wall</span>
+                            <span class="px-2 py-1 rounded bg-amber-950/80 text-amber-300 border border-amber-800/80 backdrop-blur-md">Doorway / Entrance ➡</span>
+                        </div>
+
+                        <!-- Overlay: Interactive Animation Scrub & Playback Bar -->
+                        <div class="absolute bottom-3 left-3 right-3 z-10 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-xl p-3 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white">
+                            <div class="flex items-center gap-2.5 w-full sm:w-auto">
+                                <button id="btn-3d-anim-play" onclick="toggle3DAnimation()" class="px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-bold transition-all shadow-md flex items-center gap-1.5 shrink-0">
+                                    <span id="icon-3d-anim-play">▶</span>
+                                    <span id="label-3d-anim-play">Play Load Sequence</span>
+                                </button>
+                                <button onclick="reset3DAnimation()" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-medium shrink-0">
+                                    Show All
+                                </button>
+                            </div>
+
+                            <!-- Animated Step Description -->
+                            <div class="text-center sm:text-left flex-1 px-2">
+                                <span class="text-[10px] uppercase font-bold text-orange-400 block" id="anim-step-badge">Step 6 of 6 • Complete Load</span>
+                                <p class="text-xs text-slate-200 font-medium truncate" id="anim-step-desc">All items locked in place according to 60/40 axle balance blueprint.</p>
+                            </div>
+
+                            <!-- Step Buttons -->
+                            <div class="inline-flex rounded-lg p-0.5 bg-slate-800 border border-slate-700 text-[11px] font-semibold shrink-0">
+                                <button onclick="set3DAnimStep(1)" id="step-btn-1" class="px-2 py-1 rounded hover:bg-slate-700 text-slate-300">1: Base</button>
+                                <button onclick="set3DAnimStep(2)" id="step-btn-2" class="px-2 py-1 rounded hover:bg-slate-700 text-slate-300">2: Bed</button>
+                                <button onclick="set3DAnimStep(3)" id="step-btn-3" class="px-2 py-1 rounded hover:bg-slate-700 text-slate-300">3: Mid</button>
+                                <button onclick="set3DAnimStep(4)" id="step-btn-4" class="px-2 py-1 rounded hover:bg-slate-700 text-slate-300">4: Gear</button>
+                                <button onclick="set3DAnimStep(5)" id="step-btn-5" class="px-2 py-1 rounded hover:bg-slate-700 text-slate-300">5: Bikes</button>
+                                <button onclick="set3DAnimStep(6)" id="step-btn-6" class="px-2 py-1 rounded bg-orange-500 text-white font-bold">6: Top</button>
+                            </div>
+                        </div>
+
+                        <!-- Overlay: Clicked Item Inspector Card -->
+                        <div id="pod-3d-inspector" class="hidden absolute top-14 right-3 z-20 w-80 bg-slate-900/95 backdrop-blur-md border border-orange-500/50 rounded-xl p-4 shadow-2xl text-white text-xs space-y-2">
+                            <div class="flex items-start justify-between gap-2 border-b border-slate-800 pb-2">
+                                <div>
+                                    <span class="text-[10px] uppercase font-bold text-orange-400" id="insp-category">Furniture</span>
+                                    <h4 class="font-bold text-sm text-white" id="insp-name">King Mattress & Wood Frame</h4>
+                                </div>
+                                <button onclick="close3DInspector()" class="text-slate-400 hover:text-white text-base font-bold">&times;</button>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-[11px] bg-slate-800/80 p-2 rounded-lg border border-slate-700/60">
+                                <div>
+                                    <span class="text-slate-400 block text-[10px]">Estimated Dimensions</span>
+                                    <span class="font-bold text-slate-100" id="insp-dims">80" L × 12" W × 76" H</span>
+                                </div>
+                                <div>
+                                    <span class="text-slate-400 block text-[10px]">Weight & Zone</span>
+                                    <span class="font-bold text-emerald-400" id="insp-zone">Heavy • Left Wall</span>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-slate-300 leading-relaxed" id="insp-desc">
+                                Strapped upright to left-wall E-Track rails with ratchet straps.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 3D Color Legend Bar -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300 pt-1">
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-blue-600 shadow-xs"></span> Heavy Base (Floor)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-purple-600 shadow-xs"></span> Upright Mattress (E-Track)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500 shadow-xs"></span> Stacked Boxes (Mid)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-red-500 shadow-xs"></span> Fragile TVs & Electronics</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-cyan-500 shadow-xs"></span> Bicycles (Doorway)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500 shadow-xs"></span> Top Trusses (Paddleboards/Kayak)</span>
+                        </div>
+                        <span class="text-[11px] text-slate-400 italic">Click any 3D item to inspect details</span>
+                    </div>
+                </div>
+
+                <!-- SUBVIEW B: 2D Interactive Elevation Cross-Section Schematic -->
+                <div id="pod-2d-view-wrapper" class="hidden bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                         <div>
                             <h3 class="font-bold text-slate-900 dark:text-white text-base">Longitudinal Cross-Section (16' Length × 8' Height Elevation)</h3>
@@ -1921,6 +2063,7 @@
             if (tabId === 'visualizer') {
                 renderPodVisualizer();
                 renderSubaruVisualizer();
+                if (typeof onResize3D === 'function') setTimeout(onResize3D, 60);
             }
         }
 
@@ -2379,6 +2522,506 @@
             `).join('');
         }
 
+        // ================= 3D POD SPATIAL SIMULATOR ENGINE (THREE.JS) =================
+        const pod3DItems = [
+            { id: 'p1', name: 'King Bed Mattress & Wood Frame', category: 'Furniture', dims: { l: 6.8, w: 1.0, h: 6.3 }, pos: { x: -3.8, y: 3.15, z: -3.4 }, step: 2, color: 0x9333ea, weight: 'Heavy', desc: 'King mattress in encasement + bed frame upright along left wall E-Tracks.' },
+            { id: 'p2', name: 'Large Dresser', category: 'Furniture', dims: { l: 5.5, w: 1.8, h: 3.2 }, pos: { x: -6.8, y: 1.6, z: 1.2 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Solid wood dresser at front bulkhead floor.' },
+            { id: 'p5', name: 'Wood TV Stand (6ft)', category: 'Furniture', dims: { l: 6.0, w: 1.5, h: 2.0 }, pos: { x: -6.8, y: 1.0, z: -1.0 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Low center of gravity at front floor.' },
+            { id: 'p3', name: '65" TV (In TV Box)', category: 'Electronics', dims: { l: 5.4, w: 0.8, h: 3.4 }, pos: { x: -6.8, y: 3.7, z: -1.0 }, step: 3, color: 0xef4444, weight: 'Medium', desc: 'Heavy duty box upright atop TV stand.' },
+            { id: 'p8', name: '2 Standing Desks (Tops & Legs)', category: 'Office', dims: { l: 5.0, w: 2.4, h: 1.6 }, pos: { x: -3.6, y: 0.8, z: 0.8 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Desk tops padded; motor legs flat on floor.' },
+            { id: 'p14', name: 'Books (Heavy Boxes)', category: 'Living Room', dims: { l: 3.2, w: 1.6, h: 1.4 }, pos: { x: -3.6, y: 0.7, z: -1.8 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Small dense book boxes on floor tier.' },
+            { id: 'p15', name: 'Home Receiver & Speakers', category: 'Electronics', dims: { l: 2.4, w: 1.8, h: 1.6 }, pos: { x: -1.8, y: 0.8, z: -1.8 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Subwoofer and audio electronics base.' },
+            { id: 'p4', name: '40" TV (In TV Box)', category: 'Electronics', dims: { l: 3.6, w: 0.7, h: 2.4 }, pos: { x: -3.6, y: 2.6, z: -1.8 }, step: 3, color: 0xef4444, weight: 'Medium', desc: 'Bedroom TV upright in dedicated box.' },
+            { id: 'p6', name: 'Clothes & Shoes Boxes', category: 'Bedroom', dims: { l: 4.8, w: 2.8, h: 2.2 }, pos: { x: -3.6, y: 2.7, z: 0.8 }, step: 3, color: 0xf59e0b, weight: 'Medium', desc: 'Wardrobe & linen boxes stacked over desks.' },
+            { id: 'p22', name: 'Garage Boxes (~12 boxes)', category: 'Garage', dims: { l: 4.8, w: 3.2, h: 2.2 }, pos: { x: -3.6, y: 4.9, z: 0.0 }, step: 3, color: 0xf59e0b, weight: 'Heavy', desc: 'Tools, camping gear, and bike equipment.' },
+            { id: 'p7', name: 'Artwork & Mirrors', category: 'Living Room', dims: { l: 4.0, w: 0.6, h: 3.0 }, pos: { x: -6.8, y: 5.5, z: 1.2 }, step: 3, color: 0xef4444, weight: 'Light', desc: 'Upright bubble-wrapped art wedged securely.' },
+            { id: 'p18', name: 'Blackstone Portable Grill', category: 'Outdoor', dims: { l: 2.8, w: 2.0, h: 2.0 }, pos: { x: 0.2, y: 1.0, z: 1.2 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Griddle wrapped; secure base on floor.' },
+            { id: 'p19', name: 'Small Gas Fire Pit', category: 'Outdoor', dims: { l: 2.2, w: 2.0, h: 1.8 }, pos: { x: 2.0, y: 0.9, z: 1.2 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Propane disposed; burner unit strapped.' },
+            { id: 'p11', name: '2 Office Walking Pads', category: 'Office', dims: { l: 4.5, w: 2.0, h: 0.8 }, pos: { x: 1.0, y: 0.4, z: -1.6 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Treadmills laid completely flat on floor.' },
+            { id: 'p20', name: 'Kitchen Boxes (Pans, Spices)', category: 'Kitchen', dims: { l: 4.2, w: 2.8, h: 2.2 }, pos: { x: 0.5, y: 2.9, z: 0.0 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Kitchen breakables cushioned in mid tier.' },
+            { id: 'p21', name: 'Small Appliances', category: 'Kitchen', dims: { l: 3.0, w: 2.2, h: 1.8 }, pos: { x: 0.5, y: 4.9, z: -0.8 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Snug appliance boxes.' },
+            { id: 'p13', name: 'Acoustic Guitar (Hard Case)', category: 'Personal', dims: { l: 3.8, w: 1.2, h: 1.0 }, pos: { x: 1.5, y: 5.5, z: 1.0 }, step: 4, color: 0x10b981, weight: 'Light', desc: 'Guitar in hard case placed flat near top.' },
+            { id: 'p16', name: 'Record Player & Games', category: 'Electronics', dims: { l: 2.4, w: 1.6, h: 1.4 }, pos: { x: 0.5, y: 4.8, z: 1.2 }, step: 4, color: 0xef4444, weight: 'Light', desc: 'Turntable secured with needle guard.' },
+            { id: 'p24', name: '4 Bicycles (E-bike batteries in car)', category: 'Outdoor', dims: { l: 5.8, w: 3.4, h: 3.6 }, pos: { x: 4.8, y: 1.8, z: 0.0 }, step: 5, color: 0x06b6d4, weight: 'Heavy', desc: 'Alternating front/rear wheels at doorway. Padded between frames.' },
+            { id: 'p9', name: '2 Office Chairs', category: 'Office', dims: { l: 3.2, w: 2.8, h: 3.0 }, pos: { x: 4.8, y: 5.1, z: -0.8 }, step: 5, color: 0x3b82f6, weight: 'Medium', desc: 'Chairs nested/inverted over lower cargo.' },
+            { id: 'p12', name: 'Collapsible Coffee Tables', category: 'Furniture', dims: { l: 3.0, w: 2.0, h: 1.4 }, pos: { x: 4.8, y: 4.5, z: 1.2 }, step: 5, color: 0xf59e0b, weight: 'Medium', desc: 'Folded flat, padded, standing on side.' },
+            { id: 'p25', name: '2 Paddle Boards & 1 Kayak', category: 'Outdoor', dims: { l: 7.5, w: 2.6, h: 1.4 }, pos: { x: -4.0, y: 7.1, z: 0.6 }, step: 6, color: 0x10b981, weight: 'Light', desc: 'Rolled paddle boards and kayak strapped across ceiling cross-trusses.' },
+            { id: 'p23', name: 'Folding Chairs & Rugs', category: 'Household', dims: { l: 6.0, w: 2.0, h: 1.2 }, pos: { x: 3.5, y: 7.1, z: 0.0 }, step: 6, color: 0x10b981, weight: 'Light', desc: 'Rolled rugs and folding chairs placed on top layer near door.' }
+        ];
+
+        let pod3D = {
+            scene: null,
+            camera: null,
+            renderer: null,
+            controls: null,
+            raycaster: null,
+            mouse: null,
+            initialized: false,
+            itemMeshes: [],
+            wallMesh: null,
+            wallMode: 0, // 0: glass, 1: cutaway, 2: wireframe
+            exploded: false,
+            animPlaying: false,
+            animTimer: null,
+            currentStep: 6,
+            highlightedMesh: null,
+            currentSubView: '3d'
+        };
+
+        const animStepDescriptions = {
+            1: "Step 1: Heavy anchor furniture & book boxes loaded along front bulkhead floor.",
+            2: "Step 2: King mattress & wood bed frame strapped upright along left E-Track wall.",
+            3: "Step 3: Mid-tier stacked moving boxes (clothes, shoes, garage, boxed TVs).",
+            4: "Step 4: Mid-rear gear (Blackstone grill, fire pit, walking pads, kitchen, appliances).",
+            5: "Step 5: Doorway staging (4 bicycles alternating handlebars, office chairs & tables).",
+            6: "Step 6: Top trusses (paddleboards, kayak, rugs, folding chairs) & complete tie-down."
+        };
+
+        function switchPodSubView(view) {
+            pod3D.currentSubView = view;
+            const view3D = document.getElementById('pod-3d-view-wrapper');
+            const view2D = document.getElementById('pod-2d-view-wrapper');
+            const btn3D = document.getElementById('btn-pod-view-3d');
+            const btn2D = document.getElementById('btn-pod-view-2d');
+            const tips = document.getElementById('pod-3d-tips');
+
+            if (view === '3d') {
+                view3D.classList.remove('hidden');
+                view2D.classList.add('hidden');
+                btn3D.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white dark:bg-slate-900 text-orange-600 dark:text-orange-400 shadow-xs font-bold flex items-center gap-1.5";
+                btn2D.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium flex items-center gap-1.5";
+                if (tips) tips.classList.remove('hidden');
+                if (!pod3D.initialized) {
+                    setTimeout(initPOD3DScene, 50);
+                } else if (pod3D.renderer) {
+                    onResize3D();
+                }
+            } else {
+                view3D.classList.add('hidden');
+                view2D.classList.remove('hidden');
+                btn2D.className = "px-3.5 py-1.5 rounded-lg transition-all bg-white dark:bg-slate-900 text-orange-600 dark:text-orange-400 shadow-xs font-bold flex items-center gap-1.5";
+                btn3D.className = "px-3.5 py-1.5 rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium flex items-center gap-1.5";
+                if (tips) tips.classList.add('hidden');
+            }
+        }
+
+        function onResize3D() {
+            const container = document.getElementById('pod-3d-canvas-container');
+            if (!container || !pod3D.renderer || !pod3D.camera) return;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            if (width === 0 || height === 0) return;
+            pod3D.camera.aspect = width / height;
+            pod3D.camera.updateProjectionMatrix();
+            pod3D.renderer.setSize(width, height);
+        }
+
+        function initPOD3DScene() {
+            const container = document.getElementById('pod-3d-canvas-container');
+            if (!container || typeof THREE === 'undefined') return;
+            if (pod3D.initialized) return;
+
+            const width = container.clientWidth || 800;
+            const height = container.clientHeight || 520;
+
+            // Scene & Camera
+            pod3D.scene = new THREE.Scene();
+            pod3D.scene.background = new THREE.Color(0x090d16);
+
+            pod3D.camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+            pod3D.camera.position.set(18, 14, 18);
+
+            // Renderer
+            pod3D.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            pod3D.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            pod3D.renderer.setSize(width, height);
+            pod3D.renderer.shadowMap.enabled = true;
+            pod3D.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(pod3D.renderer.domElement);
+
+            // Orbit Controls
+            pod3D.controls = new THREE.OrbitControls(pod3D.camera, pod3D.renderer.domElement);
+            pod3D.controls.enableDamping = true;
+            pod3D.controls.dampingFactor = 0.05;
+            pod3D.controls.maxPolarAngle = Math.PI / 2 + 0.05;
+            pod3D.controls.minDistance = 6;
+            pod3D.controls.maxDistance = 45;
+            pod3D.controls.target.set(0, 3.8, 0);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+            pod3D.scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.85);
+            dirLight.position.set(22, 28, 20);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 1024;
+            dirLight.shadow.mapSize.height = 1024;
+            pod3D.scene.add(dirLight);
+
+            const fillLight = new THREE.DirectionalLight(0x60a5fa, 0.45);
+            fillLight.position.set(-20, 15, -20);
+            pod3D.scene.add(fillLight);
+
+            // Build 16x8x8 Container Frame & Walls
+            buildPODContainerStructure();
+
+            // Build 3D Items
+            buildPOD3DItems();
+
+            // Raycaster for click/hover
+            pod3D.raycaster = new THREE.Raycaster();
+            pod3D.mouse = new THREE.Vector2();
+
+            pod3D.renderer.domElement.addEventListener('pointerdown', onPointerDown3D);
+            window.addEventListener('resize', onResize3D);
+
+            pod3D.initialized = true;
+
+            // Render loop
+            function animateLoop() {
+                requestAnimationFrame(animateLoop);
+                pod3D.controls.update();
+
+                // Smooth interpolation for exploded view and animation
+                pod3D.itemMeshes.forEach(item => {
+                    const target = pod3D.exploded ? item.explodedPos : item.basePos;
+                    if (item.currentStepTargetVisible) {
+                        item.mesh.position.lerp(target, 0.1);
+                        item.mesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
+                    } else {
+                        const elevated = new THREE.Vector3(target.x, target.y + 14, target.z);
+                        item.mesh.position.lerp(elevated, 0.08);
+                        item.mesh.scale.lerp(new THREE.Vector3(0.01, 0.01, 0.01), 0.08);
+                    }
+                });
+
+                pod3D.renderer.render(pod3D.scene, pod3D.camera);
+            }
+            animateLoop();
+        }
+
+        function buildPODContainerStructure() {
+            const length = 16.0;
+            const width = 8.0;
+            const height = 8.0;
+
+            // Floor Plane
+            const floorGeo = new THREE.BoxGeometry(length, 0.2, width);
+            const floorMat = new THREE.MeshStandardMaterial({
+                color: 0x272421,
+                roughness: 0.8,
+                metalness: 0.1
+            });
+            const floor = new THREE.Mesh(floorGeo, floorMat);
+            floor.position.set(0, -0.1, 0);
+            floor.receiveShadow = true;
+            pod3D.scene.add(floor);
+
+            // Floor Grid Helper (1ft intervals)
+            const grid = new THREE.GridHelper(16, 16, 0xf97316, 0x334155);
+            grid.position.set(0, 0.01, 0);
+            pod3D.scene.add(grid);
+
+            // Outer Frame Beams (Heavy Steel Container Edges)
+            const frameGeo = new THREE.BoxGeometry(length, height, width);
+            const edges = new THREE.EdgesGeometry(frameGeo);
+            const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xf97316, linewidth: 2 }));
+            line.position.set(0, height / 2, 0);
+            pod3D.scene.add(line);
+
+            // Container Translucent Walls Group
+            const wallGroup = new THREE.Group();
+
+            const glassMat = new THREE.MeshPhysicalMaterial({
+                color: 0x94a3b8,
+                transparent: true,
+                opacity: 0.16,
+                roughness: 0.15,
+                metalness: 0.1,
+                side: THREE.DoubleSide
+            });
+
+            // Back Wall (Front Bulkhead Cab)
+            const backWallGeo = new THREE.PlaneGeometry(width, height);
+            const solidFrontMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6, side: THREE.DoubleSide });
+            const backWall = new THREE.Mesh(backWallGeo, solidFrontMat);
+            backWall.rotation.y = Math.PI / 2;
+            backWall.position.set(-length / 2, height / 2, 0);
+            wallGroup.add(backWall);
+
+            // Left Wall (Acrylic with E-Track)
+            const leftWallGeo = new THREE.PlaneGeometry(length, height);
+            const leftWall = new THREE.Mesh(leftWallGeo, glassMat);
+            leftWall.position.set(0, height / 2, -width / 2);
+            wallGroup.add(leftWall);
+
+            // Right Wall
+            const rightWall = new THREE.Mesh(leftWallGeo, glassMat);
+            rightWall.position.set(0, height / 2, width / 2);
+            rightWall.rotation.y = Math.PI;
+            wallGroup.add(rightWall);
+
+            // Roof
+            const roofGeo = new THREE.PlaneGeometry(length, width);
+            const roof = new THREE.Mesh(roofGeo, glassMat);
+            roof.position.set(0, height, 0);
+            roof.rotation.x = Math.PI / 2;
+            wallGroup.add(roof);
+
+            pod3D.wallMesh = wallGroup;
+            pod3D.scene.add(wallGroup);
+
+            // 4 Vertical Tier Markers along ceiling/floor
+            for (let i = 1; i <= 3; i++) {
+                const xTier = -length / 2 + i * 4;
+                const tierGeo = new THREE.BufferGeometry().setFromPoints([
+                    new THREE.Vector3(xTier, 0.05, -width / 2),
+                    new THREE.Vector3(xTier, 0.05, width / 2)
+                ]);
+                const tierLine = new THREE.Line(tierGeo, new THREE.LineDashedMaterial({ color: 0x64748b, dashSize: 0.4, gapSize: 0.2 }));
+                tierLine.computeLineDistances();
+                pod3D.scene.add(tierLine);
+            }
+
+            // Left Wall Metallic E-Track Rails at Y = 2.5ft and Y = 4.8ft
+            [2.5, 4.8].forEach(yPos => {
+                const railGeo = new THREE.BoxGeometry(length - 0.4, 0.22, 0.05);
+                const railMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.85, roughness: 0.25 });
+                const rail = new THREE.Mesh(railGeo, railMat);
+                rail.position.set(0, yPos, -width / 2 + 0.04);
+                pod3D.scene.add(rail);
+            });
+        }
+
+        function buildPOD3DItems() {
+            pod3D.itemMeshes = [];
+
+            pod3DItems.forEach(data => {
+                const geom = new THREE.BoxGeometry(data.dims.l, data.dims.h, data.dims.w);
+                const mat = new THREE.MeshStandardMaterial({
+                    color: data.color,
+                    roughness: 0.45,
+                    metalness: 0.15,
+                    transparent: true,
+                    opacity: 0.92
+                });
+                const mesh = new THREE.Mesh(geom, mat);
+                mesh.position.set(data.pos.x, data.pos.y, data.pos.z);
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
+
+                // Edge outline
+                const wireframe = new THREE.LineSegments(
+                    new THREE.EdgesGeometry(geom),
+                    new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.35 })
+                );
+                mesh.add(wireframe);
+
+                mesh.userData = data;
+                pod3D.scene.add(mesh);
+
+                const explodedPos = new THREE.Vector3(
+                    data.pos.x * 1.25,
+                    data.pos.y * 1.55 + 0.8,
+                    data.pos.z * 1.3
+                );
+
+                pod3D.itemMeshes.push({
+                    id: data.id,
+                    mesh: mesh,
+                    basePos: new THREE.Vector3(data.pos.x, data.pos.y, data.pos.z),
+                    explodedPos: explodedPos,
+                    step: data.step,
+                    data: data,
+                    currentStepTargetVisible: true
+                });
+            });
+        }
+
+        function onPointerDown3D(event) {
+            const container = document.getElementById('pod-3d-canvas-container');
+            if (!container) return;
+            const rect = container.getBoundingClientRect();
+            pod3D.mouse.x = ((event.clientX - rect.left) / container.clientWidth) * 2 - 1;
+            pod3D.mouse.y = -((event.clientY - rect.top) / container.clientHeight) * 2 + 1;
+
+            pod3D.raycaster.setFromCamera(pod3D.mouse, pod3D.camera);
+            const meshes = pod3D.itemMeshes.map(m => m.mesh);
+            const intersects = pod3D.raycaster.intersectObjects(meshes);
+
+            if (intersects.length > 0) {
+                const hit = intersects[0].object;
+                inspect3DItem(hit.userData);
+            }
+        }
+
+        function set3DCameraAngle(angle) {
+            if (!pod3D.controls || !pod3D.camera) return;
+            switch (angle) {
+                case 'iso':
+                    pod3D.camera.position.set(18, 14, 18);
+                    pod3D.controls.target.set(0, 3.8, 0);
+                    break;
+                case 'side':
+                    pod3D.camera.position.set(0, 4.5, 23);
+                    pod3D.controls.target.set(0, 4.0, 0);
+                    break;
+                case 'top':
+                    pod3D.camera.position.set(0, 26, 0.01);
+                    pod3D.controls.target.set(0, 0, 0);
+                    break;
+                case 'door':
+                    pod3D.camera.position.set(20, 4.2, 0);
+                    pod3D.controls.target.set(0, 3.5, 0);
+                    break;
+            }
+            pod3D.controls.update();
+        }
+
+        function reset3DCamera() {
+            set3DCameraAngle('iso');
+        }
+
+        function toggle3DExplodedView() {
+            pod3D.exploded = !pod3D.exploded;
+            const btn = document.getElementById('btn-3d-exploded');
+            const label = document.getElementById('label-3d-exploded');
+            if (pod3D.exploded) {
+                btn.className = "px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold shadow-lg flex items-center gap-1.5 transition-all";
+                label.textContent = "Exploded View: ON";
+            } else {
+                btn.className = "px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800/90 backdrop-blur-md border border-slate-700 text-white text-xs font-semibold shadow-md flex items-center gap-1.5 transition-all";
+                label.textContent = "Exploded View: Off";
+            }
+        }
+
+        function toggle3DWalls() {
+            pod3D.wallMode = (pod3D.wallMode + 1) % 3;
+            const label = document.getElementById('label-3d-walls');
+            const wallMesh = pod3D.wallMesh;
+            if (!wallMesh) return;
+
+            if (pod3D.wallMode === 0) {
+                wallMesh.visible = true;
+                wallMesh.children.forEach(child => child.visible = true);
+                label.textContent = "Walls: Glass Translucent";
+            } else if (pod3D.wallMode === 1) {
+                wallMesh.visible = true;
+                if (wallMesh.children[2]) wallMesh.children[2].visible = false;
+                label.textContent = "Walls: Cutaway (Open Side)";
+            } else {
+                wallMesh.visible = false;
+                label.textContent = "Walls: Wireframe Only";
+            }
+        }
+
+        function set3DAnimStep(step) {
+            pod3D.currentStep = step;
+            for (let i = 1; i <= 6; i++) {
+                const btn = document.getElementById(`step-btn-${i}`);
+                if (btn) {
+                    if (i === step) {
+                        btn.className = "px-2 py-1 rounded bg-orange-500 text-white font-bold";
+                    } else {
+                        btn.className = "px-2 py-1 rounded hover:bg-slate-700 text-slate-300";
+                    }
+                }
+            }
+
+            document.getElementById('anim-step-badge').textContent = `Step ${step} of 6 • ${getStepTitle(step)}`;
+            document.getElementById('anim-step-desc').textContent = animStepDescriptions[step] || "";
+
+            pod3D.itemMeshes.forEach(item => {
+                item.currentStepTargetVisible = (item.step <= step);
+            });
+        }
+
+        function getStepTitle(step) {
+            const titles = { 1: "Base Heavy", 2: "King Mattress", 3: "Mid Stacks", 4: "Outdoor & Appliances", 5: "Doorway Bikes", 6: "Complete Load" };
+            return titles[step] || "Step";
+        }
+
+        function toggle3DAnimation() {
+            if (pod3D.animPlaying) {
+                clearInterval(pod3D.animTimer);
+                pod3D.animPlaying = false;
+                document.getElementById('icon-3d-anim-play').textContent = "▶";
+                document.getElementById('label-3d-anim-play').textContent = "Resume Sequence";
+            } else {
+                pod3D.animPlaying = true;
+                document.getElementById('icon-3d-anim-play').textContent = "⏸";
+                document.getElementById('label-3d-anim-play').textContent = "Pause Sequence";
+
+                if (pod3D.currentStep >= 6) {
+                    set3DAnimStep(1);
+                }
+
+                pod3D.animTimer = setInterval(() => {
+                    let next = pod3D.currentStep + 1;
+                    if (next > 6) {
+                        next = 6;
+                        clearInterval(pod3D.animTimer);
+                        pod3D.animPlaying = false;
+                        document.getElementById('icon-3d-anim-play').textContent = "▶";
+                        document.getElementById('label-3d-anim-play').textContent = "Replay Sequence";
+                    }
+                    set3DAnimStep(next);
+                }, 1800);
+            }
+        }
+
+        function reset3DAnimation() {
+            if (pod3D.animTimer) clearInterval(pod3D.animTimer);
+            pod3D.animPlaying = false;
+            document.getElementById('icon-3d-anim-play').textContent = "▶";
+            document.getElementById('label-3d-anim-play').textContent = "Play Load Sequence";
+            set3DAnimStep(6);
+        }
+
+        function inspect3DItem(itemData) {
+            if (!itemData) return;
+            const inspector = document.getElementById('pod-3d-inspector');
+            if (!inspector) return;
+
+            document.getElementById('insp-category').textContent = itemData.category || "Cargo";
+            document.getElementById('insp-name').textContent = itemData.name;
+            const dims = itemData.dims;
+            document.getElementById('insp-dims').textContent = `${Math.round(dims.l * 12)}"L × ${Math.round(dims.w * 12)}"W × ${Math.round(dims.h * 12)}"H (~${Math.round(dims.l * dims.w * dims.h)} cu.ft)`;
+            document.getElementById('insp-zone').textContent = `${itemData.weight || 'Medium'} • Tier ${itemData.step}`;
+            document.getElementById('insp-desc').textContent = itemData.desc || "";
+
+            inspector.classList.remove('hidden');
+
+            if (pod3D.highlightedMesh && pod3D.highlightedMesh.material) {
+                pod3D.highlightedMesh.material.emissive.setHex(0x000000);
+            }
+            const found = pod3D.itemMeshes.find(m => m.id === itemData.id);
+            if (found && found.mesh.material) {
+                found.mesh.material.emissive.setHex(0x332200);
+                pod3D.highlightedMesh = found.mesh;
+            }
+        }
+
+        function close3DInspector() {
+            const inspector = document.getElementById('pod-3d-inspector');
+            if (inspector) inspector.classList.add('hidden');
+            if (pod3D.highlightedMesh && pod3D.highlightedMesh.material) {
+                pod3D.highlightedMesh.material.emissive.setHex(0x000000);
+                pod3D.highlightedMesh = null;
+            }
+        }
+
+        function highlightPodItemIn3D(itemId) {
+            const found = pod3DItems.find(i => i.id === itemId);
+            if (found) {
+                if (pod3D.currentSubView !== '3d') {
+                    switchPodSubView('3d');
+                }
+                inspect3DItem(found);
+            }
+        }
+
         // ================= PACKING VISUALIZER LOGIC =================
         function switchVisualizerMode(mode) {
             const podSection = document.getElementById('viz-pod-container');
@@ -2443,6 +3086,10 @@
             const rearPct = 100 - frontPct;
             document.getElementById('pod-balance-label').textContent = `${frontPct}% Front / ${rearPct}% Rear`;
 
+            if (pod3D.currentSubView === '3d' && !pod3D.initialized) {
+                setTimeout(initPOD3DScene, 100);
+            }
+
             renderPodVisualizerTable();
         }
 
@@ -2474,8 +3121,11 @@
 
             tbody.innerHTML = items.map(item => `
                 <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td class="p-3 font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                    <td class="p-3 font-semibold text-slate-900 dark:text-white flex items-center justify-between gap-2">
                         <span>${item.text}</span>
+                        <button onclick="highlightPodItemIn3D('${item.id}')" title="Inspect in 3D Simulator" class="text-[10px] bg-orange-100 dark:bg-orange-950/80 hover:bg-orange-200 text-orange-700 dark:text-orange-300 font-bold px-2 py-0.5 rounded border border-orange-200 dark:border-orange-900/60 transition-colors shrink-0">
+                            📦 3D View
+                        </button>
                     </td>
                     <td class="p-3 text-slate-500">${item.category || 'General'}</td>
                     <td class="p-3">
