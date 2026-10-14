@@ -2524,29 +2524,29 @@
 
         // ================= 3D POD SPATIAL SIMULATOR ENGINE (THREE.JS) =================
         const pod3DItems = [
-            { id: 'p1', name: 'King Bed Mattress & Wood Frame', category: 'Furniture', dims: { l: 6.8, w: 1.0, h: 6.3 }, pos: { x: -3.8, y: 3.15, z: -3.4 }, step: 2, color: 0x9333ea, weight: 'Heavy', desc: 'King mattress in encasement + bed frame upright along left wall E-Tracks.' },
-            { id: 'p2', name: 'Large Dresser', category: 'Furniture', dims: { l: 5.5, w: 1.8, h: 3.2 }, pos: { x: -6.8, y: 1.6, z: 1.2 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Solid wood dresser at front bulkhead floor.' },
-            { id: 'p5', name: 'Wood TV Stand (6ft)', category: 'Furniture', dims: { l: 6.0, w: 1.5, h: 2.0 }, pos: { x: -6.8, y: 1.0, z: -1.0 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Low center of gravity at front floor.' },
-            { id: 'p3', name: '65" TV (In TV Box)', category: 'Electronics', dims: { l: 5.4, w: 0.8, h: 3.4 }, pos: { x: -6.8, y: 3.7, z: -1.0 }, step: 3, color: 0xef4444, weight: 'Medium', desc: 'Heavy duty box upright atop TV stand.' },
-            { id: 'p8', name: '2 Standing Desks (Tops & Legs)', category: 'Office', dims: { l: 5.0, w: 2.4, h: 1.6 }, pos: { x: -3.6, y: 0.8, z: 0.8 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Desk tops padded; motor legs flat on floor.' },
-            { id: 'p14', name: 'Books (Heavy Boxes)', category: 'Living Room', dims: { l: 3.2, w: 1.6, h: 1.4 }, pos: { x: -3.6, y: 0.7, z: -1.8 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Small dense book boxes on floor tier.' },
-            { id: 'p15', name: 'Home Receiver & Speakers', category: 'Electronics', dims: { l: 2.4, w: 1.8, h: 1.6 }, pos: { x: -1.8, y: 0.8, z: -1.8 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Subwoofer and audio electronics base.' },
-            { id: 'p4', name: '40" TV (In TV Box)', category: 'Electronics', dims: { l: 3.6, w: 0.7, h: 2.4 }, pos: { x: -3.6, y: 2.6, z: -1.8 }, step: 3, color: 0xef4444, weight: 'Medium', desc: 'Bedroom TV upright in dedicated box.' },
-            { id: 'p6', name: 'Clothes & Shoes Boxes', category: 'Bedroom', dims: { l: 4.8, w: 2.8, h: 2.2 }, pos: { x: -3.6, y: 2.7, z: 0.8 }, step: 3, color: 0xf59e0b, weight: 'Medium', desc: 'Wardrobe & linen boxes stacked over desks.' },
-            { id: 'p22', name: 'Garage Boxes (~12 boxes)', category: 'Garage', dims: { l: 4.8, w: 3.2, h: 2.2 }, pos: { x: -3.6, y: 4.9, z: 0.0 }, step: 3, color: 0xf59e0b, weight: 'Heavy', desc: 'Tools, camping gear, and bike equipment.' },
-            { id: 'p7', name: 'Artwork & Mirrors', category: 'Living Room', dims: { l: 4.0, w: 0.6, h: 3.0 }, pos: { x: -6.8, y: 5.5, z: 1.2 }, step: 3, color: 0xef4444, weight: 'Light', desc: 'Upright bubble-wrapped art wedged securely.' },
-            { id: 'p18', name: 'Blackstone Portable Grill', category: 'Outdoor', dims: { l: 2.8, w: 2.0, h: 2.0 }, pos: { x: 0.2, y: 1.0, z: 1.2 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Griddle wrapped; secure base on floor.' },
-            { id: 'p19', name: 'Small Gas Fire Pit', category: 'Outdoor', dims: { l: 2.2, w: 2.0, h: 1.8 }, pos: { x: 2.0, y: 0.9, z: 1.2 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Propane disposed; burner unit strapped.' },
-            { id: 'p11', name: '2 Office Walking Pads', category: 'Office', dims: { l: 4.5, w: 2.0, h: 0.8 }, pos: { x: 1.0, y: 0.4, z: -1.6 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Treadmills laid completely flat on floor.' },
-            { id: 'p20', name: 'Kitchen Boxes (Pans, Spices)', category: 'Kitchen', dims: { l: 4.2, w: 2.8, h: 2.2 }, pos: { x: 0.5, y: 2.9, z: 0.0 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Kitchen breakables cushioned in mid tier.' },
-            { id: 'p21', name: 'Small Appliances', category: 'Kitchen', dims: { l: 3.0, w: 2.2, h: 1.8 }, pos: { x: 0.5, y: 4.9, z: -0.8 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Snug appliance boxes.' },
-            { id: 'p13', name: 'Acoustic Guitar (Hard Case)', category: 'Personal', dims: { l: 3.8, w: 1.2, h: 1.0 }, pos: { x: 1.5, y: 5.5, z: 1.0 }, step: 4, color: 0x10b981, weight: 'Light', desc: 'Guitar in hard case placed flat near top.' },
-            { id: 'p16', name: 'Record Player & Games', category: 'Electronics', dims: { l: 2.4, w: 1.6, h: 1.4 }, pos: { x: 0.5, y: 4.8, z: 1.2 }, step: 4, color: 0xef4444, weight: 'Light', desc: 'Turntable secured with needle guard.' },
-            { id: 'p24', name: '4 Bicycles (E-bike batteries in car)', category: 'Outdoor', dims: { l: 5.8, w: 3.4, h: 3.6 }, pos: { x: 4.8, y: 1.8, z: 0.0 }, step: 5, color: 0x06b6d4, weight: 'Heavy', desc: 'Alternating front/rear wheels at doorway. Padded between frames.' },
-            { id: 'p9', name: '2 Office Chairs', category: 'Office', dims: { l: 3.2, w: 2.8, h: 3.0 }, pos: { x: 4.8, y: 5.1, z: -0.8 }, step: 5, color: 0x3b82f6, weight: 'Medium', desc: 'Chairs nested/inverted over lower cargo.' },
-            { id: 'p12', name: 'Collapsible Coffee Tables', category: 'Furniture', dims: { l: 3.0, w: 2.0, h: 1.4 }, pos: { x: 4.8, y: 4.5, z: 1.2 }, step: 5, color: 0xf59e0b, weight: 'Medium', desc: 'Folded flat, padded, standing on side.' },
-            { id: 'p25', name: '2 Paddle Boards & 1 Kayak', category: 'Outdoor', dims: { l: 7.5, w: 2.6, h: 1.4 }, pos: { x: -4.0, y: 7.1, z: 0.6 }, step: 6, color: 0x10b981, weight: 'Light', desc: 'Rolled paddle boards and kayak strapped across ceiling cross-trusses.' },
-            { id: 'p23', name: 'Folding Chairs & Rugs', category: 'Household', dims: { l: 6.0, w: 2.0, h: 1.2 }, pos: { x: 3.5, y: 7.1, z: 0.0 }, step: 6, color: 0x10b981, weight: 'Light', desc: 'Rolled rugs and folding chairs placed on top layer near door.' }
+            { id: 'p1', name: 'King Bed Mattress & Wood Frame', category: 'Furniture', size: { x: 6.8, y: 6.3, z: 0.9 }, dims: { l: 6.8, h: 6.3, w: 0.9 }, pos: { x: -3.5, y: 3.15, z: -3.45 }, step: 2, color: 0x9333ea, weight: 'Heavy', desc: 'King mattress in encasement + bed frame upright along left wall E-Tracks.' },
+            { id: 'p2', name: 'Large Dresser', category: 'Furniture', size: { x: 1.8, y: 3.2, z: 5.2 }, dims: { l: 1.8, h: 3.2, w: 5.2 }, pos: { x: -7.0, y: 1.6, z: 1.3 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Solid wood dresser at front bulkhead floor, spanning across right wall.' },
+            { id: 'p5', name: 'Wood TV Stand (6ft)', category: 'Furniture', size: { x: 1.6, y: 2.0, z: 5.8 }, dims: { l: 1.6, h: 2.0, w: 5.8 }, pos: { x: -5.2, y: 1.0, z: 0.9 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Low center of gravity at front floor, spanning full container width.' },
+            { id: 'p3', name: '65" TV (In TV Box)', category: 'Electronics', size: { x: 0.8, y: 3.4, z: 5.2 }, dims: { l: 0.8, h: 3.4, w: 5.2 }, pos: { x: -7.0, y: 4.9, z: 1.3 }, step: 3, color: 0xef4444, weight: 'Medium', desc: 'Heavy duty box upright atop dresser at front bulkhead.' },
+            { id: 'p7', name: 'Artwork & Mirrors', category: 'Living Room', size: { x: 0.7, y: 2.8, z: 4.6 }, dims: { l: 0.7, h: 2.8, w: 4.6 }, pos: { x: -5.2, y: 3.4, z: 0.9 }, step: 3, color: 0xef4444, weight: 'Light', desc: 'Upright bubble-wrapped art secured atop TV stand.' },
+            { id: 'p25', name: '2 Paddle Boards & 1 Kayak', category: 'Outdoor', size: { x: 7.0, y: 1.3, z: 3.4 }, dims: { l: 7.0, h: 1.3, w: 3.4 }, pos: { x: -4.2, y: 7.25, z: 1.2 }, step: 6, color: 0x10b981, weight: 'Light', desc: 'Rolled paddle boards and kayak strapped across ceiling cross-trusses.' },
+            { id: 'p8', name: '2 Standing Desks (Tops & Legs)', category: 'Office', size: { x: 4.2, y: 1.6, z: 2.4 }, dims: { l: 4.2, h: 1.6, w: 2.4 }, pos: { x: -2.0, y: 0.8, z: 2.65 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Padded desk tops & motor legs along right wall floor.' },
+            { id: 'p14', name: 'Books (Heavy Boxes)', category: 'Living Room', size: { x: 3.2, y: 1.4, z: 2.4 }, dims: { l: 3.2, h: 1.4, w: 2.4 }, pos: { x: -2.2, y: 0.7, z: -1.35 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Small dense book boxes on floor tier between mattress and desks.' },
+            { id: 'p15', name: 'Home Receiver & Speakers', category: 'Electronics', size: { x: 1.4, y: 1.4, z: 2.2 }, dims: { l: 1.4, h: 1.4, w: 2.2 }, pos: { x: -0.3, y: 0.7, z: -1.35 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Subwoofer and audio electronics base on floor.' },
+            { id: 'p4', name: '40" TV (In TV Box)', category: 'Electronics', size: { x: 3.4, y: 2.3, z: 0.7 }, dims: { l: 3.4, h: 2.3, w: 0.7 }, pos: { x: -2.2, y: 2.55, z: -0.45 }, step: 3, color: 0xef4444, weight: 'Medium', desc: 'Bedroom TV upright in dedicated box over book tier.' },
+            { id: 'p6', name: 'Clothes & Shoes Boxes', category: 'Bedroom', size: { x: 3.8, y: 2.4, z: 2.4 }, dims: { l: 3.8, h: 2.4, w: 2.4 }, pos: { x: -2.0, y: 2.8, z: 2.65 }, step: 3, color: 0xf59e0b, weight: 'Medium', desc: 'Wardrobe & linen boxes stacked directly over standing desks along right wall.' },
+            { id: 'p22', name: 'Garage Boxes (~12 boxes)', category: 'Garage', size: { x: 3.6, y: 2.2, z: 4.8 }, dims: { l: 3.6, h: 2.2, w: 4.8 }, pos: { x: -2.0, y: 5.1, z: 1.0 }, step: 3, color: 0xf59e0b, weight: 'Heavy', desc: 'Tools, camping gear, and bike equipment stacked mid-high across width.' },
+            { id: 'p18', name: 'Blackstone Portable Grill', category: 'Outdoor', size: { x: 2.4, y: 2.0, z: 2.2 }, dims: { l: 2.4, h: 2.0, w: 2.2 }, pos: { x: 1.4, y: 1.0, z: 2.7 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Griddle wrapped; secure base on floor along right wall.' },
+            { id: 'p19', name: 'Small Gas Fire Pit', category: 'Outdoor', size: { x: 2.0, y: 1.8, z: 2.2 }, dims: { l: 2.0, h: 1.8, w: 2.2 }, pos: { x: 3.6, y: 0.9, z: 2.7 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Propane disposed; burner unit strapped along right wall.' },
+            { id: 'p11', name: '2 Office Walking Pads', category: 'Office', size: { x: 4.4, y: 0.6, z: 3.8 }, dims: { l: 4.4, h: 0.6, w: 3.8 }, pos: { x: 2.3, y: 0.3, z: -1.7 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Treadmills laid completely flat on floor across center/left.' },
+            { id: 'p20', name: 'Kitchen Boxes (Pans, Spices)', category: 'Kitchen', size: { x: 4.2, y: 2.4, z: 3.8 }, dims: { l: 4.2, h: 2.4, w: 3.8 }, pos: { x: 2.3, y: 1.8, z: -1.7 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Kitchen breakables cushioned in mid tier over walking pads.' },
+            { id: 'p21', name: 'Small Appliances', category: 'Kitchen', size: { x: 3.2, y: 1.8, z: 3.0 }, dims: { l: 3.2, h: 1.8, w: 3.0 }, pos: { x: 2.2, y: 3.9, z: -1.5 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Snug appliance boxes stacked above kitchen tier.' },
+            { id: 'p13', name: 'Acoustic Guitar (Hard Case)', category: 'Personal', size: { x: 3.8, y: 1.0, z: 1.3 }, dims: { l: 3.8, h: 1.0, w: 1.3 }, pos: { x: 1.9, y: 2.5, z: 2.5 }, step: 4, color: 0x10b981, weight: 'Light', desc: 'Guitar in hard case placed flat over outdoor gear.' },
+            { id: 'p16', name: 'Record Player & Games', category: 'Electronics', size: { x: 2.2, y: 1.4, z: 1.8 }, dims: { l: 2.2, h: 1.4, w: 1.8 }, pos: { x: 3.4, y: 2.5, z: 2.5 }, step: 4, color: 0xef4444, weight: 'Light', desc: 'Turntable secured with needle guard above fire pit tier.' },
+            { id: 'p24', name: '4 Bicycles (E-bike batteries in car)', category: 'Outdoor', size: { x: 2.4, y: 3.8, z: 7.2 }, dims: { l: 2.4, h: 3.8, w: 7.2 }, pos: { x: 6.2, y: 1.9, z: 0.0 }, step: 5, color: 0x06b6d4, weight: 'Heavy', desc: 'Alternating front/rear wheels spanning across full doorway width. Padded between frames.' },
+            { id: 'p9', name: '2 Office Chairs', category: 'Office', size: { x: 2.4, y: 2.8, z: 4.4 }, dims: { l: 2.4, h: 2.8, w: 4.4 }, pos: { x: 6.2, y: 5.2, z: -1.2 }, step: 5, color: 0x3b82f6, weight: 'Medium', desc: 'Chairs nested/inverted over lower bike cargo at doorway.' },
+            { id: 'p12', name: 'Collapsible Coffee Tables', category: 'Furniture', size: { x: 2.4, y: 1.8, z: 2.2 }, dims: { l: 2.4, h: 1.8, w: 2.2 }, pos: { x: 6.2, y: 4.7, z: 2.5 }, step: 5, color: 0xf59e0b, weight: 'Medium', desc: 'Folded flat, padded, standing on side along right wall next to chairs.' },
+            { id: 'p23', name: 'Folding Chairs & Rugs', category: 'Household', size: { x: 2.2, y: 1.1, z: 6.6 }, dims: { l: 2.2, h: 1.1, w: 6.6 }, pos: { x: 6.2, y: 7.2, z: 0.0 }, step: 6, color: 0x10b981, weight: 'Light', desc: 'Rolled rugs and folding chairs placed on top layer spanning doorway ceiling.' }
         ];
 
         let pod3D = {
@@ -2798,7 +2798,10 @@
             pod3D.itemMeshes = [];
 
             pod3DItems.forEach(data => {
-                const geom = new THREE.BoxGeometry(data.dims.l, data.dims.h, data.dims.w);
+                const sx = data.size ? data.size.x : data.dims.l;
+                const sy = data.size ? data.size.y : data.dims.h;
+                const sz = data.size ? data.size.z : data.dims.w;
+                const geom = new THREE.BoxGeometry(sx, sy, sz);
                 const mat = new THREE.MeshStandardMaterial({
                     color: data.color,
                     roughness: 0.45,
@@ -2818,13 +2821,24 @@
                 );
                 mesh.add(wireframe);
 
+                // Authentic visual tie-down ratchet straps on King Mattress
+                if (data.id === 'p1') {
+                    [-1.8, 1.8].forEach(strapX => {
+                        const strapGeo = new THREE.BoxGeometry(0.12, sy + 0.04, sz + 0.04);
+                        const strapMat = new THREE.MeshStandardMaterial({ color: 0xf97316, roughness: 0.3 });
+                        const strapMesh = new THREE.Mesh(strapGeo, strapMat);
+                        strapMesh.position.set(strapX, 0, 0);
+                        mesh.add(strapMesh);
+                    });
+                }
+
                 mesh.userData = data;
                 pod3D.scene.add(mesh);
 
                 const explodedPos = new THREE.Vector3(
-                    data.pos.x * 1.25,
-                    data.pos.y * 1.55 + 0.8,
-                    data.pos.z * 1.3
+                    data.pos.x * 1.08,
+                    data.pos.y * 1.35 + 1.2,
+                    data.pos.z * 1.05
                 );
 
                 pod3D.itemMeshes.push({
@@ -2986,8 +3000,8 @@
 
             document.getElementById('insp-category').textContent = itemData.category || "Cargo";
             document.getElementById('insp-name').textContent = itemData.name;
-            const dims = itemData.dims;
-            document.getElementById('insp-dims').textContent = `${Math.round(dims.l * 12)}"L × ${Math.round(dims.w * 12)}"W × ${Math.round(dims.h * 12)}"H (~${Math.round(dims.l * dims.w * dims.h)} cu.ft)`;
+            const sz = itemData.size || { x: itemData.dims.l, y: itemData.dims.h, z: itemData.dims.w };
+            document.getElementById('insp-dims').textContent = `${Math.round(sz.x * 12)}"L × ${Math.round(sz.z * 12)}"W × ${Math.round(sz.y * 12)}"H (~${Math.round(sz.x * sz.y * sz.z)} cu.ft)`;
             document.getElementById('insp-zone').textContent = `${itemData.weight || 'Medium'} • Tier ${itemData.step}`;
             document.getElementById('insp-desc').textContent = itemData.desc || "";
 
