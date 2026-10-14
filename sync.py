@@ -11,6 +11,12 @@ import json
 import urllib.request
 import urllib.error
 
+# Ensure stdout supports UTF-8 on Windows
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+if hasattr(sys.stderr, 'reconfigure'):
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(SCRIPT_DIR, "data", "move_data.json")
 CONFIG_FILE = os.path.join(SCRIPT_DIR, "firebase_config.json")
@@ -19,7 +25,7 @@ def load_config():
     if not os.path.exists(CONFIG_FILE):
         return None
     try:
-        with open(CONFIG_FILE, "r") as f:
+        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception as e:
         print(f"Error loading {CONFIG_FILE}: {e}")
@@ -53,7 +59,7 @@ def pull():
                     print("[!] Remote database is empty. Push local data first.")
                     return False
                 os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
-                with open(DATA_FILE, "w") as f:
+                with open(DATA_FILE, "w", encoding="utf-8") as f:
                     json.dump(data, f, indent=2)
                 print(f"[✓] Successfully updated {DATA_FILE} with latest cloud data!")
                 return True
@@ -139,7 +145,7 @@ def push(force=False):
         print(f"[!] {DATA_FILE} not found!")
         return False
 
-    with open(DATA_FILE, "r") as f:
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     if not force:
@@ -148,7 +154,7 @@ def push(force=False):
         if remote_data:
             data = smart_merge(data, remote_data)
             # Write merged back to disk
-            with open(DATA_FILE, "w") as f:
+            with open(DATA_FILE, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2)
             print("[✓] Smart merge complete: user completed items safely preserved.")
 
