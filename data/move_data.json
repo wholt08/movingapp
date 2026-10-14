@@ -625,6 +625,26 @@
       "timeframe": "This Week"
     },
     {
+      "category": "Supplies & Purchases",
+      "id": "t49",
+      "notes": "For kitchen window sill and wall scuffs",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Get white and off-white/cream touch-up paint",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Supplies & Purchases",
+      "id": "t50",
+      "notes": "For cleaning window sill residue from AC unit",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Get Goo Gone (for cleaning window sill)",
+      "timeframe": "This Week"
+    },
+    {
       "category": "Room Sort & Purge",
       "id": "t15",
       "notes": "Completed",

@@ -1434,6 +1434,26 @@
                                 "timeframe": "This Week"
                 },
                 {
+                                "category": "Supplies & Purchases",
+                                "id": "t49",
+                                "notes": "For kitchen window sill and wall scuffs",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Get white and off-white/cream touch-up paint",
+                                "timeframe": "This Week"
+                },
+                {
+                                "category": "Supplies & Purchases",
+                                "id": "t50",
+                                "notes": "For cleaning window sill residue from AC unit",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Get Goo Gone (for cleaning window sill)",
+                                "timeframe": "This Week"
+                },
+                {
                                 "category": "Room Sort & Purge",
                                 "id": "t15",
                                 "notes": "Completed",
@@ -1877,6 +1897,13 @@
                             if (!item.zone && defaultMoveData.packing.car[idx]) {
                                 item.zone = defaultMoveData.packing.car[idx].zone;
                                 item.note = defaultMoveData.packing.car[idx].note;
+                            }
+                        });
+                    }
+                    if (moveData.tasks && defaultMoveData.tasks) {
+                        defaultMoveData.tasks.forEach(defTask => {
+                            if (!moveData.tasks.some(t => t.id === defTask.id)) {
+                                moveData.tasks.push(JSON.parse(JSON.stringify(defTask)));
                             }
                         });
                     }
