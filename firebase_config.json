@@ -1,5 +1,3 @@
 {
-  "databaseURL": "",
-  "apiKey": "",
-  "projectId": ""
+  "databaseURL": "https://moving-app-388a7-default-rtdb.firebaseio.com"
 }
