@@ -1807,7 +1807,8 @@
                     { id: "p22", text: "Garage Boxes (~12 boxes: Outdoor, Camping, Bike Tools)", category: "Garage", zone: "T2-Mid", level: "Mid Level", packed: false, weightClass: "heavy" },
                     { id: "p23", text: "Folding Chairs & Extra Carpets", category: "Household", zone: "T4-Top", level: "Top Trusses", packed: false, weightClass: "light" },
                     { id: "p24", text: "4 Bicycles (E-bike batteries removed for car)", category: "Outdoor", zone: "T4-Base", level: "Base Floor", packed: false, weightClass: "heavy" },
-                    { id: "p25", text: "2 Inflatable Paddle Boards & 1 Kayak", category: "Outdoor", zone: "T1-Top", level: "Top Trusses", packed: false, weightClass: "light" }
+                    { id: "p25", text: "2 Inflatable Paddle Boards & 1 Kayak", category: "Outdoor", zone: "T1-Top", level: "Top Trusses", packed: false, weightClass: "light" },
+                    { id: "p26", text: "2 Portable A/C Units (Drained & Upright)", category: "Appliances", zone: "T3-Base", level: "Base Floor", packed: false, weightClass: "heavy" }
                 ],
                 car: [
                     { id: "c1", text: "2 Work Laptops & Chargers", category: "Tech", zone: "Upper Delicate Deck", note: "Keep in padded sleeves in reach", packed: false },
@@ -1862,6 +1863,12 @@
                             if (!item.zone && defaultMoveData.packing.pod[idx]) {
                                 item.zone = defaultMoveData.packing.pod[idx].zone;
                                 item.level = defaultMoveData.packing.pod[idx].level;
+                            }
+                        });
+                        // Ensure newly added default items (like p26 Portable A/C Units) exist
+                        defaultMoveData.packing.pod.forEach(defItem => {
+                            if (!moveData.packing.pod.some(i => i.id === defItem.id)) {
+                                moveData.packing.pod.push(JSON.parse(JSON.stringify(defItem)));
                             }
                         });
                     }
@@ -2530,19 +2537,20 @@
             { id: 'p3', name: '65" TV (In TV Box)', category: 'Electronics', size: { x: 0.8, y: 3.4, z: 5.2 }, dims: { l: 0.8, h: 3.4, w: 5.2 }, pos: { x: -7.0, y: 4.9, z: 1.3 }, step: 3, color: 0xef4444, weight: 'Medium', desc: 'Heavy duty box upright atop dresser at front bulkhead.' },
             { id: 'p7', name: 'Artwork & Mirrors', category: 'Living Room', size: { x: 0.7, y: 2.8, z: 4.6 }, dims: { l: 0.7, h: 2.8, w: 4.6 }, pos: { x: -5.2, y: 3.4, z: 0.9 }, step: 3, color: 0xef4444, weight: 'Light', desc: 'Upright bubble-wrapped art secured atop TV stand.' },
             { id: 'p25', name: '2 Paddle Boards & 1 Kayak', category: 'Outdoor', size: { x: 7.0, y: 1.3, z: 3.4 }, dims: { l: 7.0, h: 1.3, w: 3.4 }, pos: { x: -4.2, y: 7.25, z: 1.2 }, step: 6, color: 0x10b981, weight: 'Light', desc: 'Rolled paddle boards and kayak strapped across ceiling cross-trusses.' },
-            { id: 'p8', name: '2 Standing Desks (Tops & Legs)', category: 'Office', size: { x: 4.2, y: 1.6, z: 2.4 }, dims: { l: 4.2, h: 1.6, w: 2.4 }, pos: { x: -2.0, y: 0.8, z: 2.65 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Padded desk tops & motor legs along right wall floor.' },
-            { id: 'p14', name: 'Books (Heavy Boxes)', category: 'Living Room', size: { x: 3.2, y: 1.4, z: 2.4 }, dims: { l: 3.2, h: 1.4, w: 2.4 }, pos: { x: -2.2, y: 0.7, z: -1.35 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Small dense book boxes on floor tier between mattress and desks.' },
-            { id: 'p15', name: 'Home Receiver & Speakers', category: 'Electronics', size: { x: 1.4, y: 1.4, z: 2.2 }, dims: { l: 1.4, h: 1.4, w: 2.2 }, pos: { x: -0.3, y: 0.7, z: -1.35 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Subwoofer and audio electronics base on floor.' },
-            { id: 'p4', name: '40" TV (In TV Box)', category: 'Electronics', size: { x: 3.4, y: 2.3, z: 0.7 }, dims: { l: 3.4, h: 2.3, w: 0.7 }, pos: { x: -2.2, y: 2.55, z: -0.45 }, step: 3, color: 0xef4444, weight: 'Medium', desc: 'Bedroom TV upright in dedicated box over book tier.' },
-            { id: 'p6', name: 'Clothes & Shoes Boxes', category: 'Bedroom', size: { x: 3.8, y: 2.4, z: 2.4 }, dims: { l: 3.8, h: 2.4, w: 2.4 }, pos: { x: -2.0, y: 2.8, z: 2.65 }, step: 3, color: 0xf59e0b, weight: 'Medium', desc: 'Wardrobe & linen boxes stacked directly over standing desks along right wall.' },
-            { id: 'p22', name: 'Garage Boxes (~12 boxes)', category: 'Garage', size: { x: 3.6, y: 2.2, z: 4.8 }, dims: { l: 3.6, h: 2.2, w: 4.8 }, pos: { x: -2.0, y: 5.1, z: 1.0 }, step: 3, color: 0xf59e0b, weight: 'Heavy', desc: 'Tools, camping gear, and bike equipment stacked mid-high across width.' },
-            { id: 'p18', name: 'Blackstone Portable Grill', category: 'Outdoor', size: { x: 2.4, y: 2.0, z: 2.2 }, dims: { l: 2.4, h: 2.0, w: 2.2 }, pos: { x: 1.4, y: 1.0, z: 2.7 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Griddle wrapped; secure base on floor along right wall.' },
-            { id: 'p19', name: 'Small Gas Fire Pit', category: 'Outdoor', size: { x: 2.0, y: 1.8, z: 2.2 }, dims: { l: 2.0, h: 1.8, w: 2.2 }, pos: { x: 3.6, y: 0.9, z: 2.7 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Propane disposed; burner unit strapped along right wall.' },
-            { id: 'p11', name: '2 Office Walking Pads', category: 'Office', size: { x: 4.4, y: 0.6, z: 3.8 }, dims: { l: 4.4, h: 0.6, w: 3.8 }, pos: { x: 2.3, y: 0.3, z: -1.7 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Treadmills laid completely flat on floor across center/left.' },
-            { id: 'p20', name: 'Kitchen Boxes (Pans, Spices)', category: 'Kitchen', size: { x: 4.2, y: 2.4, z: 3.8 }, dims: { l: 4.2, h: 2.4, w: 3.8 }, pos: { x: 2.3, y: 1.8, z: -1.7 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Kitchen breakables cushioned in mid tier over walking pads.' },
-            { id: 'p21', name: 'Small Appliances', category: 'Kitchen', size: { x: 3.2, y: 1.8, z: 3.0 }, dims: { l: 3.2, h: 1.8, w: 3.0 }, pos: { x: 2.2, y: 3.9, z: -1.5 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Snug appliance boxes stacked above kitchen tier.' },
-            { id: 'p13', name: 'Acoustic Guitar (Hard Case)', category: 'Personal', size: { x: 3.8, y: 1.0, z: 1.3 }, dims: { l: 3.8, h: 1.0, w: 1.3 }, pos: { x: 1.9, y: 2.5, z: 2.5 }, step: 4, color: 0x10b981, weight: 'Light', desc: 'Guitar in hard case placed flat over outdoor gear.' },
-            { id: 'p16', name: 'Record Player & Games', category: 'Electronics', size: { x: 2.2, y: 1.4, z: 1.8 }, dims: { l: 2.2, h: 1.4, w: 1.8 }, pos: { x: 3.4, y: 2.5, z: 2.5 }, step: 4, color: 0xef4444, weight: 'Light', desc: 'Turntable secured with needle guard above fire pit tier.' },
+            { id: 'p8', name: '2 Standing Desks (Tops & Legs)', category: 'Office', size: { x: 3.8, y: 1.6, z: 2.4 }, dims: { l: 3.8, h: 1.6, w: 2.4 }, pos: { x: -2.3, y: 0.8, z: 2.65 }, step: 1, color: 0x2563eb, weight: 'Heavy', desc: 'Padded desk tops & motor legs along right wall floor.' },
+            { id: 'p14', name: 'Books (Heavy Boxes)', category: 'Living Room', size: { x: 2.4, y: 1.4, z: 2.4 }, dims: { l: 2.4, h: 1.4, w: 2.4 }, pos: { x: -3.0, y: 0.7, z: -1.35 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Small dense book boxes on floor tier between mattress and desks.' },
+            { id: 'p15', name: 'Home Receiver & Speakers', category: 'Electronics', size: { x: 1.4, y: 1.4, z: 2.2 }, dims: { l: 1.4, h: 1.4, w: 2.2 }, pos: { x: -1.1, y: 0.7, z: -1.35 }, step: 1, color: 0x1d4ed8, weight: 'Heavy', desc: 'Subwoofer and audio electronics base on floor.' },
+            { id: 'p4', name: '40" TV (In TV Box)', category: 'Electronics', size: { x: 3.4, y: 2.3, z: 0.7 }, dims: { l: 3.4, h: 2.3, w: 0.7 }, pos: { x: -2.1, y: 2.55, z: -0.45 }, step: 3, color: 0xef4444, weight: 'Medium', desc: 'Bedroom TV upright in dedicated box over book tier.' },
+            { id: 'p6', name: 'Clothes & Shoes Boxes', category: 'Bedroom', size: { x: 3.8, y: 2.4, z: 2.4 }, dims: { l: 3.8, h: 2.4, w: 2.4 }, pos: { x: -2.3, y: 2.8, z: 2.65 }, step: 3, color: 0xf59e0b, weight: 'Medium', desc: 'Wardrobe & linen boxes stacked directly over standing desks along right wall.' },
+            { id: 'p22', name: 'Garage Boxes (~12 boxes)', category: 'Garage', size: { x: 3.8, y: 2.2, z: 4.8 }, dims: { l: 3.8, h: 2.2, w: 4.8 }, pos: { x: -2.3, y: 5.1, z: 1.0 }, step: 3, color: 0xf59e0b, weight: 'Heavy', desc: 'Tools, camping gear, and bike equipment stacked mid-high across width.' },
+            { id: 'p18', name: 'Blackstone Portable Grill', category: 'Outdoor', size: { x: 2.2, y: 2.0, z: 2.2 }, dims: { l: 2.2, h: 2.0, w: 2.2 }, pos: { x: 0.8, y: 1.0, z: 2.7 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Griddle wrapped; secure base on floor along right wall.' },
+            { id: 'p19', name: 'Small Gas Fire Pit', category: 'Outdoor', size: { x: 2.2, y: 1.8, z: 2.2 }, dims: { l: 2.2, h: 1.8, w: 2.2 }, pos: { x: 3.1, y: 0.9, z: 2.7 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Propane disposed; burner unit strapped along right wall.' },
+            { id: 'p11', name: '2 Office Walking Pads', category: 'Office', size: { x: 4.4, y: 0.8, z: 2.0 }, dims: { l: 4.4, h: 0.8, w: 2.0 }, pos: { x: 2.35, y: 0.4, z: -2.6 }, step: 4, color: 0x2563eb, weight: 'Heavy', desc: 'Treadmills laid completely flat on floor along left side.' },
+            { id: 'p26', name: '2 Portable A/C Units', category: 'Appliances', size: { x: 1.6, y: 2.5, z: 2.6 }, dims: { l: 1.6, h: 2.5, w: 2.6 }, pos: { x: 0.7, y: 1.25, z: -0.1 }, step: 4, color: 0x0284c7, weight: 'Heavy', desc: 'Two portable air conditioners kept strictly upright on floor. Drained completely.' },
+            { id: 'p20', name: 'Kitchen Boxes (Pans, Spices)', category: 'Kitchen', size: { x: 2.6, y: 2.4, z: 2.6 }, dims: { l: 2.6, h: 2.4, w: 2.6 }, pos: { x: 3.0, y: 1.2, z: -0.1 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Kitchen breakables cushioned on mid floor behind A/C units.' },
+            { id: 'p21', name: 'Small Appliances', category: 'Kitchen', size: { x: 3.8, y: 1.8, z: 2.0 }, dims: { l: 3.8, h: 1.8, w: 2.0 }, pos: { x: 2.35, y: 1.7, z: -2.6 }, step: 4, color: 0xf59e0b, weight: 'Medium', desc: 'Snug appliance boxes stacked above walking pads.' },
+            { id: 'p13', name: 'Acoustic Guitar (Hard Case)', category: 'Personal', size: { x: 2.0, y: 1.0, z: 2.0 }, dims: { l: 2.0, h: 1.0, w: 2.0 }, pos: { x: 0.8, y: 2.5, z: 2.7 }, step: 4, color: 0x10b981, weight: 'Light', desc: 'Guitar in hard case placed flat over Blackstone grill.' },
+            { id: 'p16', name: 'Record Player & Games', category: 'Electronics', size: { x: 2.0, y: 1.2, z: 2.0 }, dims: { l: 2.0, h: 1.2, w: 2.0 }, pos: { x: 3.1, y: 2.4, z: 2.7 }, step: 4, color: 0xef4444, weight: 'Light', desc: 'Turntable secured with needle guard above fire pit tier.' },
             { id: 'p24', name: '4 Bicycles (E-bike batteries in car)', category: 'Outdoor', size: { x: 2.4, y: 3.8, z: 7.2 }, dims: { l: 2.4, h: 3.8, w: 7.2 }, pos: { x: 6.2, y: 1.9, z: 0.0 }, step: 5, color: 0x06b6d4, weight: 'Heavy', desc: 'Alternating front/rear wheels spanning across full doorway width. Padded between frames.' },
             { id: 'p9', name: '2 Office Chairs', category: 'Office', size: { x: 2.4, y: 2.8, z: 4.4 }, dims: { l: 2.4, h: 2.8, w: 4.4 }, pos: { x: 6.2, y: 5.2, z: -1.2 }, step: 5, color: 0x3b82f6, weight: 'Medium', desc: 'Chairs nested/inverted over lower bike cargo at doorway.' },
             { id: 'p12', name: 'Collapsible Coffee Tables', category: 'Furniture', size: { x: 2.4, y: 1.8, z: 2.2 }, dims: { l: 2.4, h: 1.8, w: 2.2 }, pos: { x: 6.2, y: 4.7, z: 2.5 }, step: 5, color: 0xf59e0b, weight: 'Medium', desc: 'Folded flat, padded, standing on side along right wall next to chairs.' },
@@ -2572,7 +2580,7 @@
             1: "Step 1: Heavy anchor furniture & book boxes loaded along front bulkhead floor.",
             2: "Step 2: King mattress & wood bed frame strapped upright along left E-Track wall.",
             3: "Step 3: Mid-tier stacked moving boxes (clothes, shoes, garage, boxed TVs).",
-            4: "Step 4: Mid-rear gear (Blackstone grill, fire pit, walking pads, kitchen, appliances).",
+            4: "Step 4: Mid-rear gear (Blackstone grill, fire pit, walking pads, 2 portable A/C units, kitchen).",
             5: "Step 5: Doorway staging (4 bicycles alternating handlebars, office chairs & tables).",
             6: "Step 6: Top trusses (paddleboards, kayak, rugs, folding chairs) & complete tie-down."
         };

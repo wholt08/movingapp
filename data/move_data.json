@@ -461,6 +461,15 @@
         "text": "2 Inflatable Paddle Boards & 1 Kayak",
         "weightClass": "light",
         "zone": "T1-Top"
+      },
+      {
+        "category": "Appliances",
+        "id": "p26",
+        "level": "Base Floor",
+        "packed": false,
+        "text": "2 Portable A/C Units (Drained & Upright)",
+        "weightClass": "heavy",
+        "zone": "T3-Base"
       }
     ]
   },
