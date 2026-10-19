@@ -13,7 +13,7 @@
       "id": "m2",
       "item": "Extra bicycle",
       "notes": "Clean up & post on Marketplace",
-      "status": "Ready to List",
+      "status": "Pending / Holding",
       "targetPrice": "TBD"
     },
     {
@@ -21,7 +21,7 @@
       "id": "m3",
       "item": "Scout's ramps & fencing",
       "notes": "Still need to get rid of pet ramp; post in local dog group",
-      "status": "To Rehome",
+      "status": "Sold",
       "targetPrice": "Free / Rehome"
     },
     {
@@ -45,7 +45,7 @@
       "id": "m6",
       "item": "Motorcycle",
       "notes": "Listed publicly; responding to active buyer messages. Need sold before move.",
-      "status": "Listed",
+      "status": "Sold",
       "targetPrice": "Market Price"
     },
     {
@@ -53,7 +53,7 @@
       "id": "m7",
       "item": "Rowing machine",
       "notes": "Fixed by William; Camille taking photos & posting on Marketplace",
-      "status": "Ready to List",
+      "status": "Sold",
       "targetPrice": "$200"
     },
     {
@@ -61,7 +61,7 @@
       "id": "m8",
       "item": "Dining table & chairs",
       "notes": "Camille to post on Marketplace",
-      "status": "Ready to List",
+      "status": "Listed",
       "targetPrice": "$120"
     },
     {
@@ -77,7 +77,7 @@
       "id": "m10",
       "item": "Bike helmet",
       "notes": "Need to get rid of",
-      "status": "To Rehome",
+      "status": "Sold",
       "targetPrice": "$10 / Free"
     },
     {
@@ -234,6 +234,14 @@
         "packed": false,
         "text": "Scout's Essentials (Food, Bowls, Bed, Leash, Meds)",
         "zone": "Scout's Safe Haven (Rear Left)"
+      },
+      {
+        "category": "Tech",
+        "id": "c14",
+        "note": "Prepaid UPS return label attached; drop at UPS on way down or in Encinitas",
+        "packed": false,
+        "text": "Quantum Fiber Return Box (Modem, Router, WiFi Pod, Cords)",
+        "zone": "Underfloor / Quick-Access"
       }
     ],
     "pod": [
@@ -475,6 +483,26 @@
   },
   "tasks": [
     {
+      "category": "Supplies & Purchases",
+      "id": "t_1792176279080",
+      "notes": "",
+      "owner": "William",
+      "priority": "High Priority",
+      "status": "Pending",
+      "text": "Get more moving boxes",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Core Logistics",
+      "id": "t_1792071626099",
+      "notes": "",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Done",
+      "text": "Cancel motorcycle insurance",
+      "timeframe": "This Week"
+    },
+    {
       "category": "Core Logistics",
       "id": "t1",
       "notes": "Confirmed for 10/31",
@@ -550,7 +578,7 @@
       "notes": "Listed publicly; responding to active buyer messages & scheduling viewings",
       "owner": "William",
       "priority": "High Priority",
-      "status": "Pending",
+      "status": "Done",
       "text": "Sell motorcycle (responding to listing inquiries & test rides)",
       "timeframe": "This Week"
     },
@@ -640,7 +668,7 @@
       "notes": "For cleaning window sill residue from AC unit",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Get Goo Gone (for cleaning window sill)",
       "timeframe": "This Week"
     },
@@ -677,7 +705,7 @@
     {
       "category": "Room Sort & Purge",
       "id": "t18",
-      "notes": "Sort electronics, cables & paperwork",
+      "notes": "Packed 2 boxes of office essentials & prepped artwork on 10/18",
       "owner": "William",
       "priority": "Medium",
       "status": "Pending",
@@ -740,7 +768,7 @@
       "notes": "Pending listing",
       "owner": "Camille",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Post dining table & chairs on Marketplace",
       "timeframe": "This Week"
     },
@@ -880,7 +908,7 @@
       "notes": "Use Goo Gone or isopropyl alcohol",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Remove residue/goo from kitchen window from AC unit",
       "timeframe": "Next Week"
     },
@@ -983,6 +1011,36 @@
       "status": "Done",
       "text": "Set up water & trash utilities at new home",
       "timeframe": "Post Move"
+    },
+    {
+      "category": "Core Logistics",
+      "id": "t52",
+      "notes": "Cancelled by William on 10/19. Equipment return pending (see task t53).",
+      "owner": "William",
+      "priority": "High Priority",
+      "status": "Done",
+      "text": "Cancel Quantum Fiber internet service",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Core Logistics",
+      "id": "t53",
+      "notes": "Box up modem, router, and WiFi pod + cords. Print return label from Quantum Fiber website. Drop off at UPS Store (either en route or in Encinitas after move).",
+      "owner": "William",
+      "priority": "High Priority",
+      "status": "Pending",
+      "text": "Box up Quantum Fiber modem/router/wifi pod & return via UPS",
+      "timeframe": "Move Week"
+    },
+    {
+      "category": "Core Logistics",
+      "id": "t54",
+      "notes": "Must be pet-friendly to accommodate Scout (dog). Stopover location for road trip drive from Seattle to Encinitas / San Diego.",
+      "owner": "Camille",
+      "priority": "High Priority",
+      "status": "Pending",
+      "text": "Book pet-friendly hotel in Sacramento",
+      "timeframe": "This Week"
     }
   ]
 }

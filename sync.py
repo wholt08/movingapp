@@ -102,6 +102,12 @@ def smart_merge(local, remote):
                 # If remote marked it Done, keep it Done
                 if rt.get("status") == "Done":
                     t["status"] = "Done"
+        # Preserve tasks added from remote
+        local_ids = {t["id"] for t in merged["tasks"] if isinstance(t, dict) and "id" in t}
+        for rt in remote["tasks"]:
+            if isinstance(rt, dict) and "id" in rt and rt["id"] not in local_ids:
+                merged["tasks"].append(rt)
+                local_ids.add(rt["id"])
 
     # 2. Merge Home Repairs
     if "homeRepairs" in merged and isinstance(merged["homeRepairs"], list) and "homeRepairs" in remote and isinstance(remote["homeRepairs"], list):
@@ -113,15 +119,22 @@ def smart_merge(local, remote):
                 r["status"] = "Done"
 
     # 3. Merge Packing Lists
-    if "packingLists" in merged and isinstance(merged["packingLists"], dict) and "packingLists" in remote and isinstance(remote["packingLists"], dict):
-        for container in ["pod", "subaru"]:
-            if container in merged["packingLists"] and container in remote["packingLists"]:
-                r_items = {it["id"]: it for it in remote["packingLists"][container] if isinstance(it, dict) and "id" in it}
-                for it in merged["packingLists"][container]:
-                    if not isinstance(it, dict): continue
-                    rit = r_items.get(it.get("id"))
-                    if rit and rit.get("packed") is True:
-                        it["packed"] = True
+    for pkey in ["packing", "packingLists"]:
+        if pkey in merged and isinstance(merged[pkey], dict) and pkey in remote and isinstance(remote[pkey], dict):
+            for container in ["pod", "car", "subaru"]:
+                if container in merged[pkey] and container in remote[pkey]:
+                    r_items = {it["id"]: it for it in remote[pkey][container] if isinstance(it, dict) and "id" in it}
+                    for it in merged[pkey][container]:
+                        if not isinstance(it, dict): continue
+                        rit = r_items.get(it.get("id"))
+                        if rit and rit.get("packed") is True:
+                            it["packed"] = True
+                    # Preserve items added from remote
+                    local_item_ids = {it["id"] for it in merged[pkey][container] if isinstance(it, dict) and "id" in it}
+                    for rit in remote[pkey][container]:
+                        if isinstance(rit, dict) and "id" in rit and rit["id"] not in local_item_ids:
+                            merged[pkey][container].append(rit)
+                            local_item_ids.add(rit["id"])
 
     # 4. Merge Marketplace
     if "marketplace" in merged and isinstance(merged["marketplace"], list) and "marketplace" in remote and isinstance(remote["marketplace"], list):
@@ -131,6 +144,12 @@ def smart_merge(local, remote):
             rm = remote_mp.get(m.get("id"))
             if rm and rm.get("status") in ["Sold", "Picked up", "Rehomed"]:
                 m["status"] = rm["status"]
+        # Preserve marketplace items added from remote
+        local_m_ids = {m["id"] for m in merged["marketplace"] if isinstance(m, dict) and "id" in m}
+        for rm in remote["marketplace"]:
+            if isinstance(rm, dict) and "id" in rm and rm["id"] not in local_m_ids:
+                merged["marketplace"].append(rm)
+                local_m_ids.add(rm["id"])
 
     return merged
 

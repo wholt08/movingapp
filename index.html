@@ -1792,6 +1792,36 @@
                                 "status": "Done",
                                 "text": "Set up water & trash utilities at new home",
                                 "timeframe": "Post Move"
+                },
+                {
+                                "category": "Core Logistics",
+                                "id": "t52",
+                                "notes": "Cancelled by William on 10/19. Equipment return pending (see task t53).",
+                                "owner": "William",
+                                "priority": "High Priority",
+                                "status": "Done",
+                                "text": "Cancel Quantum Fiber internet service",
+                                "timeframe": "This Week"
+                },
+                {
+                                "category": "Core Logistics",
+                                "id": "t53",
+                                "notes": "Box up modem, router, and WiFi pod + cords. Print return label from Quantum Fiber website. Drop off at UPS Store (either en route or in Encinitas after move).",
+                                "owner": "William",
+                                "priority": "High Priority",
+                                "status": "Pending",
+                                "text": "Box up Quantum Fiber modem/router/wifi pod & return via UPS",
+                                "timeframe": "Move Week"
+                },
+                {
+                                "category": "Core Logistics",
+                                "id": "t54",
+                                "notes": "Must be pet-friendly to accommodate Scout (dog). Stopover location for road trip drive from Seattle to Encinitas / San Diego.",
+                                "owner": "Camille",
+                                "priority": "High Priority",
+                                "status": "Pending",
+                                "text": "Book pet-friendly hotel in Sacramento",
+                                "timeframe": "This Week"
                 }
 ],
             marketplace: [
@@ -1853,7 +1883,8 @@
                     { id: "c10", text: "Coffee Machine & Beans/Mug", category: "Kitchen", zone: "Lower Cargo Floor", note: "First thing to unpack!", packed: false },
                     { id: "c11", text: "Toiletries & Daily Bathroom Essentials", category: "Personal", zone: "Underfloor / Quick-Access", note: "Easy reach during highway rest stops", packed: false },
                     { id: "c12", text: "House Plants", category: "Plants", zone: "Upper Delicate Deck", note: "Secured upright in boxes so they don't tip", packed: false },
-                    { id: "c13", text: "Scout's Essentials (Food, Bowls, Bed, Leash, Meds)", category: "Pet Scout", zone: "Scout's Safe Haven (Rear Left)", note: "Dog bed & harness tethered to seatbelt", packed: false }
+                    { id: "c13", text: "Scout's Essentials (Food, Bowls, Bed, Leash, Meds)", category: "Pet Scout", zone: "Scout's Safe Haven (Rear Left)", note: "Dog bed & harness tethered to seatbelt", packed: false },
+                    { id: "c14", text: "Quantum Fiber Return Box (Modem, Router, WiFi Pod, Cords)", category: "Tech", zone: "Underfloor / Quick-Access", note: "Prepaid UPS return label attached; drop at UPS on way down or in Encinitas", packed: false }
                 ]
             }
         };
@@ -1909,6 +1940,12 @@
                                 item.note = defaultMoveData.packing.car[idx].note;
                             }
                         });
+                        // Ensure newly added default car items (like c14) exist
+                        defaultMoveData.packing.car.forEach(defItem => {
+                            if (!moveData.packing.car.some(i => i.id === defItem.id)) {
+                                moveData.packing.car.push(JSON.parse(JSON.stringify(defItem)));
+                            }
+                        });
                     }
                     if (moveData.tasks && defaultMoveData.tasks) {
                         defaultMoveData.tasks.forEach(defTask => {
@@ -1921,6 +1958,12 @@
                             t33.status = 'Done';
                             t33.notes = 'Curtain rods removed; holes filled with putty';
                             t33.text = 'Dismount bedroom curtain rods & fill holes';
+                        }
+                        const t52 = moveData.tasks.find(t => t.id === 't52');
+                        if (t52 && t52.status !== 'Done') {
+                            t52.status = 'Done';
+                            t52.notes = 'Cancelled by William on 10/19. Equipment return pending (see task t53).';
+                            t52.text = 'Cancel Quantum Fiber internet service';
                         }
                     }
                 } catch (e) {
