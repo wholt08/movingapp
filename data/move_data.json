@@ -28,8 +28,8 @@
       "category": "Office",
       "id": "m4",
       "item": "Office chair & ottoman",
-      "notes": "Put on curb or post on Buy Nothing",
-      "status": "To Rehome",
+      "notes": "Picked up! Saved disposal fee & transfer station trip.",
+      "status": "Sold",
       "targetPrice": "Free / Curb"
     },
     {
@@ -60,8 +60,8 @@
       "category": "Dining Room",
       "id": "m8",
       "item": "Dining table & chairs",
-      "notes": "Camille to post on Marketplace",
-      "status": "Listed",
+      "notes": "Camille found buyers! Pending pickup & payment.",
+      "status": "Pending / Holding",
       "targetPrice": "$120"
     },
     {
@@ -69,7 +69,7 @@
       "id": "m9",
       "item": "Motorcycle helmet",
       "notes": "Need to get rid of",
-      "status": "To Rehome",
+      "status": "Sold",
       "targetPrice": "$30 / Free"
     },
     {
@@ -119,6 +119,14 @@
       "notes": "Sorted and boxed for Goodwill; drop off this week",
       "status": "Pending Drop-off",
       "targetPrice": "Donation"
+    },
+    {
+      "category": "Outdoor / Bike",
+      "id": "m16",
+      "item": "Bike trailer",
+      "notes": "Sold on Marketplace for ",
+      "status": "Sold",
+      "targetPrice": ""
     }
   ],
   "metadata": {
@@ -294,7 +302,7 @@
         "category": "Bedroom",
         "id": "p6",
         "level": "Mid Level",
-        "packed": false,
+        "packed": true,
         "text": "Clothes & Shoes Boxes",
         "weightClass": "medium",
         "zone": "T2-Mid"
@@ -384,8 +392,8 @@
         "category": "Electronics",
         "id": "p16",
         "level": "Mid Level",
-        "packed": false,
-        "text": "Record Player",
+        "packed": true,
+        "text": "Record Player & Records",
         "weightClass": "medium",
         "zone": "T3-Mid"
       },
@@ -393,7 +401,7 @@
         "category": "Living Room",
         "id": "p17",
         "level": "Mid Level",
-        "packed": false,
+        "packed": true,
         "text": "Board Games Box",
         "weightClass": "light",
         "zone": "T3-Mid"
@@ -482,6 +490,16 @@
     ]
   },
   "tasks": [
+    {
+      "category": "Core Logistics",
+      "id": "t_1792451177784",
+      "notes": "Detail/vacuum Subaru Outback before loading road trip gear & Scout safe haven",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Clean car",
+      "timeframe": "This Week"
+    },
     {
       "category": "Supplies & Purchases",
       "id": "t_1792176279080",
@@ -598,7 +616,7 @@
       "notes": "Home Depot: $40",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Buy TV box for 65\" TV",
       "timeframe": "This Week"
     },
@@ -608,7 +626,7 @@
       "notes": "Home Depot: $27",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Buy TV box for ~40\" bedroom TV",
       "timeframe": "This Week"
     },
@@ -648,7 +666,7 @@
       "notes": "Need heavy duty tape for boxes",
       "owner": "William",
       "priority": "High Priority",
-      "status": "Pending",
+      "status": "Done",
       "text": "Buy packing tape",
       "timeframe": "This Week"
     },
@@ -658,7 +676,7 @@
       "notes": "For kitchen window sill, bedroom curtain rod marks, and wall scuffs",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Get white and off-white/cream touch-up paint",
       "timeframe": "This Week"
     },
@@ -708,7 +726,7 @@
       "notes": "Packed 2 boxes of office essentials & prepped artwork on 10/18",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Office: Organize and pack non-daily essentials",
       "timeframe": "This Week"
     },
@@ -718,7 +736,7 @@
       "notes": "Sort remaining clothes & shoes",
       "owner": "Camille",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Bedroom: Second round of decluttering / sorting",
       "timeframe": "This Week"
     },
@@ -798,7 +816,7 @@
       "notes": "Pack in wardrobe box or flat boxes",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Box up suits and work clothes",
       "timeframe": "This Week"
     },
@@ -815,10 +833,10 @@
     {
       "category": "Home Repairs",
       "id": "t29",
-      "notes": "Use spackle & sanding sponge",
+      "notes": "Spackled, sanded, and painted! Blends seamlessly.",
       "owner": "William",
       "priority": "High Priority",
-      "status": "Pending",
+      "status": "Done",
       "text": "Fill nail holes & patch walls",
       "timeframe": "Next Week"
     },
@@ -868,7 +886,7 @@
       "notes": "Holes already filled with putty; paint once touch-up paint is acquired",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Touch up paint on bedroom curtain rod wall marks",
       "timeframe": "This Week"
     },
@@ -898,7 +916,7 @@
       "notes": "Touch-up paint",
       "owner": "William",
       "priority": "Medium",
-      "status": "Pending",
+      "status": "Done",
       "text": "Repaint window sill in kitchen",
       "timeframe": "Next Week"
     },
@@ -1040,6 +1058,136 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Book pet-friendly hotel in Sacramento",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t55",
+      "notes": "Take apart frame and desk surface for POD Tier 2 Base",
+      "owner": "William",
+      "priority": "High Priority",
+      "status": "Pending",
+      "text": "Office: Disassemble standing desk (separate desktop & legs for POD)",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t56",
+      "notes": "Switching to laptop for remainder of move week; pad desktop well for POD",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Office: Pack desktop computer & cables for POD",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t57",
+      "notes": "Decide whether plant & extra monitor ride in Outback or POD; box wide brim hat carefully",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Office: Pack or find homes for remaining office items (large brim hat, extra monitor, plant)",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t58",
+      "notes": "Camille's territory",
+      "owner": "Camille",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Guest bathroom: Sort and pack essentials, towels & toiletries",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t59",
+      "notes": "Leave items inside drawers; find light items to fill and secure the 2nd drawer so contents don't shift",
+      "owner": "William",
+      "priority": "Low",
+      "status": "Pending",
+      "text": "Bedroom: Secure nightstand drawers & fill 2nd drawer before move",
+      "timeframe": "Next Week"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t60",
+      "notes": "Purged; coordinate what to box for POD vs what stays in Subaru quick-access kit",
+      "owner": "William & Camille",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Bedroom bathroom: Collab with Camille to pack up remaining toiletries & bath items",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Room Sort & Purge",
+      "id": "t61",
+      "notes": "Purge junk/misc drawers; box up appliances and dishes we won't need before move day",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Kitchen: Purge misc drawers & start boxing non-daily items / dishes",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Core Logistics",
+      "id": "t62",
+      "notes": "Buyers found! Arrange pickup window, payment, and handoff",
+      "owner": "Camille",
+      "priority": "High Priority",
+      "status": "Pending",
+      "text": "Kitchen: Coordinate pickup & handoff of dining table & chairs",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t63",
+      "notes": "Use small boxes so weight stays manageable for loading into POD",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Living room: Box up remaining books in small heavy-duty boxes",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t64",
+      "notes": "Label speaker wires and pad components well for POD Tier 2 Base",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Living room: Disconnect sound system (receiver, subwoofer, speakers) and box up",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Room Sort & Purge",
+      "id": "t65",
+      "notes": "Clean & fold Blackstone; take down hanging chimes and feeders",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Patio: Fold up Blackstone grill, take down wind chimes & bird feeders",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Room Sort & Purge",
+      "id": "t66",
+      "notes": "Determine if fencing moves to CA or gets rehomed / posted locally",
+      "owner": "William & Camille",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Patio: Decide what to do with brown fencing (pack, sell, or rehome)",
+      "timeframe": "This Week"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t67",
+      "notes": "Find suitable box for motorcycle gear, skateboard, baseball gear, and misc garage items",
+      "owner": "William",
+      "priority": "Medium",
+      "status": "Pending",
+      "text": "Garage: Box up misc gear (motorcycle jacket/gloves, skateboard, baseball gear)",
       "timeframe": "This Week"
     }
   ]
