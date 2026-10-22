@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient: Seattle Navy to San Diego Royal Blue -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="50%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <!-- Box Kraft Gradients -->
+    <linearGradient id="boxTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <linearGradient id="boxLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+    <linearGradient id="boxRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b45309" />
+      <stop offset="100%" stop-color="#78350f" />
+    </linearGradient>
+
+    <!-- Sun Radial Gradient -->
+    <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="60%" stop-color="#facc15" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </radialGradient>
+
+    <!-- Tape Gradient -->
+    <linearGradient id="tapeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fef3c7" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#fde047" stop-opacity="0.9" />
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Base with Subtle Border -->
+  <rect x="16" y="16" width="480" height="480" rx="115" ry="115" fill="url(#bgGrad)" stroke="#38bdf8" stroke-width="6" stroke-opacity="0.3" />
+
+  <!-- Sun in Top Right (San Diego ☀️) with Rays -->
+  <g transform="translate(370, 130)">
+    <!-- Sun Glow / Ring -->
+    <circle cx="0" cy="0" r="62" fill="#fbbf24" opacity="0.2" />
+    <circle cx="0" cy="0" r="48" fill="#f59e0b" opacity="0.35" />
+    <!-- Sun Core -->
+    <circle cx="0" cy="0" r="36" fill="url(#sunGrad)" filter="url(#shadow)" />
+    <!-- Sun Rays -->
+    <g stroke="#fde047" stroke-width="6" stroke-linecap="round" opacity="0.9">
+      <line x1="0" y1="-52" x2="0" y2="-62" />
+      <line x1="0" y1="52" x2="0" y2="62" />
+      <line x1="-52" y1="0" x2="-62" y2="0" />
+      <line x1="52" y1="0" x2="62" y2="0" />
+      <line x1="-37" y1="-37" x2="-44" y2="-44" />
+      <line x1="37" y1="-37" x2="44" y2="-44" />
+      <line x1="-37" y1="37" x2="-44" y2="44" />
+      <line x1="37" y1="37" x2="44" y2="44" />
+    </g>
+  </g>
+
+  <!-- Isometric Moving Box 📦 with Soft Drop Shadow -->
+  <g filter="url(#shadow)" transform="translate(0, 15)">
+    <!-- Top Face (Rhombus) -->
+    <polygon points="256,155 385,225 256,295 127,225" fill="url(#boxTop)" stroke="#fef3c7" stroke-width="2" stroke-opacity="0.4" />
+
+    <!-- Left Face -->
+    <polygon points="127,225 256,295 256,415 127,345" fill="url(#boxLeft)" />
+
+    <!-- Right Face -->
+    <polygon points="256,295 385,225 385,345 256,415" fill="url(#boxRight)" />
+
+    <!-- Packing Tape Across Top Face -->
+    <polygon points="226,171 286,204 286,305 226,278" fill="url(#tapeGrad)" opacity="0.9" />
+
+    <!-- Packing Tape Down Front Seam -->
+    <polygon points="246,290 266,295 266,415 246,415" fill="#fef08a" opacity="0.85" />
+
+    <!-- Delivery / Moving Arrow Icon on Box Side (Seattle ➔ SD Upward Momentum) -->
+    <g transform="translate(185, 305) rotate(-15) scale(0.9)">
+      <path d="M 0,-15 L 12, -2 L 5, -2 L 5, 18 L -5, 18 L -5, -2 L -12, -2 Z" fill="#ffffff" opacity="0.9" />
+    </g>
+  </g>
+</svg>
