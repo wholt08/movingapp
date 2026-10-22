@@ -136,6 +136,11 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     Timeline & Focus
                 </button>
+                <button onclick="switchTab('daily')" id="tab-daily" class="tab-btn px-3.5 py-2 rounded-t-lg transition-colors flex items-center gap-2 whitespace-nowrap">
+                    <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>Daily Schedule</span>
+                    <span id="badge-daily-count" class="text-[11px] bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-300 px-1.5 py-0.2 rounded-full font-bold">Today</span>
+                </button>
                 <button onclick="switchTab('tasks')" id="tab-tasks" class="tab-btn px-3.5 py-2 rounded-t-lg transition-colors flex items-center gap-2 whitespace-nowrap">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                     Master Task Hub
@@ -351,7 +356,88 @@
         </div>
 
 
-        <!-- ================= TAB 2: MASTER TASK HUB ================= -->
+                <!-- ================= TAB: CHRONOLOGICAL DAILY SCHEDULE ================= -->
+        <div id="view-daily" class="hidden space-y-6">
+            <!-- Daily Plan Header & Control Bar -->
+            <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-xs space-y-5 transition-colors">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 text-xs font-semibold border border-blue-200 dark:border-blue-800/80 mb-2">
+                            <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                            <span>📅 Day-by-Day Tactical Planner</span>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Chronological Moving Schedule</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
+                            Bite-sized, realistic daily targets from today through the California drive. Reschedule any task with one click if plans shift.
+                        </p>
+                    </div>
+
+                    <!-- Top Action Controls -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <!-- Rollover Button -->
+                        <button onclick="rolloverOverdueTasks()" title="Move any uncompleted tasks from earlier days to Today" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            <span>Rollover Overdue to Today</span>
+                            <span id="rollover-count-badge" class="hidden px-1.5 py-0.2 bg-amber-600 text-white rounded-full text-[10px] font-bold">0</span>
+                        </button>
+
+                        <!-- Add Task for Today -->
+                        <button onclick="openAddTaskModal('2026-10-21')" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            <span>Add Task</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Secondary Filters: Day Pills, Search, Owner, Show Completed -->
+                <div class="space-y-3">
+                    <!-- Horizontal Day Selector Pills -->
+                    <div class="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-thin text-xs font-semibold" id="daily-day-pills">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs">
+                        <div class="flex flex-wrap items-center gap-2 flex-1 min-w-[280px]">
+                            <input type="text" id="daily-search-input" oninput="renderDailySchedule()" placeholder="Search scheduled tasks..." class="px-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-56">
+                            <select id="daily-filter-owner" onchange="renderDailySchedule()" class="px-2.5 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium">
+                                <option value="all">All Owners</option>
+                                <option value="William">William</option>
+                                <option value="Camille">Camille</option>
+                                <option value="William & Camille">William & Camille</option>
+                            </select>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <label class="flex items-center gap-1.5 cursor-pointer text-slate-600 dark:text-slate-300 select-none">
+                                <input type="checkbox" id="daily-show-completed" onchange="renderDailySchedule()" checked class="rounded text-blue-600 focus:ring-blue-500 dark:bg-slate-800 dark:border-slate-700 w-3.5 h-3.5">
+                                <span>Show Completed</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overdue Alert Banner (Shown dynamically if uncompleted tasks exist before today) -->
+            <div id="daily-overdue-banner" class="hidden bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/80 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-900 dark:text-amber-200">
+                <div class="flex items-center gap-2">
+                    <span class="text-base">⚠️</span>
+                    <div>
+                        <strong id="daily-overdue-text">You have 0 tasks from earlier days pending.</strong>
+                        <span class="text-slate-500 dark:text-slate-400 block sm:inline sm:ml-1">Roll them forward to today to keep your daily focus accurate.</span>
+                    </div>
+                </div>
+                <button onclick="rolloverOverdueTasks()" class="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold transition-colors whitespace-nowrap">
+                    Roll Over to Today
+                </button>
+            </div>
+
+            <!-- Chronological Day Cards Container -->
+            <div id="daily-schedule-container" class="space-y-5">
+                <!-- Populated dynamically by renderDailySchedule() -->
+            </div>
+        </div>
+
+<!-- ================= TAB 2: MASTER TASK HUB ================= -->
         <div id="view-tasks" class="hidden space-y-6">
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs transition-colors">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
@@ -1188,6 +1274,23 @@
                             <option value="">Normal</option>
                         </select>
                     </div>
+                                    <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-200 mb-1">Scheduled Day</label>
+                    <select id="new-task-scheduled-date" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-lg p-2">
+                        <option value="2026-10-21">Wednesday, Oct 21 (Today)</option>
+                        <option value="2026-10-22">Thursday, Oct 22 (Tomorrow)</option>
+                        <option value="2026-10-23">Friday, Oct 23</option>
+                        <option value="2026-10-24">Saturday, Oct 24 (Weekend)</option>
+                        <option value="2026-10-25">Sunday, Oct 25 (Weekend)</option>
+                        <option value="2026-10-26">Monday, Oct 26</option>
+                        <option value="2026-10-27">Tuesday, Oct 27 (POD Eve)</option>
+                        <option value="2026-10-28">Wednesday, Oct 28 (POD Drop-off 📦)</option>
+                        <option value="2026-10-29">Thursday, Oct 29 (Load POD 🚚)</option>
+                        <option value="2026-10-30">Friday, Oct 30 (Turnover & Swap 🔑)</option>
+                        <option value="2026-10-31">Saturday, Oct 31 (Drive Day 🚗)</option>
+                        <option value="post_move">Nov 1+ • California Arrival 🌴</option>
+                    </select>
+                </div>
                     <div>
                         <label class="block font-semibold text-slate-700 dark:text-slate-200 mb-1">Timing / Notes</label>
                         <input type="text" id="new-task-notes" placeholder="e.g. Target 10/20" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-lg p-2">
@@ -1285,13 +1388,47 @@
             tasks: [
                 {
                                 "category": "Core Logistics",
+                                "id": "t_1792451177784",
+                                "notes": "Detail/vacuum Subaru Outback before loading road trip gear & Scout safe haven",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Clean car",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-24"
+                },
+                {
+                                "category": "Supplies & Purchases",
+                                "id": "t_1792176279080",
+                                "notes": "",
+                                "owner": "William",
+                                "priority": "High Priority",
+                                "status": "Pending",
+                                "text": "Get more moving boxes",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-21"
+                },
+                {
+                                "category": "Core Logistics",
+                                "id": "t_1792071626099",
+                                "notes": "",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Done",
+                                "text": "Cancel motorcycle insurance",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
+                },
+                {
+                                "category": "Core Logistics",
                                 "id": "t1",
                                 "notes": "Confirmed for 10/31",
                                 "owner": "William",
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Get confirmation from Brian on move-out date",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1301,7 +1438,8 @@
                                 "priority": "Medium",
                                 "status": "Pending",
                                 "text": "Get confirmation from Brian on deposit return process",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-27"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1311,7 +1449,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Research & reserve transport (POD vs. U-Haul vs. Movers)",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1321,7 +1460,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Obtain written manager/work approval for move",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1331,7 +1471,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Apply for parking permit with City of Seattle for POD",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1341,7 +1482,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Update drop-off location on PODS portal",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1351,7 +1493,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Sign PODS user agreement",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1359,9 +1502,10 @@
                                 "notes": "Listed publicly; responding to active buyer messages & scheduling viewings",
                                 "owner": "William",
                                 "priority": "High Priority",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Sell motorcycle (responding to listing inquiries & test rides)",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1371,7 +1515,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Determine & submit PTO / work days off for move",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Supplies & Purchases",
@@ -1379,9 +1524,10 @@
                                 "notes": "Home Depot: $40",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Buy TV box for 65\" TV",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Supplies & Purchases",
@@ -1389,9 +1535,10 @@
                                 "notes": "Home Depot: $27",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Buy TV box for ~40\" bedroom TV",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Supplies & Purchases",
@@ -1401,7 +1548,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Get moving boxes (via Marketplace)",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Supplies & Purchases",
@@ -1411,7 +1559,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Buy spackle & sanding sponge for wall holes",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Supplies & Purchases",
@@ -1421,7 +1570,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Buy wood touch-up marker / scratch repair kit",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Supplies & Purchases",
@@ -1429,9 +1579,10 @@
                                 "notes": "Need heavy duty tape for boxes",
                                 "owner": "William",
                                 "priority": "High Priority",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Buy packing tape",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Supplies & Purchases",
@@ -1439,9 +1590,10 @@
                                 "notes": "For kitchen window sill, bedroom curtain rod marks, and wall scuffs",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Get white and off-white/cream touch-up paint",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Supplies & Purchases",
@@ -1449,9 +1601,10 @@
                                 "notes": "For cleaning window sill residue from AC unit",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Get Goo Gone (for cleaning window sill)",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1461,7 +1614,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Clean out garage",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1471,7 +1625,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Clean up backyard & remove outdoor pet gear",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1481,17 +1636,19 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Closets: Cull unworn clothes and pack non-seasonal items",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Room Sort & Purge",
                                 "id": "t18",
-                                "notes": "Sort electronics, cables & paperwork",
+                                "notes": "Packed 2 boxes of office essentials & prepped artwork on 10/18",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Office: Organize and pack non-daily essentials",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-21"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1499,9 +1656,10 @@
                                 "notes": "Sort remaining clothes & shoes",
                                 "owner": "Camille",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Bedroom: Second round of decluttering / sorting",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1509,9 +1667,10 @@
                                 "notes": "Free alert on Buy Nothing / Craigslist",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Put garage items on curb and post in neighborhood group",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1521,7 +1680,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Sort books, clothes, games, & decorations for donation",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-21"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1531,7 +1691,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Drop off donations at Goodwill (books, clothes, games, decor)",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-21"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1539,9 +1700,10 @@
                                 "notes": "Machine repaired, ready to photograph & list",
                                 "owner": "Camille",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Take photos of rowing machine and post on Marketplace",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1549,9 +1711,10 @@
                                 "notes": "Pending listing",
                                 "owner": "Camille",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Post dining table & chairs on Marketplace",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1561,7 +1724,8 @@
                                 "priority": "Low",
                                 "status": "Pending",
                                 "text": "Post living room couch for sale",
-                                "timeframe": "Move Week"
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-26"
                 },
                 {
                                 "category": "Room Sort & Purge",
@@ -1571,7 +1735,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Rehome/get rid of office chair, helmets (motorcycle & bike), pet ramp",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-21"
                 },
                 {
                                 "category": "Early Packing",
@@ -1579,9 +1744,10 @@
                                 "notes": "Pack in wardrobe box or flat boxes",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Box up suits and work clothes",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-21"
                 },
                 {
                                 "category": "Early Packing",
@@ -1591,17 +1757,19 @@
                                 "priority": "Medium",
                                 "status": "Pending",
                                 "text": "Box up guest bedroom decor & books",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-23"
                 },
                 {
                                 "category": "Home Repairs",
                                 "id": "t29",
-                                "notes": "Use spackle & sanding sponge",
+                                "notes": "Spackled, sanded, and painted! Blends seamlessly.",
                                 "owner": "William",
                                 "priority": "High Priority",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Fill nail holes & patch walls",
-                                "timeframe": "Next Week"
+                                "timeframe": "Next Week",
+                                "scheduledDate": "2026-10-21"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1611,7 +1779,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Repair scratches on wood trim / floors",
-                                "timeframe": "Next Week"
+                                "timeframe": "Next Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1621,7 +1790,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Patch bike rack holes in foyer",
-                                "timeframe": "Next Week"
+                                "timeframe": "Next Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1631,7 +1801,8 @@
                                 "priority": "Medium",
                                 "status": "Pending",
                                 "text": "Patch TV speaker holes",
-                                "timeframe": "Next Week"
+                                "timeframe": "Next Week",
+                                "scheduledDate": "2026-10-25"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1641,7 +1812,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Dismount bedroom curtain rods & fill holes",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1649,9 +1821,10 @@
                                 "notes": "Holes already filled with putty; paint once touch-up paint is acquired",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Touch up paint on bedroom curtain rod wall marks",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-21"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1661,7 +1834,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Uninstall bike mount",
-                                "timeframe": "Next Week"
+                                "timeframe": "Next Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1671,7 +1845,8 @@
                                 "priority": "Medium",
                                 "status": "Pending",
                                 "text": "Uninstall dog gate in foyer",
-                                "timeframe": "Move Week"
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-30"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1679,9 +1854,10 @@
                                 "notes": "Touch-up paint",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Repaint window sill in kitchen",
-                                "timeframe": "Next Week"
+                                "timeframe": "Next Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1689,9 +1865,10 @@
                                 "notes": "Use Goo Gone or isopropyl alcohol",
                                 "owner": "William",
                                 "priority": "Medium",
-                                "status": "Pending",
+                                "status": "Done",
                                 "text": "Remove residue/goo from kitchen window from AC unit",
-                                "timeframe": "Next Week"
+                                "timeframe": "Next Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1701,7 +1878,8 @@
                                 "priority": "High Priority",
                                 "status": "Pending",
                                 "text": "Remove video doorbell and reinstall original doorbell",
-                                "timeframe": "Move Week"
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-30"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1711,7 +1889,8 @@
                                 "priority": "High Priority",
                                 "status": "Pending",
                                 "text": "Remove bidet and reinstall original toilet seat",
-                                "timeframe": "Move Week"
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-30"
                 },
                 {
                                 "category": "Home Repairs",
@@ -1721,7 +1900,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Fix rowing machine",
-                                "timeframe": "Next Week"
+                                "timeframe": "Next Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Post-Move Admin",
@@ -1731,7 +1911,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Check / modify Apartments.com payment settings (contact Brian)",
-                                "timeframe": "Move Week"
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-30"
                 },
                 {
                                 "category": "Post-Move Admin",
@@ -1741,7 +1922,8 @@
                                 "priority": "Medium",
                                 "status": "Pending",
                                 "text": "Update vehicle & motorcycle insurance",
-                                "timeframe": "Post Move"
+                                "timeframe": "Post Move",
+                                "scheduledDate": "post_move"
                 },
                 {
                                 "category": "Post-Move Admin",
@@ -1751,7 +1933,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Update address in workplace HR system",
-                                "timeframe": "Post Move"
+                                "timeframe": "Post Move",
+                                "scheduledDate": "post_move"
                 },
                 {
                                 "category": "Post-Move Admin",
@@ -1761,7 +1944,8 @@
                                 "priority": "High Priority",
                                 "status": "Pending",
                                 "text": "Set up USPS mail forwarding",
-                                "timeframe": "Move Week"
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-27"
                 },
                 {
                                 "category": "Post-Move Admin",
@@ -1771,7 +1955,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Set up electric utility at new home (San Diego / Encinitas)",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Post-Move Admin",
@@ -1781,7 +1966,8 @@
                                 "priority": "High Priority",
                                 "status": "Pending",
                                 "text": "Set up high-speed Internet at new home",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-21"
                 },
                 {
                                 "category": "Post-Move Admin",
@@ -1791,7 +1977,8 @@
                                 "priority": "Medium",
                                 "status": "Done",
                                 "text": "Set up water & trash utilities at new home",
-                                "timeframe": "Post Move"
+                                "timeframe": "Post Move",
+                                "scheduledDate": "post_move"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1801,7 +1988,8 @@
                                 "priority": "High Priority",
                                 "status": "Done",
                                 "text": "Cancel Quantum Fiber internet service",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-20"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1811,7 +1999,8 @@
                                 "priority": "High Priority",
                                 "status": "Pending",
                                 "text": "Box up Quantum Fiber modem/router/wifi pod & return via UPS",
-                                "timeframe": "Move Week"
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-30"
                 },
                 {
                                 "category": "Core Logistics",
@@ -1821,7 +2010,184 @@
                                 "priority": "High Priority",
                                 "status": "Pending",
                                 "text": "Book pet-friendly hotel in Sacramento",
-                                "timeframe": "This Week"
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-22"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t55",
+                                "notes": "Take apart frame and desk surface for POD Tier 2 Base",
+                                "owner": "William",
+                                "priority": "High Priority",
+                                "status": "Pending",
+                                "text": "Office: Disassemble standing desk (separate desktop & legs for POD)",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-26"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t56",
+                                "notes": "Switching to laptop for remainder of move week; pad desktop well for POD",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Office: Pack desktop computer & cables for POD",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-26"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t57",
+                                "notes": "Decide whether plant & extra monitor ride in Outback or POD; box wide brim hat carefully",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Office: Pack or find homes for remaining office items (large brim hat, extra monitor, plant)",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-26"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t58",
+                                "notes": "Camille's territory",
+                                "owner": "Camille",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Guest bathroom: Sort and pack essentials, towels & toiletries",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-23"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t59",
+                                "notes": "Leave items inside drawers; find light items to fill and secure the 2nd drawer so contents don't shift",
+                                "owner": "William",
+                                "priority": "Low",
+                                "status": "Pending",
+                                "text": "Bedroom: Secure nightstand drawers & fill 2nd drawer before move",
+                                "timeframe": "Next Week",
+                                "scheduledDate": "2026-10-25"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t60",
+                                "notes": "Purged; coordinate what to box for POD vs what stays in Subaru quick-access kit",
+                                "owner": "William & Camille",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Bedroom bathroom: Collab with Camille to pack up remaining toiletries & bath items",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-23"
+                },
+                {
+                                "category": "Room Sort & Purge",
+                                "id": "t61",
+                                "notes": "Purge junk/misc drawers; box up appliances and dishes we won't need before move day",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Kitchen: Purge misc drawers & start boxing non-daily items / dishes",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-21"
+                },
+                {
+                                "category": "Core Logistics",
+                                "id": "t62",
+                                "notes": "Buyers found! Arrange pickup window, payment, and handoff",
+                                "owner": "Camille",
+                                "priority": "High Priority",
+                                "status": "Pending",
+                                "text": "Kitchen: Coordinate pickup & handoff of dining table & chairs",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-22"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t63",
+                                "notes": "Use small boxes so weight stays manageable for loading into POD",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Living room: Box up remaining books in small heavy-duty boxes",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-23"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t64",
+                                "notes": "Label speaker wires and pad components well for POD Tier 2 Base",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Living room: Disconnect sound system (receiver, subwoofer, speakers) and box up",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-23"
+                },
+                {
+                                "category": "Room Sort & Purge",
+                                "id": "t65",
+                                "notes": "Clean & fold Blackstone; take down hanging chimes and feeders",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Patio: Fold up Blackstone grill, take down wind chimes & bird feeders",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-22"
+                },
+                {
+                                "category": "Room Sort & Purge",
+                                "id": "t66",
+                                "notes": "Determine if fencing moves to CA or gets rehomed / posted locally",
+                                "owner": "William & Camille",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Patio: Decide what to do with brown fencing (pack, sell, or rehome)",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-22"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t67",
+                                "notes": "Find suitable box for motorcycle gear, skateboard, baseball gear, and misc garage items",
+                                "owner": "William",
+                                "priority": "Medium",
+                                "status": "Pending",
+                                "text": "Garage: Box up misc gear (motorcycle jacket/gloves, skateboard, baseball gear)",
+                                "timeframe": "This Week",
+                                "scheduledDate": "2026-10-24"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t68",
+                                "notes": "POD arrives today! Start with heavy foundation: King mattress/frame along side wall, large dresser, 6ft TV stand, kayak & paddleboards on top trusses.",
+                                "owner": "William & Camille",
+                                "priority": "High Priority",
+                                "status": "Pending",
+                                "text": "POD Day 1: Load Tier 1 Heavy Base (King bed/frame, dresser, 6ft TV stand, kayak & paddleboards)",
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-28"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t69",
+                                "notes": "Load standing desks, TVs in TV boxes, 4 bikes, A/C units, Blackstone, and stack medium/light boxes to ceiling. Ratchet strap cargo securely!",
+                                "owner": "William & Camille",
+                                "priority": "High Priority",
+                                "status": "Pending",
+                                "text": "POD Day 2: Load Tiers 2-4 (Desks, TVs, 4 bikes, A/C units, Blackstone, boxes & ratchet strap down)",
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-29"
+                },
+                {
+                                "category": "Early Packing",
+                                "id": "t70",
+                                "notes": "Pack 4 computer monitors face-down on moving blanket, work/personal laptops in backpack, Scout's safe haven rear left, 10-day luggage, bedding, and coffee setup.",
+                                "owner": "William & Camille",
+                                "priority": "High Priority",
+                                "status": "Pending",
+                                "text": "Drive Day: Pack Subaru Outback (monitors, laptops, Scout safe haven, road luggage, cooler)",
+                                "timeframe": "Move Week",
+                                "scheduledDate": "2026-10-31"
                 }
 ],
             marketplace: [
@@ -1976,8 +2342,10 @@
             }
 
             updateCountdowns();
+            normalizeScheduledDates(moveData);
             renderStats();
             renderUrgentFocus();
+            renderDailySchedule();
             renderMasterTasks();
             renderRepairsList();
             renderMarketplace();
@@ -2024,8 +2392,10 @@
                         if (val && !isRemoteSync) {
                             moveData = val;
                             localStorage.setItem('moveDataCommandCenter', JSON.stringify(moveData));
+                            normalizeScheduledDates(moveData);
                             renderStats();
                             renderUrgentFocus();
+                            renderDailySchedule();
                             renderMasterTasks();
                             renderRepairsList();
                             renderMarketplace();
@@ -2142,7 +2512,7 @@
         // Tab Switching
         function switchTab(tabId) {
             activeTab = tabId;
-            ['timeline', 'tasks', 'repairs', 'marketplace', 'packing', 'visualizer'].forEach(t => {
+            ['timeline', 'daily', 'tasks', 'repairs', 'marketplace', 'packing', 'visualizer'].forEach(t => {
                 const view = document.getElementById(`view-${t}`);
                 const btn = document.getElementById(`tab-${t}`);
                 if (t === tabId) {
@@ -2153,6 +2523,9 @@
                     btn.classList.remove('active');
                 }
             });
+            if (tabId === 'daily') {
+                renderDailySchedule();
+            }
             if (tabId === 'visualizer') {
                 renderPodVisualizer();
                 renderSubaruVisualizer();
@@ -2182,6 +2555,14 @@
             document.getElementById('stat-total-tasks').textContent = `${doneTasks}/${totalTasks}`;
             document.getElementById('stat-tasks-progress').textContent = `${taskPct}% complete`;
             document.getElementById('badge-tasks-count').textContent = `${totalTasks - doneTasks}`;
+            const todayPending = moveData.tasks.filter(t => t.scheduledDate === '2026-10-21' && t.status !== 'Done').length;
+            const badgeDaily = document.getElementById('badge-daily-count');
+            if (badgeDaily) {
+                badgeDaily.textContent = todayPending > 0 ? `${todayPending} Today` : 'Done Today!';
+                badgeDaily.className = todayPending > 0 
+                    ? "text-[11px] bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-300 px-1.5 py-0.2 rounded-full font-bold"
+                    : "text-[11px] bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 px-1.5 py-0.2 rounded-full font-bold";
+            }
 
             // Repairs
             const repairTasks = moveData.tasks.filter(t => t.category === 'Home Repairs');
@@ -2265,6 +2646,387 @@
             if (['t8', 't23', 't24', 't20'].includes(task.id)) return { icon: '🏷️', label: 'Purge & Sell', color: 'bg-emerald-400/20 text-emerald-200 border-emerald-400/30' };
             if (['t18', 't19', 't27', 't28'].includes(task.id)) return { icon: '📦', label: 'Low-Stress Packing', color: 'bg-purple-400/20 text-purple-200 border-purple-400/30' };
             return { icon: '🎯', label: 'Tangible Win', color: 'bg-indigo-400/20 text-indigo-200 border-indigo-400/30' };
+        }
+
+        
+        // ================= CHRONOLOGICAL DAILY SCHEDULE LOGIC =================
+        const SCHEDULED_DAYS = [
+            { id: "2026-10-21", name: "Wednesday", dateStr: "Oct 21", label: "Wednesday, Oct 21 • Today", badge: "⚡ Midweek Kickoff & Purge", isToday: true, isPOD: false, isDrive: false, milestoneInfo: null },
+            { id: "2026-10-22", name: "Thursday", dateStr: "Oct 22", label: "Thursday, Oct 22 • Tomorrow", badge: "🌿 Patio, Gear & Travel Admin", isToday: false, isPOD: false, isDrive: false, milestoneInfo: null },
+            { id: "2026-10-23", name: "Friday", dateStr: "Oct 23", label: "Friday, Oct 23", badge: "📚 Media & Guest Rooms", isToday: false, isPOD: false, isDrive: false, milestoneInfo: null },
+            { id: "2026-10-24", name: "Saturday", dateStr: "Oct 24", label: "Saturday, Oct 24 • Weekend Sprint", badge: "🧰 Garage Gear & Car Detail", isToday: false, isPOD: false, isDrive: false, milestoneInfo: null },
+            { id: "2026-10-25", name: "Sunday", dateStr: "Oct 25", label: "Sunday, Oct 25 • Weekend Sprint", badge: "🍳 Kitchen Deep Pack & Wall Touchups", isToday: false, isPOD: false, isDrive: false, milestoneInfo: null },
+            { id: "2026-10-26", name: "Monday", dateStr: "Oct 26", label: "Monday, Oct 26", badge: "💻 Desks & Electronics Teardown", isToday: false, isPOD: false, isDrive: false, milestoneInfo: null },
+            { id: "2026-10-27", name: "Tuesday", dateStr: "Oct 27", label: "Tuesday, Oct 27 • POD Eve", badge: "🚧 Staging & Street Parking Ready", isToday: false, isPOD: false, isDrive: false, milestoneInfo: "Put out cones/reserve street parking spot for POD arrival. Move staged heavy boxes near exit." },
+            { id: "2026-10-28", name: "Wednesday", dateStr: "Oct 28", label: "Wednesday, Oct 28 • POD Drop-off Day 📦", badge: "📦 POD Arrives • Tier 1 Base Heavy Load", isToday: false, isPOD: true, isDrive: false, milestoneInfo: "POD Container arrives today! Inspect interior, lay down cardboard floor runners. Load Tier 1 Heavy Base along front & side walls (King bed/frame, large dresser, 6ft TV stand, kayak & paddleboards on top trusses)." },
+            { id: "2026-10-29", name: "Thursday", dateStr: "Oct 29", label: "Thursday, Oct 29 • POD Full Load 🚚", badge: "🚚 Tiers 2-4 Loading & Ratchet Tiedown", isToday: false, isPOD: true, isDrive: false, milestoneInfo: "Load Tier 2 (Standing desks, TVs in TV boxes, books) and Tier 3-4 (4 Bicycles, A/C units, Blackstone, stacked boxes). Secure cargo tightly to POD D-rings with ratchet straps!" },
+            { id: "2026-10-30", name: "Friday", dateStr: "Oct 30", label: "Friday, Oct 30 • Turnover & Swap 🔑", badge: "🔑 POD Pickup • Doorbell/Bidet Swap & Keys", isToday: false, isPOD: true, isDrive: false, milestoneInfo: "POD locked for pickup! Complete landlord turnover: reinstall original doorbell & toilet seat, remove foyer dog gate, box Quantum Fiber modem for UPS return, and do walkthrough with Brian." },
+            { id: "2026-10-31", name: "Saturday", dateStr: "Oct 31", label: "Saturday, Oct 31 • Drive Day 🚗", badge: "☀️ Pack Outback ➔ Drive Seattle to Sacramento", isToday: false, isPOD: false, isDrive: true, milestoneInfo: "California Road Trip Day 1! Pack Subaru Outback (monitors face-down, laptops in reach, Scout safe haven in rear left, 10-day luggage, bedding, road cooler). Drive ~750 miles south on I-5 to pet-friendly hotel in Sacramento." },
+            { id: "post_move", name: "Post Move", dateStr: "Nov 1+", label: "Nov 1+ • California Arrival 🌴", badge: "🏖️ Encinitas / San Diego Setup & Utilities", isToday: false, isPOD: false, isDrive: false, milestoneInfo: "Drive Sacramento ➔ Encinitas / San Diego! Settle into new home, verify internet & SDG&E electric utilities, update vehicle insurance garaging address." }
+        ];
+
+        let currentDailyFilter = 'all';
+
+        function normalizeScheduledDates(data) {
+            if (!data || !data.tasks) return;
+            const scheduleMap = {
+                "t61": "2026-10-21", "t_1792176279080": "2026-10-21", "t47": "2026-10-21",
+                "t29": "2026-10-21", "t51": "2026-10-21", "t27": "2026-10-21", "t18": "2026-10-21", "t26": "2026-10-21", "t22": "2026-10-21", "t21": "2026-10-21",
+                "t65": "2026-10-22", "t66": "2026-10-22", "t54": "2026-10-22", "t62": "2026-10-22",
+                "t63": "2026-10-23", "t64": "2026-10-23", "t28": "2026-10-23", "t58": "2026-10-23", "t60": "2026-10-23",
+                "t67": "2026-10-24", "t_1792451177784": "2026-10-24",
+                "t32": "2026-10-25", "t59": "2026-10-25",
+                "t55": "2026-10-26", "t56": "2026-10-26", "t57": "2026-10-26", "t25": "2026-10-26",
+                "t2": "2026-10-27", "t44": "2026-10-27",
+                "t68": "2026-10-28",
+                "t69": "2026-10-29",
+                "t35": "2026-10-30", "t38": "2026-10-30", "t39": "2026-10-30", "t53": "2026-10-30", "t41": "2026-10-30",
+                "t70": "2026-10-31",
+                "t42": "post_move", "t43": "post_move", "t48": "post_move"
+            };
+
+            data.tasks.forEach(t => {
+                if (!t.scheduledDate) {
+                    if (scheduleMap[t.id]) {
+                        t.scheduledDate = scheduleMap[t.id];
+                    } else if (t.status === 'Done') {
+                        t.scheduledDate = '2026-10-20';
+                    } else if (t.timeframe === 'Post Move') {
+                        t.scheduledDate = 'post_move';
+                    } else if (t.timeframe === 'Move Week') {
+                        t.scheduledDate = '2026-10-30';
+                    } else if (t.timeframe === 'Next Week') {
+                        t.scheduledDate = '2026-10-26';
+                    } else {
+                        t.scheduledDate = '2026-10-21';
+                    }
+                }
+            });
+        }
+
+        function setDailyFilter(filterId) {
+            currentDailyFilter = filterId;
+            renderDailySchedule();
+        }
+
+        function renderDailyDayPills() {
+            const container = document.getElementById('daily-day-pills');
+            if (!container) return;
+
+            const pillOptions = [
+                { id: 'all', label: 'All Days' },
+                { id: '2026-10-21', label: 'Wed 10/21 (Today)' },
+                { id: '2026-10-22', label: 'Thu 10/22' },
+                { id: '2026-10-23', label: 'Fri 10/23' },
+                { id: 'weekend', label: 'Weekend (10/24-25)' },
+                { id: '2026-10-26', label: 'Mon 10/26' },
+                { id: '2026-10-27', label: 'Tue 10/27' },
+                { id: 'pod', label: 'POD Days (10/28-30) 📦' },
+                { id: '2026-10-31', label: 'Sat 10/31 (Drive) 🚗' },
+                { id: 'post_move', label: 'Post Move 🌴' }
+            ];
+
+            container.innerHTML = pillOptions.map(p => {
+                const isActive = currentDailyFilter === p.id;
+                return `
+                    <button onclick="setDailyFilter('${p.id}')" class="px-3 py-1.5 rounded-xl whitespace-nowrap transition-all ${
+                        isActive 
+                            ? 'bg-blue-600 text-white shadow-xs font-bold' 
+                            : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium'
+                    }">
+                        ${p.label}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderDailySchedule() {
+            normalizeScheduledDates(moveData);
+            renderDailyDayPills();
+
+            const container = document.getElementById('daily-schedule-container');
+            if (!container) return;
+
+            const searchInput = document.getElementById('daily-search-input');
+            const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const ownerSelect = document.getElementById('daily-filter-owner');
+            const ownerFilter = ownerSelect ? ownerSelect.value : 'all';
+            const showCompletedCheckbox = document.getElementById('daily-show-completed');
+            const showCompleted = showCompletedCheckbox ? showCompletedCheckbox.checked : true;
+
+            const todayStr = "2026-10-21";
+
+            // Check overdue pending tasks
+            const overdueTasks = moveData.tasks.filter(t => t.status !== 'Done' && t.scheduledDate && t.scheduledDate < todayStr && t.scheduledDate !== 'post_move');
+            const overdueBanner = document.getElementById('daily-overdue-banner');
+            const overdueText = document.getElementById('daily-overdue-text');
+            const rolloverBadge = document.getElementById('rollover-count-badge');
+
+            if (overdueTasks.length > 0) {
+                if (overdueBanner) overdueBanner.classList.remove('hidden');
+                if (overdueText) overdueText.textContent = `You have ${overdueTasks.length} task${overdueTasks.length > 1 ? 's' : ''} from earlier days still pending.`;
+                if (rolloverBadge) {
+                    rolloverBadge.textContent = overdueTasks.length;
+                    rolloverBadge.classList.remove('hidden');
+                }
+            } else {
+                if (overdueBanner) overdueBanner.classList.add('hidden');
+                if (rolloverBadge) rolloverBadge.classList.add('hidden');
+            }
+
+            // Filter days based on currentDailyFilter
+            let displayedDays = SCHEDULED_DAYS;
+            if (currentDailyFilter === 'weekend') {
+                displayedDays = SCHEDULED_DAYS.filter(d => ['2026-10-24', '2026-10-25'].includes(d.id));
+            } else if (currentDailyFilter === 'pod') {
+                displayedDays = SCHEDULED_DAYS.filter(d => ['2026-10-28', '2026-10-29', '2026-10-30'].includes(d.id));
+            } else if (currentDailyFilter !== 'all') {
+                displayedDays = SCHEDULED_DAYS.filter(d => d.id === currentDailyFilter);
+            }
+
+            container.innerHTML = displayedDays.map(day => {
+                // Find tasks scheduled for this day
+                let dayTasks = moveData.tasks.filter(t => t.scheduledDate === day.id);
+
+                // Apply search filter
+                if (searchQuery) {
+                    dayTasks = dayTasks.filter(t => (t.text && t.text.toLowerCase().includes(searchQuery)) || (t.notes && t.notes.toLowerCase().includes(searchQuery)));
+                }
+
+                // Apply owner filter
+                if (ownerFilter !== 'all') {
+                    dayTasks = dayTasks.filter(t => t.owner === ownerFilter);
+                }
+
+                const totalDayTasks = dayTasks.length;
+                const doneDayTasks = dayTasks.filter(t => t.status === 'Done');
+                const pendingDayTasks = dayTasks.filter(t => t.status !== 'Done');
+                const completionPct = totalDayTasks ? Math.round((doneDayTasks.length / totalDayTasks) * 100) : 0;
+
+                const isTodayCard = day.isToday;
+                const isPodCard = day.isPOD;
+                const isDriveCard = day.isDrive;
+
+                let borderClasses = "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900";
+                let headerBadgeClasses = "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300";
+
+                if (isTodayCard) {
+                    borderClasses = "border-blue-400/80 dark:border-blue-500/60 bg-blue-50/20 dark:bg-blue-950/20 ring-1 ring-blue-500/30";
+                    headerBadgeClasses = "bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 font-bold border border-blue-300 dark:border-blue-700";
+                } else if (isPodCard) {
+                    borderClasses = "border-amber-300/80 dark:border-amber-700/60 bg-amber-50/20 dark:bg-amber-950/20";
+                    headerBadgeClasses = "bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-200 font-bold border border-amber-300 dark:border-amber-700";
+                } else if (isDriveCard) {
+                    borderClasses = "border-emerald-300/80 dark:border-emerald-700/60 bg-emerald-50/20 dark:bg-emerald-950/20";
+                    headerBadgeClasses = "bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 font-bold border border-emerald-300 dark:border-emerald-700";
+                }
+
+                const visibleTasks = showCompleted ? dayTasks : pendingDayTasks;
+
+                return `
+                    <div class="rounded-2xl border ${borderClasses} p-5 shadow-xs space-y-4 transition-all">
+                        <!-- Day Header -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                    <span>${day.label}</span>
+                                </h3>
+                                <span class="text-xs px-2.5 py-0.5 rounded-full ${headerBadgeClasses}">
+                                    ${day.badge}
+                                </span>
+                            </div>
+
+                            <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                                <!-- Progress Indicator -->
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-lg ${
+                                    totalDayTasks > 0 && pendingDayTasks.length === 0 
+                                        ? 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300' 
+                                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                                }">
+                                    ${doneDayTasks.length}/${totalDayTasks} Done (${completionPct}%)
+                                </span>
+
+                                <!-- Add Task Button for this specific day -->
+                                <button onclick="openAddTaskModal('${day.id}')" title="Add a task for this day" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold flex items-center gap-1 transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                    <span class="hidden sm:inline">Add Task</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Mini Day Progress Bar -->
+                        ${totalDayTasks > 0 ? `
+                            <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-gradient-to-r from-blue-500 to-emerald-400 h-full rounded-full transition-all duration-300" style="width: ${completionPct}%"></div>
+                            </div>
+                        ` : ''}
+
+                        <!-- Optional Milestone Callout -->
+                        ${day.milestoneInfo ? `
+                            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2.5">
+                                <span class="text-sm mt-0.5">📌</span>
+                                <div>
+                                    <strong class="font-bold text-slate-900 dark:text-white">Milestone Focus:</strong>
+                                    <span>${day.milestoneInfo}</span>
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <!-- Day Tasks List -->
+                        <div class="space-y-2.5">
+                            ${visibleTasks.length === 0 ? `
+                                <div class="py-6 text-center text-xs text-slate-400 dark:text-slate-500 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl">
+                                    ${totalDayTasks > 0 && !showCompleted 
+                                        ? 'All scheduled tasks for this day are completed! 🎉' 
+                                        : 'No tasks scheduled for this day yet. Click "+ Add Task" to schedule one.'}
+                                </div>
+                            ` : visibleTasks.map(t => {
+                                const isDone = t.status === 'Done';
+                                return renderDailyTaskRow(t, isDone);
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderDailyTaskRow(t, isDone) {
+            const ownerColors = {
+                "William": "bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800",
+                "Camille": "bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800",
+                "William & Camille": "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800"
+            };
+            const ownerClass = ownerColors[t.owner] || "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700";
+
+            return `
+                <div class="p-3.5 rounded-xl border ${
+                    isDone 
+                        ? 'border-emerald-200/80 dark:border-emerald-900/40 bg-emerald-50/20 dark:bg-emerald-950/10' 
+                        : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 hover:border-slate-300 dark:hover:border-slate-700'
+                } shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all">
+                    
+                    <!-- Left: Checkbox & Task Details -->
+                    <div class="flex items-start gap-3 flex-1 min-w-0">
+                        <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleTaskStatus('${t.id}')" class="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer dark:bg-slate-800 dark:border-slate-700">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex flex-wrap items-center gap-1.5">
+                                <span class="text-xs font-semibold ${isDone ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-900 dark:text-slate-100'}">
+                                    ${t.text}
+                                </span>
+                                ${t.priority === 'High Priority' ? `
+                                    <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300">High</span>
+                                ` : ''}
+                            </div>
+
+                            ${t.notes ? `
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">${t.notes}</p>
+                            ` : ''}
+
+                            <!-- Metadata Tags -->
+                            <div class="flex flex-wrap items-center gap-1.5 mt-1.5 text-[10px]">
+                                <span class="px-2 py-0.5 rounded font-medium border ${ownerClass}">
+                                    ${t.owner || 'Unassigned'}
+                                </span>
+                                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                                    ${t.category}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Move / Reschedule Controls -->
+                    <div class="flex items-center gap-2 self-end sm:self-center shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100 dark:border-slate-800/80 w-full sm:w-auto justify-end">
+                        <span class="text-[10px] text-slate-400 font-medium hidden sm:inline">Move:</span>
+                        
+                        <!-- Day Selector Dropdown -->
+                        <select onchange="moveTaskToDay('${t.id}', this.value)" class="text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-slate-700 dark:text-slate-200 font-medium focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            ${SCHEDULED_DAYS.map(d => `
+                                <option value="${d.id}" ${t.scheduledDate === d.id ? 'selected' : ''}>
+                                    ${d.label.split(' • ')[0]}
+                                </option>
+                            `).join('')}
+                        </select>
+
+                        <!-- Quick Next Day Button -->
+                        <button onclick="moveTaskToNextDay('${t.id}')" title="Move to next upcoming day" class="px-2 py-1 text-[11px] font-semibold rounded-lg bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/50 dark:hover:bg-blue-900/60 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 transition-colors">
+                            ➔ Next
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function moveTaskToDay(taskId, newDate) {
+            const task = moveData.tasks.find(t => t.id === taskId);
+            if (!task) return;
+            task.scheduledDate = newDate;
+
+            // Harmonize timeframe so Master Task Hub filters align
+            if (['2026-10-21', '2026-10-22', '2026-10-23'].includes(newDate)) {
+                task.timeframe = 'This Week';
+            } else if (['2026-10-24', '2026-10-25', '2026-10-26', '2026-10-27'].includes(newDate)) {
+                task.timeframe = 'Next Week';
+            } else if (['2026-10-28', '2026-10-29', '2026-10-30', '2026-10-31'].includes(newDate)) {
+                task.timeframe = 'Move Week';
+            } else if (newDate === 'post_move') {
+                task.timeframe = 'Post Move';
+            }
+
+            saveData();
+            renderDailySchedule();
+            renderMasterTasks();
+            renderWeeklyFocus();
+
+            const targetDay = SCHEDULED_DAYS.find(d => d.id === newDate);
+            const targetName = targetDay ? targetDay.label.split(' • ')[0] : newDate;
+            showToast(`Moved to ${targetName}`);
+        }
+
+        function moveTaskToNextDay(taskId) {
+            const task = moveData.tasks.find(t => t.id === taskId);
+            if (!task) return;
+            const currDate = task.scheduledDate || '2026-10-21';
+            const dayIds = SCHEDULED_DAYS.map(d => d.id);
+            const currIdx = dayIds.indexOf(currDate);
+            const nextIdx = (currIdx >= 0 && currIdx < dayIds.length - 1) ? currIdx + 1 : currIdx;
+            moveTaskToDay(taskId, dayIds[nextIdx]);
+        }
+
+        function rolloverOverdueTasks() {
+            const today = "2026-10-21";
+            let count = 0;
+            moveData.tasks.forEach(t => {
+                if (t.status !== 'Done' && t.scheduledDate && t.scheduledDate < today && t.scheduledDate !== 'post_move') {
+                    t.scheduledDate = today;
+                    t.timeframe = 'This Week';
+                    count++;
+                }
+            });
+
+            if (count > 0) {
+                saveData();
+                renderDailySchedule();
+                renderMasterTasks();
+                renderWeeklyFocus();
+                showToast(`Rolled over ${count} task${count > 1 ? 's' : ''} to Today!`);
+            } else {
+                showToast("No overdue tasks to roll over.");
+            }
+        }
+
+        function showToast(msg) {
+            let toast = document.getElementById('app-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'app-toast';
+                toast.className = 'fixed bottom-5 right-5 z-50 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-2.5 rounded-xl shadow-2xl text-xs font-semibold flex items-center gap-2 transition-all duration-300 opacity-0 pointer-events-none transform translate-y-2';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = `<span class="text-emerald-400 dark:text-emerald-600 font-bold">✓</span> <span>${msg}</span>`;
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+            }, 2500);
         }
 
         function renderWeeklyFocus() {
@@ -2389,6 +3151,7 @@
             if (task) {
                 task.status = (task.status === 'Done') ? 'Pending' : 'Done';
                 saveData();
+                renderDailySchedule();
                 renderMasterTasks();
                 renderRepairsList();
                 renderWeeklyFocus();
@@ -2445,6 +3208,11 @@
                                                 <div class="flex flex-wrap items-center gap-2 mt-2">
                                                     ${task.owner ? `<span class="text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2 py-0.5 rounded">👤 ${task.owner}</span>` : ''}
                                                     ${task.priority ? `<span class="text-[10px] font-semibold px-2 py-0.5 rounded border ${priorityClass}">${task.priority}</span>` : ''}
+                                                    ${(() => {
+                                                        const sDay = SCHEDULED_DAYS.find(d => d.id === task.scheduledDate);
+                                                        const sLabel = sDay ? sDay.label.split(' • ')[0] : (task.scheduledDate || 'Day TBD');
+                                                        return `<span class="text-[10px] font-semibold px-2 py-0.5 rounded border bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800">📅 ${sLabel}</span>`;
+                                                    })()}
                                                     <button onclick="toggleTaskTimeframe('${task.id}')" title="Click to toggle Pin to This Week" class="text-[10px] font-semibold px-2 py-0.5 rounded border transition-colors ${isThisWeek ? 'bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:text-indigo-600'}">
                                                         ${isThisWeek ? '⚡ This Week' : (task.timeframe || '📌 Pin to Week')}
                                                     </button>
@@ -3362,8 +4130,11 @@ Please review this state and help me with:
         }
 
         // Add Task Modal
-        function openAddTaskModal() {
+        function openAddTaskModal(dayId) {
             document.getElementById('modal-add-task').classList.remove('hidden');
+            if (dayId && document.getElementById('new-task-scheduled-date')) {
+                document.getElementById('new-task-scheduled-date').value = dayId;
+            }
         }
         function closeAddTaskModal() {
             document.getElementById('modal-add-task').classList.add('hidden');
@@ -3376,6 +4147,15 @@ Please review this state and help me with:
             const priority = document.getElementById('new-task-priority').value;
             const notes = document.getElementById('new-task-notes').value.trim();
 
+            const scheduledDate = document.getElementById('new-task-scheduled-date') 
+                ? document.getElementById('new-task-scheduled-date').value 
+                : '2026-10-21';
+
+            let timeframe = 'This Week';
+            if (['2026-10-24', '2026-10-25', '2026-10-26', '2026-10-27'].includes(scheduledDate)) timeframe = 'Next Week';
+            else if (['2026-10-28', '2026-10-29', '2026-10-30', '2026-10-31'].includes(scheduledDate)) timeframe = 'Move Week';
+            else if (scheduledDate === 'post_move') timeframe = 'Post Move';
+
             const newTask = {
                 id: 't_' + Date.now(),
                 category,
@@ -3383,13 +4163,17 @@ Please review this state and help me with:
                 owner,
                 status: 'Pending',
                 priority,
-                notes
+                notes,
+                scheduledDate,
+                timeframe
             };
 
             moveData.tasks.unshift(newTask);
             saveData();
+            renderDailySchedule();
             renderMasterTasks();
             renderRepairsList();
+            renderWeeklyFocus();
             closeAddTaskModal();
             document.getElementById('new-task-text').value = '';
             document.getElementById('new-task-notes').value = '';

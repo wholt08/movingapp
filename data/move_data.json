@@ -498,7 +498,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Clean car",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-24"
     },
     {
       "category": "Supplies & Purchases",
@@ -508,7 +509,8 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Get more moving boxes",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Core Logistics",
@@ -518,7 +520,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Cancel motorcycle insurance",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Core Logistics",
@@ -528,7 +531,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Get confirmation from Brian on move-out date",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Core Logistics",
@@ -538,7 +542,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Get confirmation from Brian on deposit return process",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-27"
     },
     {
       "category": "Core Logistics",
@@ -548,7 +553,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Research & reserve transport (POD vs. U-Haul vs. Movers)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Core Logistics",
@@ -558,7 +564,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Obtain written manager/work approval for move",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Core Logistics",
@@ -568,7 +575,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Apply for parking permit with City of Seattle for POD",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Core Logistics",
@@ -578,7 +586,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Update drop-off location on PODS portal",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Core Logistics",
@@ -588,7 +597,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Sign PODS user agreement",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Core Logistics",
@@ -598,7 +608,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Sell motorcycle (responding to listing inquiries & test rides)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Core Logistics",
@@ -608,7 +619,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Determine & submit PTO / work days off for move",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Supplies & Purchases",
@@ -618,7 +630,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Buy TV box for 65\" TV",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Supplies & Purchases",
@@ -628,7 +641,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Buy TV box for ~40\" bedroom TV",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Supplies & Purchases",
@@ -638,7 +652,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Get moving boxes (via Marketplace)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Supplies & Purchases",
@@ -648,7 +663,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Buy spackle & sanding sponge for wall holes",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Supplies & Purchases",
@@ -658,7 +674,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Buy wood touch-up marker / scratch repair kit",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Supplies & Purchases",
@@ -668,7 +685,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Buy packing tape",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Supplies & Purchases",
@@ -678,7 +696,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Get white and off-white/cream touch-up paint",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Supplies & Purchases",
@@ -688,7 +707,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Get Goo Gone (for cleaning window sill)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Room Sort & Purge",
@@ -698,7 +718,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Clean out garage",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Room Sort & Purge",
@@ -708,7 +729,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Clean up backyard & remove outdoor pet gear",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Room Sort & Purge",
@@ -718,7 +740,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Closets: Cull unworn clothes and pack non-seasonal items",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Room Sort & Purge",
@@ -728,7 +751,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Office: Organize and pack non-daily essentials",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Room Sort & Purge",
@@ -738,7 +762,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Bedroom: Second round of decluttering / sorting",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Room Sort & Purge",
@@ -748,7 +773,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Put garage items on curb and post in neighborhood group",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Room Sort & Purge",
@@ -758,7 +784,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Sort books, clothes, games, & decorations for donation",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Room Sort & Purge",
@@ -768,7 +795,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Drop off donations at Goodwill (books, clothes, games, decor)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Room Sort & Purge",
@@ -778,7 +806,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Take photos of rowing machine and post on Marketplace",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Room Sort & Purge",
@@ -788,7 +817,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Post dining table & chairs on Marketplace",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Room Sort & Purge",
@@ -798,7 +828,8 @@
       "priority": "Low",
       "status": "Pending",
       "text": "Post living room couch for sale",
-      "timeframe": "Move Week"
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-26"
     },
     {
       "category": "Room Sort & Purge",
@@ -808,7 +839,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Rehome/get rid of office chair, helmets (motorcycle & bike), pet ramp",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Early Packing",
@@ -818,7 +850,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Box up suits and work clothes",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Early Packing",
@@ -828,7 +861,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Box up guest bedroom decor & books",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-23"
     },
     {
       "category": "Home Repairs",
@@ -838,7 +872,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Fill nail holes & patch walls",
-      "timeframe": "Next Week"
+      "timeframe": "Next Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Home Repairs",
@@ -848,7 +883,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Repair scratches on wood trim / floors",
-      "timeframe": "Next Week"
+      "timeframe": "Next Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Home Repairs",
@@ -858,7 +894,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Patch bike rack holes in foyer",
-      "timeframe": "Next Week"
+      "timeframe": "Next Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Home Repairs",
@@ -868,7 +905,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Patch TV speaker holes",
-      "timeframe": "Next Week"
+      "timeframe": "Next Week",
+      "scheduledDate": "2026-10-25"
     },
     {
       "category": "Home Repairs",
@@ -878,7 +916,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Dismount bedroom curtain rods & fill holes",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Home Repairs",
@@ -888,7 +927,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Touch up paint on bedroom curtain rod wall marks",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Home Repairs",
@@ -898,7 +938,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Uninstall bike mount",
-      "timeframe": "Next Week"
+      "timeframe": "Next Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Home Repairs",
@@ -908,7 +949,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Uninstall dog gate in foyer",
-      "timeframe": "Move Week"
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-30"
     },
     {
       "category": "Home Repairs",
@@ -918,7 +960,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Repaint window sill in kitchen",
-      "timeframe": "Next Week"
+      "timeframe": "Next Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Home Repairs",
@@ -928,7 +971,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Remove residue/goo from kitchen window from AC unit",
-      "timeframe": "Next Week"
+      "timeframe": "Next Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Home Repairs",
@@ -938,7 +982,8 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Remove video doorbell and reinstall original doorbell",
-      "timeframe": "Move Week"
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-30"
     },
     {
       "category": "Home Repairs",
@@ -948,7 +993,8 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Remove bidet and reinstall original toilet seat",
-      "timeframe": "Move Week"
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-30"
     },
     {
       "category": "Home Repairs",
@@ -958,7 +1004,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Fix rowing machine",
-      "timeframe": "Next Week"
+      "timeframe": "Next Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Post-Move Admin",
@@ -968,7 +1015,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Check / modify Apartments.com payment settings (contact Brian)",
-      "timeframe": "Move Week"
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-30"
     },
     {
       "category": "Post-Move Admin",
@@ -978,7 +1026,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Update vehicle & motorcycle insurance",
-      "timeframe": "Post Move"
+      "timeframe": "Post Move",
+      "scheduledDate": "post_move"
     },
     {
       "category": "Post-Move Admin",
@@ -988,7 +1037,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Update address in workplace HR system",
-      "timeframe": "Post Move"
+      "timeframe": "Post Move",
+      "scheduledDate": "post_move"
     },
     {
       "category": "Post-Move Admin",
@@ -998,7 +1048,8 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Set up USPS mail forwarding",
-      "timeframe": "Move Week"
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-27"
     },
     {
       "category": "Post-Move Admin",
@@ -1008,7 +1059,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Set up electric utility at new home (San Diego / Encinitas)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Post-Move Admin",
@@ -1018,7 +1070,8 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Set up high-speed Internet at new home",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Post-Move Admin",
@@ -1028,7 +1081,8 @@
       "priority": "Medium",
       "status": "Done",
       "text": "Set up water & trash utilities at new home",
-      "timeframe": "Post Move"
+      "timeframe": "Post Move",
+      "scheduledDate": "post_move"
     },
     {
       "category": "Core Logistics",
@@ -1038,7 +1092,8 @@
       "priority": "High Priority",
       "status": "Done",
       "text": "Cancel Quantum Fiber internet service",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-20"
     },
     {
       "category": "Core Logistics",
@@ -1048,7 +1103,8 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Box up Quantum Fiber modem/router/wifi pod & return via UPS",
-      "timeframe": "Move Week"
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-30"
     },
     {
       "category": "Core Logistics",
@@ -1058,7 +1114,8 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Book pet-friendly hotel in Sacramento",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-22"
     },
     {
       "category": "Early Packing",
@@ -1068,7 +1125,8 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Office: Disassemble standing desk (separate desktop & legs for POD)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-26"
     },
     {
       "category": "Early Packing",
@@ -1078,7 +1136,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Office: Pack desktop computer & cables for POD",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-26"
     },
     {
       "category": "Early Packing",
@@ -1088,7 +1147,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Office: Pack or find homes for remaining office items (large brim hat, extra monitor, plant)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-26"
     },
     {
       "category": "Early Packing",
@@ -1098,7 +1158,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Guest bathroom: Sort and pack essentials, towels & toiletries",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-23"
     },
     {
       "category": "Early Packing",
@@ -1108,7 +1169,8 @@
       "priority": "Low",
       "status": "Pending",
       "text": "Bedroom: Secure nightstand drawers & fill 2nd drawer before move",
-      "timeframe": "Next Week"
+      "timeframe": "Next Week",
+      "scheduledDate": "2026-10-25"
     },
     {
       "category": "Early Packing",
@@ -1118,7 +1180,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Bedroom bathroom: Collab with Camille to pack up remaining toiletries & bath items",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-23"
     },
     {
       "category": "Room Sort & Purge",
@@ -1128,7 +1191,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Kitchen: Purge misc drawers & start boxing non-daily items / dishes",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-21"
     },
     {
       "category": "Core Logistics",
@@ -1138,7 +1202,8 @@
       "priority": "High Priority",
       "status": "Pending",
       "text": "Kitchen: Coordinate pickup & handoff of dining table & chairs",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-22"
     },
     {
       "category": "Early Packing",
@@ -1148,7 +1213,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Living room: Box up remaining books in small heavy-duty boxes",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-23"
     },
     {
       "category": "Early Packing",
@@ -1158,7 +1224,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Living room: Disconnect sound system (receiver, subwoofer, speakers) and box up",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-23"
     },
     {
       "category": "Room Sort & Purge",
@@ -1168,7 +1235,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Patio: Fold up Blackstone grill, take down wind chimes & bird feeders",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-22"
     },
     {
       "category": "Room Sort & Purge",
@@ -1178,7 +1246,8 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Patio: Decide what to do with brown fencing (pack, sell, or rehome)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-22"
     },
     {
       "category": "Early Packing",
@@ -1188,7 +1257,41 @@
       "priority": "Medium",
       "status": "Pending",
       "text": "Garage: Box up misc gear (motorcycle jacket/gloves, skateboard, baseball gear)",
-      "timeframe": "This Week"
+      "timeframe": "This Week",
+      "scheduledDate": "2026-10-24"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t68",
+      "notes": "POD arrives today! Start with heavy foundation: King mattress/frame along side wall, large dresser, 6ft TV stand, kayak & paddleboards on top trusses.",
+      "owner": "William & Camille",
+      "priority": "High Priority",
+      "status": "Pending",
+      "text": "POD Day 1: Load Tier 1 Heavy Base (King bed/frame, dresser, 6ft TV stand, kayak & paddleboards)",
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-28"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t69",
+      "notes": "Load standing desks, TVs in TV boxes, 4 bikes, A/C units, Blackstone, and stack medium/light boxes to ceiling. Ratchet strap cargo securely!",
+      "owner": "William & Camille",
+      "priority": "High Priority",
+      "status": "Pending",
+      "text": "POD Day 2: Load Tiers 2-4 (Desks, TVs, 4 bikes, A/C units, Blackstone, boxes & ratchet strap down)",
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-29"
+    },
+    {
+      "category": "Early Packing",
+      "id": "t70",
+      "notes": "Pack 4 computer monitors face-down on moving blanket, work/personal laptops in backpack, Scout's safe haven rear left, 10-day luggage, bedding, and coffee setup.",
+      "owner": "William & Camille",
+      "priority": "High Priority",
+      "status": "Pending",
+      "text": "Drive Day: Pack Subaru Outback (monitors, laptops, Scout safe haven, road luggage, cooler)",
+      "timeframe": "Move Week",
+      "scheduledDate": "2026-10-31"
     }
   ]
 }

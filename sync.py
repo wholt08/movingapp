@@ -102,6 +102,9 @@ def smart_merge(local, remote):
                 # If remote marked it Done, keep it Done
                 if rt.get("status") == "Done":
                     t["status"] = "Done"
+                # Preserve rescheduled dates from mobile/remote
+                if rt.get("scheduledDate") and rt.get("scheduledDate") != t.get("scheduledDate"):
+                    t["scheduledDate"] = rt.get("scheduledDate")
         # Preserve tasks added from remote
         local_ids = {t["id"] for t in merged["tasks"] if isinstance(t, dict) and "id" in t}
         for rt in remote["tasks"]:
